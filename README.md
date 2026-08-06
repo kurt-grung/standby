@@ -1,43 +1,90 @@
-# Widgets Example
+# Standby
 
-<p>
-  <!-- iOS -->
-  <a href="https://itunes.apple.com/app/apple-store/id982107779">
-    <img alt="Supports Expo iOS" longdesc="Supports Expo iOS" src="https://img.shields.io/badge/iOS-4630EB.svg?style=flat-square&logo=APPLE&labelColor=999999&logoColor=fff" />
-  </a>
-</p>
+Expo React Native app with **Apple Watch Ultra–style Night Mode widgets** for iPhone **StandBy**.
 
-This example shows how to build an iOS home screen widget and a delivery Live Activity with [`expo-widgets`](https://docs.expo.dev/versions/latest/sdk/widgets/), and update them from the app.
+The app lives in [`app/`](./app/).
 
-## Launch your own
+Built with [`expo-widgets`](https://docs.expo.dev/versions/latest/sdk/widgets/), [`@expo/ui`](https://docs.expo.dev/versions/latest/sdk/ui/swift-ui/), **NativeWind** (Tailwind), and **EAS** — no SwiftUI source to maintain.
 
-[![Launch with Expo](https://github.com/expo/examples/blob/master/.gh-assets/launch.svg?raw=true)](https://launch.expo.dev/?github=https://github.com/expo/examples/tree/master/with-widgets)
+## Widgets
 
-## 🚀 How to use
+| Widget | StandBy sizes | Description |
+|--------|---------------|-------------|
+| **Ultra Clock** | Small, Medium, Large | Live time, date, and day-progress ring on pure black |
+| **Ultra Gauge** | Small, Medium, Large | Circular capacity gauge with Ultra orange accent |
 
-> `expo-widgets` is not available in the Expo Go app — it requires a [development build](https://docs.expo.dev/develop/development-builds/introduction/) and iOS 16 or later.
+StandBy promotes `systemSmall` and `systemMedium` home-screen widgets when your iPhone is charging in landscape (iOS 17+).
 
-- Install packages with `yarn` or `npm install`.
-- Run `yarn ios` or `npm run ios` to build and open the app on an iOS simulator or device.
-- Long-press the home screen, tap the **Edit** (or **+**) button, search for the app, and add **Counter Widget**.
-- Tap **Increment and update widget** in the app and watch the widget update.
-- Tap **Start delivery Live Activity** to kick off a Live Activity that auto-advances Preparing → On the way → Delivered on the Lock Screen and Dynamic Island, with a live ETA countdown and a self-filling progress bar.
+## Requirements
 
-## 📝 Notes
+- macOS with Xcode
+- iOS 17+ device or simulator
+- **Not supported in Expo Go** — use a [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 
-- Learn more about [Expo Widgets](https://docs.expo.dev/versions/latest/sdk/widgets/), including timelines and [Live Activities](https://docs.expo.dev/versions/latest/sdk/widgets/#live-activities).
-- The home screen widget UI in [`widgets/CounterWidget.tsx`](./widgets/CounterWidget.tsx) is built with [`@expo/ui`](https://docs.expo.dev/versions/latest/sdk/ui/) SwiftUI primitives and the `'widget'` directive, and is registered with the `expo-widgets` config plugin in [`app.json`](./app.json).
-- The delivery Live Activity in [`widgets/DeliveryActivity.tsx`](./widgets/DeliveryActivity.tsx) uses `createLiveActivity` to render a Lock Screen banner and the Dynamic Island presentations. Its ETA countdown and progress bar update on their own via SwiftUI `timerInterval`, so the app only pushes a snapshot when the delivery stage changes — see `startDelivery` in [`App.tsx`](./App.tsx).
-- The background is a `Rectangle` filled with the `foregroundStyle` modifier's `linearGradient` style, layered with a grid image in a `ZStack` behind the content and clipped with `clipShape('containerRelativeShape')` — see the [`@expo/ui` modifiers](https://docs.expo.dev/versions/latest/sdk/ui/#modifiers) for the other gradient types.
-- Widgets run in a separate process and cannot read the app's asset bundle, so the logo and grid images are copied into `widgetsDirectory` (the shared app group container) and referenced by their file URIs — see `ensureImageInSharedStorage` in [`App.tsx`](./App.tsx).
+## Run
 
-## 📁 File Structure
+```bash
+make install
+make ios
+```
+
+Or start Metro only:
+
+```bash
+make run
+make kill   # stop dev servers
+```
+
+## EAS (cloud builds)
+
+Link the project once:
+
+```bash
+make eas-init
+```
+
+Then build:
+
+```bash
+make eas-build-dev          # simulator dev client
+make eas-build-dev-device   # device dev client (widgets)
+make eas-build-preview      # internal preview
+make eas-build-production   # App Store
+make eas-submit             # submit to App Store
+```
+
+This runs `expo run:ios`, which prebuilds the native project (including the Widget Extension) and launches the app.
+
+## Add widgets to StandBy
+
+1. Plug in your iPhone and rotate to **landscape**.
+2. StandBy appears automatically (Settings → StandBy to enable).
+3. Long-press → **Edit** → add **Ultra Clock** or **Ultra Gauge**.
+4. In StandBy appearance settings, pick **Night** (red tint) or **Mono** for the classic Ultra night look.
+
+You can also add the widgets to the Home Screen; they appear in StandBy automatically.
+
+## Customize the gauge
+
+Open the app to:
+
+- Switch gauge labels (Day / Energy / Focus)
+- Set a manual value, or leave **Auto** to track day progress
+- Refresh the 24-hour widget timeline
+
+## Project layout
 
 ```
-with-widgets
-├── App.tsx ➡️ The app screen that updates the widget and runs the Live Activity
-├── widgets/CounterWidget.tsx ➡️ The home screen widget UI, written with @expo/ui SwiftUI components
-├── widgets/DeliveryActivity.tsx ➡️ The delivery Live Activity UI (Lock Screen + Dynamic Island)
-├── assets/images ➡️ Logo and grid images shared with the widget through `widgetsDirectory`
-└── app.json ➡️ The `expo-widgets` config plugin configuration
+standby/
+└── app/
+    ├── App.tsx                    # Tailwind/NativeWind control screen
+    ├── app.config.ts              # Expo + widgets + EAS config
+    ├── eas.json                   # EAS build profiles
+    ├── global.css                 # Tailwind entry
+    ├── tailwind.config.js         # Ultra color tokens
+    ├── theme/ultra.ts             # Widget timeline helpers
+    ├── widgets/
+    │   ├── UltraClockWidget.tsx   # StandBy clock widget
+    │   └── UltraGaugeWidget.tsx   # StandBy gauge widget
+    └── babel.config.js            # NativeWind + Reanimated
 ```
