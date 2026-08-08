@@ -10,3 +10,7 @@ Use only this Expo account and project for Standby:
 - Project: https://expo.dev/accounts/kurtgrung/projects/standby
 
 Run Expo/EAS CLI as `kurtgrung`. Do not link the repo to other Expo accounts or projects. Do not run `eas init` unless re-linking to this project (`owner: kurtgrung`, `slug: standby`, project ID `c112d885-1090-4f24-81fc-74ec7a64ad98`).
+
+## After app changes
+
+Run `npx tsc --noEmit` in `app/`, lint touched files, and use Expo MCP docs (v57) when unsure. Fix failures before finishing. See `.cursor/rules/app-verify-mcp.mdc`.

@@ -7,6 +7,24 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { ThemeProvider } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
+
+function RootNavigation() {
+  const chrome = useAppChrome();
+
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        animation: 'fade',
+        contentStyle: { backgroundColor: chrome.colors.bg },
+      }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="home" />
+      <Stack.Screen name="ui" />
+    </Stack>
+  );
+}
 
 export default function RootLayout() {
   useEffect(() => {
@@ -24,11 +42,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="home" />
-          <Stack.Screen name="ui" />
-        </Stack>
+        <RootNavigation />
       </ThemeProvider>
     </SafeAreaProvider>
   );

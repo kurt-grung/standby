@@ -24,7 +24,7 @@ export default function PreviewScreen() {
     <>
       <StatusBar style={chrome.statusBar} hidden />
       <SafeAreaView className="flex-1" style={{ backgroundColor: chrome.colors.bg }} edges={[]}>
-        <View className="flex-1">
+        <View className="flex-1" style={{ backgroundColor: chrome.colors.bg }}>
           <LandscapePreviewFrame inset={12}>
             <StandByPreview />
           </LandscapePreviewFrame>

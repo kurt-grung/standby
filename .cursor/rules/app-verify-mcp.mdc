@@ -1,0 +1,18 @@
+---
+description: After app code changes, verify with MCP and fix issues before finishing
+alwaysApply: true
+---
+
+# App verification after changes
+
+When editing files under `app/`, run checks before marking work complete:
+
+1. **Typecheck**: `cd app && npx tsc --noEmit` — fix all errors.
+2. **Lints**: `read_lints` on every file touched.
+3. **Expo MCP** (when changing config, native, widgets, or routing): authenticate if needed, then use `read_documentation` for Expo v57 APIs before guessing.
+4. **Vitest MCP** (when tests exist): `set_project_root` → `run_tests` for affected paths.
+5. **Maestro MCP** (when UI/navigation changed): `list_devices` → smoke flow on preview/home if a simulator is available.
+
+If a check fails, fix it in the same turn. Do not leave broken typecheck or linter errors.
+
+Widget preview (`StandByPreview`, `nightMode`) stays night-themed; app chrome uses `useAppChrome()` for system light/dark.

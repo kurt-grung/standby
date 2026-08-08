@@ -9,11 +9,6 @@ const config: ExpoConfig = {
   scheme: 'standby',
   userInterfaceStyle: 'automatic',
   icon: './assets/icon.png',
-  splash: {
-    image: './assets/splash.png',
-    resizeMode: 'contain',
-    backgroundColor: '#000000',
-  },
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.kurtgrung.standby',
@@ -31,6 +26,14 @@ const config: ExpoConfig = {
   },
   plugins: [
     'expo-router',
+    [
+      'expo-splash-screen',
+      {
+        image: './assets/splash.png',
+        resizeMode: 'contain',
+        backgroundColor: '#000000',
+      },
+    ],
     [
       'expo-dev-client',
       {

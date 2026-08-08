@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { View, useWindowDimensions } from 'react-native';
 
+import { useAppChrome } from '../theme/useAppChrome';
+
 type LandscapePreviewFrameProps = {
   children: ReactNode;
   inset?: number;
@@ -8,10 +10,11 @@ type LandscapePreviewFrameProps = {
 
 export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreviewFrameProps) {
   const { width, height } = useWindowDimensions();
+  const chrome = useAppChrome();
   const isPortrait = height >= width;
 
   if (!isPortrait) {
-    return <View className="flex-1">{children}</View>;
+    return <View className="flex-1" style={{ backgroundColor: chrome.colors.bg }}>{children}</View>;
   }
 
   const landscapeWidth = height;
@@ -23,7 +26,9 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
   const frameHeight = height * scale;
 
   return (
-    <View className="flex-1 items-center justify-center">
+    <View
+      className="flex-1 items-center justify-center"
+      style={{ backgroundColor: chrome.colors.bg }}>
       <View
         style={{
           width: frameWidth,
