@@ -4,6 +4,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
 import { NavLink } from '../components/NavLink';
+import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
@@ -55,26 +56,25 @@ export default function HomeScreen() {
   return (
     <>
       <StatusBar style={theme.statusBar} />
-      <ScreenShell>
-        <View className="mb-6 flex-row items-start justify-between pr-2">
-          <View className="flex-1 pr-4">
-            <ThemeBadge />
-            <Text className="text-[42px] font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
-              StandBy+
-            </Text>
-            <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
-              Ultra Night widgets for iPhone StandBy
-            </Text>
-            <Text className="mt-4 text-3xl font-extralight" style={{ color: theme.colors.accent }}>
-              {formatNightTime(now)}
-            </Text>
-          </View>
-          <View className="items-end">
+      <ScreenShell
+        contentClassName="px-6 pb-10 pt-2 pr-24"
+        overlay={
+          <NavRail>
             <NavLink href="/" label="Preview" />
-            <View className="mt-2">
-              <NavLink href="/ui" label="UI" />
-            </View>
-          </View>
+            <NavLink href="/ui" label="UI" />
+          </NavRail>
+        }>
+        <View className="mb-6 pr-2">
+          <ThemeBadge />
+          <Text className="text-[42px] font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
+            StandBy+
+          </Text>
+          <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
+            Ultra Night widgets for iPhone StandBy
+          </Text>
+          <Text className="mt-4 text-3xl font-extralight" style={{ color: theme.colors.accent }}>
+            {formatNightTime(now)}
+          </Text>
         </View>
 
         <SectionCard label="Gauge">

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 
 type LandscapePreviewFrameProps = {
   children: ReactNode;

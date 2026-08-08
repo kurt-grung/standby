@@ -3,6 +3,7 @@ import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
 import { NavLink } from '../components/NavLink';
+import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
@@ -264,22 +265,25 @@ export default function UiScreen() {
   return (
     <>
       <StatusBar style={theme.statusBar} />
-      <ScreenShell>
-        <View className="mb-8 flex-row items-start justify-between">
-          <View className="flex-1 pr-4">
-            <Text
-              className="text-[11px] font-semibold uppercase tracking-widest"
-              style={{ color: theme.colors.accent }}>
-              Design System
-            </Text>
-            <Text className="mt-2 text-[34px] font-extralight" style={{ color: theme.colors.primary }}>
-              UI
-            </Text>
-            <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
-              Icon, typography, branding, and themes
-            </Text>
-          </View>
-          <NavLink href="/home" label="Home" />
+      <ScreenShell
+        contentClassName="px-6 pb-10 pt-2 pr-24"
+        overlay={
+          <NavRail>
+            <NavLink href="/home" label="Home" />
+          </NavRail>
+        }>
+        <View className="mb-8 pr-2">
+          <Text
+            className="text-[11px] font-semibold uppercase tracking-widest"
+            style={{ color: theme.colors.accent }}>
+            Design System
+          </Text>
+          <Text className="mt-2 text-[34px] font-extralight" style={{ color: theme.colors.primary }}>
+            UI
+          </Text>
+          <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
+            Icon, typography, branding, and themes
+          </Text>
         </View>
 
         <SectionCard label="Themes" title="Appearance">
