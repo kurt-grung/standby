@@ -10,7 +10,7 @@ import { useTheme } from '../theme/ThemeContext';
 import { themeList, type ThemeId } from '../theme/themes';
 
 const typographyScale = [
-  { name: 'Display', sample: 'Standby', className: 'text-[42px] font-extralight tracking-tight' },
+  { name: 'Display', sample: 'StandBy+', className: 'text-[42px] font-extralight tracking-tight' },
   { name: 'Title', sample: 'Ultra Night', className: 'text-2xl font-light' },
   { name: 'Headline', sample: 'Add to StandBy', className: 'text-lg font-medium' },
   { name: 'Body', sample: 'Widgets for iPhone StandBy mode.', className: 'text-base font-normal' },
@@ -141,9 +141,9 @@ export default function UiScreen() {
           </View>
         </SectionCard>
 
-        <SectionCard label="Branding" title="Standby identity">
+        <SectionCard label="Branding" title="StandBy+ identity">
           <Text className="mt-2 text-5xl font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
-            Standby
+            StandBy+
           </Text>
           <Text className="mt-2 text-base" style={{ color: theme.colors.secondary }}>
             Ultra Night widgets for iPhone StandBy

@@ -1,4 +1,4 @@
-# Standby
+# StandBy+
 
 Expo React Native app with **Apple Watch Ultra–style Night Mode widgets** for iPhone **StandBy**.
 

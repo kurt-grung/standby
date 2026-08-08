@@ -1,7 +1,7 @@
 import type { ExpoConfig } from 'expo/config';
 
 const config: ExpoConfig = {
-  name: 'Standby',
+  name: 'StandBy+',
   slug: 'standby',
   owner: 'kurtgrung',
   version: '1.0.0',

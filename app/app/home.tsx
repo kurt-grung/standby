@@ -17,7 +17,7 @@ import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 const GAUGE_STEP = 0.05;
 
 const standBySteps = [
-  'Run make standby on your Mac (best) or make device, then open Standby once on the phone',
+  'Run make standby on your Mac (best) or make device, then open StandBy+ once on the phone',
   'Wait for the home screen to load (registers widget layouts)',
   'Plug in your iPhone and rotate to landscape',
   'Long-press StandBy, then tap Edit',
@@ -60,7 +60,7 @@ export default function HomeScreen() {
           <View className="flex-1 pr-4">
             <ThemeBadge />
             <Text className="text-[42px] font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
-              Standby
+              StandBy+
             </Text>
             <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
               Ultra Night widgets for iPhone StandBy
