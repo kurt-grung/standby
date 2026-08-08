@@ -21,9 +21,45 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
   const isSmall = environment.widgetFamily === 'systemSmall';
   const isLarge = environment.widgetFamily === 'systemLarge';
   const progress = dayProgress(environment.date);
-  const timeSize = isSmall ? 48 : isLarge ? 88 : 72;
-  const dateSize = isSmall ? 11 : 14;
-  const ringSize = isSmall ? 36 : isLarge ? 56 : 44;
+  const timeSize = isSmall ? 40 : isLarge ? 88 : 72;
+  const dateSize = isSmall ? 10 : 14;
+  const ringSize = isSmall ? 32 : isLarge ? 56 : 44;
+
+  if (isSmall) {
+    return (
+      <ZStack
+        modifiers={[
+          containerBackground(ultraColors.background, 'widget'),
+          clipShape('containerRelativeShape'),
+        ]}>
+        <VStack
+          alignment="center"
+          spacing={8}
+          modifiers={[
+            padding({ all: 12 }),
+            frame({ maxWidth: Infinity, maxHeight: Infinity }),
+          ]}>
+          <Gauge
+            value={progress}
+            modifiers={[
+              gaugeStyle('circularCapacity'),
+              tint(ultraColors.accent),
+              frame({ width: ringSize, height: ringSize }),
+            ]}
+          />
+          <Text
+            date={environment.date}
+            dateStyle="time"
+            modifiers={[
+              font({ design: 'rounded', weight: 'ultraLight', size: timeSize }),
+              monospacedDigit(),
+              foregroundStyle(ultraColors.primary),
+            ]}
+          />
+        </VStack>
+      </ZStack>
+    );
+  }
 
   return (
     <ZStack

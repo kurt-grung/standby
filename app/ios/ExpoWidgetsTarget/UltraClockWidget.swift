@@ -17,7 +17,7 @@ struct UltraClockWidget: Widget {
       }
     }
     .configurationDisplayName("Ultra Clock")
-    .description("Apple Watch Ultra-style night clock for StandBy mode")
+    .description("Left StandBy column — live clock with day ring (Small)")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     .contentMarginsDisabled()
   }

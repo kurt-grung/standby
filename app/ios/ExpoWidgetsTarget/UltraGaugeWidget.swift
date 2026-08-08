@@ -17,7 +17,7 @@ struct UltraGaugeWidget: Widget {
       }
     }
     .configurationDisplayName("Ultra Gauge")
-    .description("Circular Ultra-style gauge for StandBy mode")
+    .description("Right StandBy column — Ultra gauge with live value (Small)")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     .contentMarginsDisabled()
   }

@@ -13,13 +13,6 @@ const widgetBundleId = 'Standby.widgets';
 const appGroup = 'group.com.kurtgrung.standby';
 const developmentTeam = '85FP2SN2JN';
 
-const emptyEntitlements = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict/>
-</plist>
-`;
-
 const appEntitlements = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -32,10 +25,9 @@ const appEntitlements = `<?xml version="1.0" encoding="UTF-8"?>
 </plist>
 `;
 
-function syncEntitlements(useAppGroups) {
-  const contents = useAppGroups ? appEntitlements : emptyEntitlements;
-  fs.writeFileSync(path.join(root, 'ios/Standby/Standby.entitlements'), contents);
-  fs.writeFileSync(path.join(root, 'ios/ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements'), contents);
+function syncEntitlements() {
+  fs.writeFileSync(path.join(root, 'ios/Standby/Standby.entitlements'), appEntitlements);
+  fs.writeFileSync(path.join(root, 'ios/ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements'), appEntitlements);
 }
 
 function removeStaleStandbyProfiles() {
@@ -126,34 +118,44 @@ function profileSupportsAppGroup() {
     return false;
   }
 
+  let hasMainProfile = false;
+  let hasWidgetProfile = false;
+
   for (const fileName of fs.readdirSync(profilesDir)) {
     if (!fileName.endsWith('.mobileprovision')) {
       continue;
     }
 
     const xml = fs.readFileSync(path.join(profilesDir, fileName), 'utf8');
-    if (!xml.includes('85FP2SN2JN.Standby') || !xml.includes(appGroup)) {
+    if (!xml.includes(appGroup)) {
       continue;
     }
 
-    return true;
+    if (xml.includes(`85FP2SN2JN.${appBundleId}`)) {
+      hasMainProfile = true;
+    }
+
+    if (xml.includes(`85FP2SN2JN.${widgetBundleId}`)) {
+      hasWidgetProfile = true;
+    }
   }
 
-  return false;
+  return hasMainProfile && hasWidgetProfile;
 }
 
 removeStaleStandbyProfiles();
 syncTeamId();
 syncBundleIds();
 
-const useAppGroups = profileSupportsAppGroup();
-syncEntitlements(useAppGroups);
+syncEntitlements();
 
-if (!useAppGroups) {
+if (!profileSupportsAppGroup()) {
   process.stderr.write(
     [
-      'Device signing: App Groups disabled until Apple Developer is configured.',
-      'Enable group.com.kurtgrung.standby on Standby and Standby.widgets, then rebuild.',
+      'Widgets need App Groups in Apple Developer and matching provisioning profiles.',
+      `Main: ${appBundleId} + App Group ${appGroup}`,
+      `Widget: ${widgetBundleId} + same App Group`,
+      'Then rebuild (Xcode will refresh profiles): make device',
       '',
     ].join('\n'),
   );

@@ -7,6 +7,7 @@ import { NavLink } from '../components/NavLink';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
+import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
 import { ThemeBadge } from '../components/ThemeBadge';
 import { useTheme } from '../theme/ThemeContext';
 import { buildMinuteTimeline, dayProgress, formatNightTime } from '../theme/ultra';
@@ -15,6 +16,14 @@ import UltraGaugeWidget, { type UltraGaugeWidgetProps } from '../widgets/UltraGa
 
 const TIMELINE_HOURS = 24;
 const GAUGE_STEP = 0.05;
+
+const standBySteps = [
+  'Plug in your iPhone and rotate to landscape',
+  'Long-press StandBy, then tap Edit',
+  'Tap the left column and add Ultra Clock (Small)',
+  'Tap the right column and add Ultra Gauge (Small)',
+  'Open StandBy settings and choose Night or Mono',
+] as const;
 
 const gaugePresets = [
   { label: 'DAY', icon: 'sun.max.fill' },
@@ -133,14 +142,10 @@ export default function HomeScreen() {
           </View>
         </SectionCard>
 
-        <SectionCard label="StandBy" title="Add to StandBy" className="mb-0">
-          <View className="mt-4">
-            {[
-              'Plug in your iPhone and rotate to landscape',
-              'Open StandBy and tap Edit',
-              `Add ${activePreset.label === 'DAY' ? 'Ultra Clock' : 'Ultra Gauge'} or both`,
-              'Choose Night (red) or Mono palette in StandBy settings',
-            ].map((step, index) => (
+        <SectionCard label="StandBy" title="Left and right widgets" className="mb-0">
+          <StandByLayoutGuide />
+          <View className="mt-5">
+            {standBySteps.map((step, index) => (
               <View key={step} className={`flex-row ${index > 0 ? 'mt-3' : ''}`}>
                 <Text className="mr-3 w-5 text-sm font-semibold" style={{ color: theme.colors.accent }}>
                   {index + 1}.

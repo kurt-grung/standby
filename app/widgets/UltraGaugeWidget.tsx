@@ -27,8 +27,52 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   const isSmall = environment.widgetFamily === 'systemSmall';
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
-  const gaugeSize = isSmall ? 72 : 112;
-  const valueSize = isSmall ? 28 : 40;
+  const gaugeSize = isSmall ? 64 : 112;
+  const valueSize = isSmall ? 22 : 40;
+
+  if (isSmall) {
+    return (
+      <ZStack
+        modifiers={[
+          containerBackground(ultraColors.background, 'widget'),
+          clipShape('containerRelativeShape'),
+        ]}>
+        <VStack
+          alignment="center"
+          spacing={6}
+          modifiers={[
+            padding({ all: 12 }),
+            frame({ maxWidth: Infinity, maxHeight: Infinity }),
+          ]}>
+          <ZStack>
+            <Gauge
+              value={clamped}
+              modifiers={[
+                gaugeStyle('circularCapacity'),
+                tint(ultraColors.accent),
+                frame({ width: gaugeSize, height: gaugeSize }),
+              ]}
+            />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'light', size: valueSize }),
+                monospacedDigit(),
+                foregroundStyle(ultraColors.primary),
+              ]}>
+              {percent}
+            </Text>
+          </ZStack>
+          <Text
+            modifiers={[
+              font({ design: 'rounded', weight: 'bold', size: 10 }),
+              foregroundStyle(ultraColors.secondary),
+            ]}>
+            {props.label}
+          </Text>
+        </VStack>
+      </ZStack>
+    );
+  }
 
   return (
     <ZStack
