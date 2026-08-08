@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
+import { GaugeValueControls } from '../components/GaugeValueControls';
 import { NavLink } from '../components/NavLink';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
@@ -178,6 +179,17 @@ export default function UiScreen() {
         </SectionCard>
 
         <SectionCard label="Components" title="UI kit" className="mb-0">
+          <View className="mt-4">
+            <GaugeValueControls
+              accent={theme.colors.accent}
+              border={theme.colors.border}
+              surface={theme.colors.bg}
+              text={theme.colors.primary}
+              onDecrease={() => undefined}
+              onAuto={() => undefined}
+              onIncrease={() => undefined}
+            />
+          </View>
           <View className="mt-4 flex-row flex-wrap">
             <View
               className="mb-2 mr-2 rounded-full border px-4 py-2"

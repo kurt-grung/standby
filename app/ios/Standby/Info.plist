@@ -28,7 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>standby</string>
-				<string>com.standby.app</string>
+				<string>Standby</string>
 			</array>
 		</dict>
 		<dict>
@@ -41,7 +41,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>ExpoWidgetsAppGroupIdentifier</key>
-	<string>group.com.standby.app</string>
+	<string>group.Standby</string>
 	<key>ExpoWidgets_EnablePushNotifications</key>
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>

@@ -7,7 +7,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>ExpoWidgetsAppGroupIdentifier</key>
-	<string>group.com.standby.app</string>
+	<string>group.Standby</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

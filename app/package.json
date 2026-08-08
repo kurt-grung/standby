@@ -11,7 +11,7 @@
     "ios": "expo run:ios",
     "android": "expo run:android",
     "web": "expo start --web",
-    "prebuild": "expo prebuild --platform ios",
+    "prebuild": "expo prebuild --platform ios && node scripts/patch-widget-container-background.mjs",
     "typecheck": "tsc --noEmit",
     "eas:init": "eas init",
     "eas:build:dev": "eas build --profile development --platform ios",
@@ -19,7 +19,7 @@
     "eas:build:preview": "eas build --profile preview --platform ios",
     "eas:build:production": "eas build --profile production --platform ios",
     "eas:submit": "eas submit --profile production --platform ios",
-    "postinstall": "node scripts/patch-expo-modules-jsi.mjs && node scripts/ensure-ios-bundle-id.mjs"
+    "postinstall": "node scripts/patch-expo-modules-jsi.mjs && node scripts/ensure-ios-bundle-id.mjs && node scripts/patch-widget-container-background.mjs"
   },
   "dependencies": {
     "@expo/ui": "~57.0.2",

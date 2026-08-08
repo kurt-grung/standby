@@ -8,6 +8,7 @@ struct UltraGaugeWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: name, provider: WidgetsTimelineProvider(name: name)) { entry in
       WidgetsEntryView(entry: entry)
+        .containerBackground(Color.black, for: .widget)
     }
     .configurationDisplayName("Ultra Gauge")
     .description("Circular Ultra-style gauge for StandBy mode")

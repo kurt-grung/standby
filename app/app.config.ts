@@ -3,6 +3,7 @@ import type { ExpoConfig } from 'expo/config';
 const config: ExpoConfig = {
   name: 'Standby',
   slug: 'standby',
+  owner: 'kurtgrung',
   version: '1.0.0',
   orientation: 'portrait',
   scheme: 'standby',
@@ -10,7 +11,7 @@ const config: ExpoConfig = {
   icon: './assets/icon.png',
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.standby.app',
+    bundleIdentifier: 'Standby',
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -27,8 +28,8 @@ const config: ExpoConfig = {
     [
       'expo-widgets',
       {
-        bundleIdentifier: 'com.standby.app.widgets',
-        groupIdentifier: 'group.com.standby.app',
+        bundleIdentifier: 'Standby.widgets',
+        groupIdentifier: 'group.Standby',
         widgets: [
           {
             name: 'UltraClockWidget',
@@ -51,12 +52,12 @@ const config: ExpoConfig = {
   ],
   extra: {
     eas: {
-      projectId: process.env.EAS_PROJECT_ID,
+      projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',
     },
   },
-  updates: process.env.EAS_PROJECT_ID
-    ? { url: `https://u.expo.dev/${process.env.EAS_PROJECT_ID}` }
-    : undefined,
+  updates: {
+    url: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
+  },
 };
 
 export default config;

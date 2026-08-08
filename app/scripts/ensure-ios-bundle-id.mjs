@@ -3,15 +3,21 @@ import path from 'node:path';
 
 const root = process.cwd();
 const pbxprojPath = path.join(root, 'ios/Standby.xcodeproj/project.pbxproj');
-const appBundleId = 'com.standby.app';
-const widgetBundleId = 'com.standby.app.widgets';
+const appBundleId = 'Standby';
+const widgetBundleId = 'Standby.widgets';
 
 if (!fs.existsSync(pbxprojPath)) {
   process.exit(0);
 }
 
 let source = fs.readFileSync(pbxprojPath, 'utf8');
-const mainAppIds = new Set(['Standby', 'standby.app', appBundleId]);
+const mainAppIds = new Set([
+  'Standby',
+  'standby.app',
+  'com.kurtgrung.standby',
+  'com.standby.app',
+  appBundleId,
+]);
 const lines = source.split('\n');
 let changed = false;
 

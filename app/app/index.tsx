@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import { GaugeValueControls } from '../components/GaugeValueControls';
 import { NavLink } from '../components/NavLink';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
@@ -13,6 +14,7 @@ import UltraClockWidget from '../widgets/UltraClockWidget';
 import UltraGaugeWidget, { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 
 const TIMELINE_HOURS = 24;
+const GAUGE_STEP = 0.05;
 
 const gaugePresets = [
   { label: 'DAY', icon: 'sun.max.fill' },
@@ -118,36 +120,16 @@ export default function HomeScreen() {
             })}
           </View>
 
-          <View className="mt-4 flex-row">
-            <Pressable
-              className="mr-2 flex-1 items-center rounded-2xl border py-3.5 active:opacity-70"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}
-              onPress={() => setGaugeValue((value) => Math.max(0, value - 0.05))}>
-              <Text className="text-xl font-light" style={{ color: theme.colors.primary }}>
-                −
-              </Text>
-            </Pressable>
-            <Pressable
-              className="mr-2 flex-1 items-center rounded-2xl border py-3.5 active:opacity-70"
-              style={{
-                borderColor: `${theme.colors.accent}80`,
-                backgroundColor: theme.colors.accentSoft,
-              }}
-              onPress={() => setGaugeValue(0)}>
-              <Text
-                className="text-sm font-semibold uppercase tracking-wide"
-                style={{ color: theme.colors.accent }}>
-                Auto
-              </Text>
-            </Pressable>
-            <Pressable
-              className="flex-1 items-center rounded-2xl border py-3.5 active:opacity-70"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}
-              onPress={() => setGaugeValue((value) => Math.min(1, value + 0.05))}>
-              <Text className="text-xl font-light" style={{ color: theme.colors.primary }}>
-                +
-              </Text>
-            </Pressable>
+          <View className="mt-4">
+            <GaugeValueControls
+              accent={theme.colors.accent}
+              border={theme.colors.border}
+              surface={theme.colors.bg}
+              text={theme.colors.primary}
+              onDecrease={() => setGaugeValue((value) => Math.max(0, value - GAUGE_STEP))}
+              onAuto={() => setGaugeValue(0)}
+              onIncrease={() => setGaugeValue((value) => Math.min(1, value + GAUGE_STEP))}
+            />
           </View>
         </SectionCard>
 

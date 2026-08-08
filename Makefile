@@ -51,7 +51,7 @@ web: ## Start Expo for web
 
 prebuild: ## Generate ios/ native project and widget extension
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && npx expo prebuild --platform ios
+	cd "$(ROOT)/$(APP_DIR)" && npm run prebuild
 
 rebuild: clean install prebuild ## Clean caches, reinstall, and prebuild iOS
 	@if [ -f "$(ROOT)/$(APP_DIR)/ios/Podfile" ]; then \
@@ -70,7 +70,7 @@ clean: ## Remove Expo / Metro caches (keeps node_modules and ios/)
 	@rm -f "$(ROOT)/$(APP_DIR)/.metro-health-check"* "$(ROOT)/$(APP_DIR)"/*.tsbuildinfo
 	@echo "Cleaned Expo caches."
 
-kill: ## Stop Expo / Metro dev servers for this repo
+kill: ## Stop Expo / Metro dev servers and stale iOS builds for this repo
 	@echo "Killing listeners on $(EXPO_PORT) 8082 19000–19002 19006…"
 	@for p in $(EXPO_PORT) 8082 19000 19001 19002 19006; do \
 		kill -9 $$(lsof -tiTCP:$$p -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true; \
@@ -82,6 +82,7 @@ kill: ## Stop Expo / Metro dev servers for this repo
 		"$(ROOT)/$(APP_DIR).*metro"; do \
 		pgrep -f "$$pattern" 2>/dev/null | xargs kill -TERM 2>/dev/null || true; \
 	done
+	@pgrep -f "xcodebuild.*Standby" 2>/dev/null | xargs kill -TERM 2>/dev/null || true
 	@sleep 1
 	@for pattern in \
 		"$(ROOT)/$(APP_DIR)/node_modules/.bin/expo" \
@@ -90,6 +91,7 @@ kill: ## Stop Expo / Metro dev servers for this repo
 		"$(ROOT)/$(APP_DIR).*metro"; do \
 		pgrep -f "$$pattern" 2>/dev/null | xargs kill -KILL 2>/dev/null || true; \
 	done
+	@pgrep -f "xcodebuild.*Standby" 2>/dev/null | xargs kill -KILL 2>/dev/null || true
 	@echo "Stopped dev servers."
 
 eas-init: ## Link project to Expo (run once)
