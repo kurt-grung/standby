@@ -46,7 +46,7 @@ export default function UiScreen() {
               Icon, typography, branding, and themes
             </Text>
           </View>
-          <NavLink href="/" label="Home" />
+          <NavLink href="/home" label="Home" />
         </View>
 
         <SectionCard label="Themes" title="Appearance">

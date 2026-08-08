@@ -24,8 +24,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
+        <Stack screenOptions={{ headerShown: false, animation: 'fade', orientation: 'landscape' }}>
           <Stack.Screen name="index" />
+          <Stack.Screen name="home" />
           <Stack.Screen name="ui" />
         </Stack>
       </ThemeProvider>

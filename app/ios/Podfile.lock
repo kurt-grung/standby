@@ -232,6 +232,29 @@ PODS:
   - ExpoRouter (57.0.11):
     - ExpoModulesCore
     - RNScreens
+  - ExpoScreenOrientation (57.0.1):
+    - ExpoModulesCore
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - ExpoSymbols (57.0.2):
     - ExpoModulesCore
   - ExpoUI (57.0.9):
@@ -2399,6 +2422,7 @@ DEPENDENCIES:
   - ExpoModulesWorklets (from `../node_modules/expo-modules-core/ExpoModulesWorklets.podspec`)
   - ExpoModulesWorkletsAdapter (from `../node_modules/expo-modules-core`)
   - ExpoRouter (from `../node_modules/expo-router/ios`)
+  - ExpoScreenOrientation (from `../node_modules/expo-screen-orientation/ios`)
   - ExpoSymbols (from `../node_modules/expo-symbols/ios`)
   - "ExpoUI (from `../node_modules/@expo/ui/ios`)"
   - ExpoWidgets (from `../node_modules/expo-widgets/ios`)
@@ -2528,6 +2552,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core"
   ExpoRouter:
     :path: "../node_modules/expo-router/ios"
+  ExpoScreenOrientation:
+    :path: "../node_modules/expo-screen-orientation/ios"
   ExpoSymbols:
     :path: "../node_modules/expo-symbols/ios"
   ExpoUI:
@@ -2720,6 +2746,7 @@ SPEC CHECKSUMS:
   ExpoModulesWorklets: 53d4ca8d32225cb3ec4660b9f03496192b4f3cac
   ExpoModulesWorkletsAdapter: dfe18b33612eb83868fe9a0dee4bc2a50b8f870c
   ExpoRouter: 6a876a5008025dcced0867086f2640da67c7c59e
+  ExpoScreenOrientation: 17fd81b2bdb7615b4b540335673aaf98a358281f
   ExpoSymbols: 0efd93edf0f825bf3c762582b0769dd3b296235c
   ExpoUI: 9d39a0371d8abff2b79394c8d81239dce4ad3298
   ExpoWidgets: 3c23466b5a8ea2682b57cc7ec0319ed0ce9d23c0
@@ -2805,6 +2832,6 @@ SPEC CHECKSUMS:
   RNWorklets: 43af89f696342f91118a2f1f3a879056e2f47331
   Yoga: 9891cfb1c680f64de9c41b09e7453dea33454d2b
 
-PODFILE CHECKSUM: c30fbbea7365d68827fe094d8ead0e4dc89ecd80
+PODFILE CHECKSUM: 9dee1e52b585bc20f2318c54fa634843bf3c5f2e
 
 COCOAPODS: 1.16.2

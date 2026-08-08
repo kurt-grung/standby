@@ -40,6 +40,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>DEV_CLIENT_DEFAULT_LAUNCHER_URL</key>
+	<string>http://localhost:8081</string>
+	<key>EXDevMenuIsOnboardingFinished</key>
+	<true/>
+	<key>EXDevMenuShowsAtLaunch</key>
+	<false/>
 	<key>ExpoWidgetsAppGroupIdentifier</key>
 	<string>group.com.kurtgrung.standby</string>
 	<key>ExpoWidgets_EnablePushNotifications</key>
@@ -85,8 +91,8 @@
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

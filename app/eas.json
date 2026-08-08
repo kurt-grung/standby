@@ -9,14 +9,12 @@
       "distribution": "internal",
       "channel": "development",
       "ios": {
-        "appleTeamId": "85FP2SN2JN",
         "simulator": true
       }
     },
     "development-device": {
       "extends": "development",
       "ios": {
-        "appleTeamId": "85FP2SN2JN",
         "simulator": false
       }
     },
@@ -24,7 +22,6 @@
       "distribution": "internal",
       "channel": "preview",
       "ios": {
-        "appleTeamId": "85FP2SN2JN",
         "image": "latest"
       }
     },
@@ -32,7 +29,6 @@
       "autoIncrement": true,
       "channel": "production",
       "ios": {
-        "appleTeamId": "85FP2SN2JN",
         "image": "latest"
       }
     }

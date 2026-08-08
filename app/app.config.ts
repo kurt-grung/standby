@@ -5,7 +5,7 @@ const config: ExpoConfig = {
   slug: 'standby',
   owner: 'kurtgrung',
   version: '1.0.0',
-  orientation: 'portrait',
+  orientation: 'landscape',
   scheme: 'standby',
   userInterfaceStyle: 'dark',
   icon: './assets/icon.png',
@@ -26,7 +26,24 @@ const config: ExpoConfig = {
   },
   plugins: [
     'expo-router',
-    'expo-dev-client',
+    [
+      'expo-dev-client',
+      {
+        launchMode: 'most-recent',
+        defaultLaunchURL: 'http://localhost:8081',
+        skipOnboarding: true,
+        showMenuAtLaunch: false,
+        ios: {
+          defaultLaunchURL: 'http://localhost:8081',
+        },
+      },
+    ],
+    [
+      'expo-screen-orientation',
+      {
+        initialOrientation: 'LANDSCAPE',
+      },
+    ],
     [
       'expo-widgets',
       {

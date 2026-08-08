@@ -4,7 +4,7 @@ import { Pressable, Text } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
 
 type NavLinkProps = {
-  href: '/ui' | '/';
+  href: '/' | '/home' | '/ui';
   label: string;
 };
 

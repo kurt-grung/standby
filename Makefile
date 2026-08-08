@@ -109,24 +109,24 @@ kill: ## Stop Expo / Metro dev servers and stale iOS builds for this repo
 
 eas-init: ## Link project to Expo (run once)
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) init
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) init
 
 eas-build-dev: ## EAS build — iOS simulator dev client
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) build --profile development --platform ios $(EAS_BUILD_FLAGS)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) build --profile development --platform ios $(EAS_BUILD_FLAGS)
 
 eas-build-dev-device: ## EAS build — iOS device dev client
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) build --profile development-device --platform ios $(EAS_BUILD_FLAGS)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) build --profile development-device --platform ios $(EAS_BUILD_FLAGS)
 
 eas-build-preview: ## EAS build — internal preview (TestFlight-ready)
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) build --profile preview --platform ios $(EAS_BUILD_FLAGS)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) build --profile preview --platform ios $(EAS_BUILD_FLAGS)
 
 eas-build-production: ## EAS build — App Store production
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) build --profile production --platform ios $(EAS_BUILD_FLAGS)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) build --profile production --platform ios $(EAS_BUILD_FLAGS)
 
 eas-submit: ## Submit latest production build to App Store
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && $(EAS) submit --profile production --platform ios $(EAS_BUILD_FLAGS)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-account.mjs && $(EAS) submit --profile production --platform ios $(EAS_BUILD_FLAGS)

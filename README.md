@@ -44,6 +44,13 @@ make run
 make kill   # stop dev servers
 ```
 
+## Expo project
+
+- Account: [kurtgrung](https://expo.dev/accounts/kurtgrung)
+- Project: [standby](https://expo.dev/accounts/kurtgrung/projects/standby)
+
+Log in as `kurtgrung` before EAS commands (`npx expo login`). Apple Team ID lives in `app/app.config.ts`.
+
 ## EAS (cloud builds)
 
 Link the project once:
