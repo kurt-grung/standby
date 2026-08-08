@@ -126,7 +126,7 @@ export function TempComplication({ size, value, low, high }: TempComplicationPro
   const progress = (value - low) / Math.max(1, high - low);
 
   return (
-    <View className="items-center" style={{ width: size + 4 }}>
+    <View className="items-center" style={{ width: size }}>
       <ArcGauge size={size} progress={progress} stroke={size * 0.14}>
         <Text
           style={{
@@ -138,7 +138,9 @@ export function TempComplication({ size, value, low, high }: TempComplicationPro
           {value}
         </Text>
       </ArcGauge>
-      <View className="mt-0.5 w-full flex-row justify-between px-0.5">
+      <View
+        className="w-full flex-row justify-between"
+        style={{ height: 14, paddingHorizontal: 2, marginTop: 2 }}>
         <Text
           style={{
             color: nightMode.secondary,
@@ -169,7 +171,7 @@ type UvComplicationProps = {
 
 export function UvComplication({ size, value }: UvComplicationProps) {
   return (
-    <View className="items-center" style={{ width: size + 2 }}>
+    <View className="items-center" style={{ width: size }}>
       <ArcGauge size={size} progress={Math.min(1, value / 11)} stroke={size * 0.14}>
         <View className="items-center">
           <Text
@@ -193,6 +195,7 @@ export function UvComplication({ size, value }: UvComplicationProps) {
           />
         </View>
       </ArcGauge>
+      <View style={{ height: 14, marginTop: 2 }} />
     </View>
   );
 }

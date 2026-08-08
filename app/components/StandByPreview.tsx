@@ -14,8 +14,13 @@ export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1_000);
-    return () => clearInterval(timer);
+    let frame = 0;
+    const tick = () => {
+      setNow(new Date());
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return (

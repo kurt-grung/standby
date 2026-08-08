@@ -62,8 +62,9 @@ export function ModularUltraFace({
       <SecondsBezel
         width={size.width}
         height={size.height}
-        seconds={now.getSeconds()}
-        inset={4}
+        seconds={now.getSeconds() + now.getMilliseconds() / 1000}
+        inset={1.5}
+        cornerRadius={32}
       />
 
       <View className="flex-1 justify-between px-7 py-6">
@@ -117,8 +118,8 @@ export function ModularUltraFace({
 
         <DayProgressStrip now={now} batteryPercent={batteryPercent} />
 
-        <View className="flex-row items-end justify-between px-0.5">
-          <ActivityRings size={ringSize + 2} />
+        <View className="flex-row items-start justify-between">
+          <ActivityRings size={ringSize} />
           <SunsetComplication size={ringSize} label={sunsetLabel} />
           <UvComplication size={ringSize} value={uvIndex} />
         </View>

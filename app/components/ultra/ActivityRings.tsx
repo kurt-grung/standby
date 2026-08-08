@@ -28,39 +28,42 @@ export function ActivityRings({
   ] as const;
 
   return (
-    <View style={{ width: size, height: size }}>
-      <Svg width={size} height={size}>
-        {rings.map((ring) => (
-          <Circle
-            key={ring.radius}
-            cx={cx}
-            cy={cy}
-            r={ring.radius}
-            stroke={nightMode.track}
-            strokeWidth={stroke}
-            fill="none"
-          />
-        ))}
-        {rings.map((ring) => {
-          const circumference = 2 * Math.PI * ring.radius;
-          const clamped = Math.min(1, Math.max(0, ring.progress));
-          return (
+    <View className="items-center" style={{ width: size }}>
+      <View style={{ width: size, height: size }}>
+        <Svg width={size} height={size}>
+          {rings.map((ring) => (
             <Circle
-              key={`p-${ring.radius}`}
+              key={ring.radius}
               cx={cx}
               cy={cy}
               r={ring.radius}
-              stroke={nightMode.primary}
+              stroke={nightMode.track}
               strokeWidth={stroke}
               fill="none"
-              strokeDasharray={`${circumference * clamped} ${circumference}`}
-              strokeLinecap="round"
-              transform={`rotate(-90 ${cx} ${cy})`}
-              opacity={0.85 + clamped * 0.15}
             />
-          );
-        })}
-      </Svg>
+          ))}
+          {rings.map((ring) => {
+            const circumference = 2 * Math.PI * ring.radius;
+            const clamped = Math.min(1, Math.max(0, ring.progress));
+            return (
+              <Circle
+                key={`p-${ring.radius}`}
+                cx={cx}
+                cy={cy}
+                r={ring.radius}
+                stroke={nightMode.primary}
+                strokeWidth={stroke}
+                fill="none"
+                strokeDasharray={`${circumference * clamped} ${circumference}`}
+                strokeLinecap="round"
+                transform={`rotate(-90 ${cx} ${cy})`}
+                opacity={0.85 + clamped * 0.15}
+              />
+            );
+          })}
+        </Svg>
+      </View>
+      <View style={{ height: 14, marginTop: 2 }} />
     </View>
   );
 }
