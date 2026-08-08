@@ -4,7 +4,7 @@ import Svg, { Circle, Defs, Line, RadialGradient, Stop } from 'react-native-svg'
 
 import { nightMode } from './nightColors';
 
-const TICK_COUNT = 300;
+const TICK_COUNT = 180;
 const SECONDS = 60;
 const FINE_PER_SECOND = TICK_COUNT / SECONDS;
 
@@ -140,15 +140,15 @@ function tickKind(index: number): Tick['kind'] {
 }
 
 function tickLength(kind: Tick['kind']) {
-  if (kind === 'major') return 9;
-  if (kind === 'second') return 6;
-  return 3.25;
+  if (kind === 'major') return 12;
+  if (kind === 'second') return 8.5;
+  return 5;
 }
 
 function tickStroke(kind: Tick['kind']) {
-  if (kind === 'major') return 1.3;
-  if (kind === 'second') return 0.95;
-  return 0.65;
+  if (kind === 'major') return 2.8;
+  if (kind === 'second') return 2.2;
+  return 1.7;
 }
 
 function buildGeometry(
@@ -227,8 +227,8 @@ export function SecondsBezel({
     y: head.point.y - head.normal.y * 1.2,
   };
   const headInner = {
-    x: head.point.x + head.normal.x * 12,
-    y: head.point.y + head.normal.y * 12,
+    x: head.point.x + head.normal.x * 15,
+    y: head.point.y + head.normal.y * 15,
   };
 
   return (
@@ -291,9 +291,9 @@ export function SecondsBezel({
           x2={headInner.x}
           y2={headInner.y}
           stroke={nightMode.primary}
-          strokeWidth={4.2}
-          strokeLinecap="round"
-          opacity={0.45}
+          strokeWidth={5.5}
+          strokeLinecap="butt"
+          opacity={0.4}
         />
         <Line
           x1={headOuter.x}
@@ -301,14 +301,14 @@ export function SecondsBezel({
           x2={headInner.x}
           y2={headInner.y}
           stroke={nightMode.primary}
-          strokeWidth={2.8}
-          strokeLinecap="round"
+          strokeWidth={3.6}
+          strokeLinecap="butt"
           opacity={1}
         />
         <Circle
           cx={head.point.x + head.normal.x * 2}
           cy={head.point.y + head.normal.y * 2}
-          r={2.4}
+          r={2.8}
           fill={nightMode.primary}
         />
       </Svg>
