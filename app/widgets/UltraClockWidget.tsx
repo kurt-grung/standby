@@ -17,8 +17,8 @@ type UltraClockWidgetProps = Record<string, never>;
 const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const background = '#000000';
-  const primary = '#FFFFFF';
-  const secondary = '#8E8E93';
+  const primary = '#FF453A';
+  const secondary = '#A8423A';
   const accent = '#FF453A';
   const date = environment.date;
   const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;

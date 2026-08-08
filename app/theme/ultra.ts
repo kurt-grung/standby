@@ -10,15 +10,15 @@ export const ultraColors = {
 
 export const nightColors = {
   background: '#000000',
-  surface: '#111111',
-  card: '#161616',
-  border: '#2A2A2C',
-  primary: '#F5F5F7',
-  secondary: '#8E8E93',
-  muted: '#636366',
+  surface: '#110808',
+  card: '#160A0A',
+  border: '#3A1512',
+  primary: '#FF453A',
+  secondary: '#A8423A',
+  muted: '#6B2E28',
   accent: '#FF453A',
   orange: '#FF9F0A',
-  track: '#1F1F1F',
+  track: '#2A1210',
 } as const;
 
 export function dayProgress(date: Date): number {

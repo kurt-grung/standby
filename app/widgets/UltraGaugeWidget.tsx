@@ -23,10 +23,10 @@ export type UltraGaugeWidgetProps = {
 const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const background = '#000000';
-  const primary = '#FFFFFF';
-  const secondary = '#8E8E93';
+  const primary = '#FF453A';
+  const secondary = '#A8423A';
   const accent = '#FF453A';
-  const accentMuted = '#FF6961';
+  const accentMuted = '#C44E45';
   const isSmall = environment.widgetFamily === 'systemSmall';
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
