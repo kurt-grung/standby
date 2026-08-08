@@ -271,7 +271,7 @@ export default function UiScreen() {
         contentClassName="px-6 pb-10 pt-2 pr-24"
         overlay={
           <NavRail>
-            <NavIconLink href="/home" symbol="house" accessibilityLabel="Home" />
+            <NavIconLink href="/home" icon="home" accessibilityLabel="Home" />
           </NavRail>
         }>
         <View className="mb-8 pr-2">

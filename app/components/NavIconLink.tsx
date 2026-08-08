@@ -1,28 +1,28 @@
 import { Link } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { Pressable } from 'react-native';
-import type { SFSymbol } from 'sf-symbols-typescript';
 
+import { navIcons, type NavIconName } from './navIcons';
 import { useAppChrome } from '../theme/useAppChrome';
 
 type NavIconLinkProps = {
   href: '/' | '/home' | '/ui';
-  symbol: SFSymbol;
+  icon: NavIconName;
   accessibilityLabel: string;
   size?: number;
   iconSize?: number;
 };
 
-const DEFAULT_SIZE = 38;
+const DEFAULT_SIZE = 36;
 
 export function NavIconLink({
   href,
-  symbol,
+  icon,
   accessibilityLabel,
   size = DEFAULT_SIZE,
-  iconSize = 18,
+  iconSize = 17,
 }: NavIconLinkProps) {
   const chrome = useAppChrome();
+  const Icon = navIcons[icon];
 
   return (
     <Link href={href} asChild>
@@ -35,10 +35,12 @@ export function NavIconLink({
           height: size,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: chrome.colors.surface,
-          borderRadius: 11,
+          backgroundColor: chrome.colors.navButtonBg,
+          borderWidth: 1,
+          borderColor: chrome.colors.navButtonBorder,
+          borderRadius: 10,
         }}>
-        <SymbolView name={symbol} size={iconSize} tintColor={chrome.colors.primary} weight="medium" />
+        <Icon size={iconSize} color={chrome.colors.navButtonIcon} />
       </Pressable>
     </Link>
   );

@@ -62,8 +62,8 @@ export default function HomeScreen() {
         contentClassName="px-6 pb-10 pt-2 pr-24"
         overlay={
           <NavRail>
-            <NavIconLink href="/" symbol="play.rectangle" accessibilityLabel="Preview" />
-            <NavIconLink href="/ui" symbol="square.grid.2x2" accessibilityLabel="UI" />
+            <NavIconLink href="/" icon="preview" accessibilityLabel="Preview" />
+            <NavIconLink href="/ui" icon="ui" accessibilityLabel="UI" />
           </NavRail>
         }>
         <View className="mb-6 pr-2">

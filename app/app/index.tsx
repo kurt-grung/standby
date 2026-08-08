@@ -36,7 +36,7 @@ export default function PreviewScreen() {
               top: insets.top + 26,
               zIndex: 10,
             }}>
-            <NavIconLink href="/home" symbol="house" accessibilityLabel="Home" />
+            <NavIconLink href="/home" icon="home" accessibilityLabel="Home" />
           </View>
         </View>
       </SafeAreaView>
