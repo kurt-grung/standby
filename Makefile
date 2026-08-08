@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i run start s ios device android web kill clean prebuild rebuild tsc typecheck \
+.PHONY: help install i run start s ios device standby android web kill clean prebuild rebuild tsc typecheck \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -36,11 +36,23 @@ start s: run ## Alias for run
 
 ios: ## Build native app and run on iOS simulator (widgets need this, not Expo Go)
 	$(call require_app)
+	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npm run ios
 
-device: ## Build and run on a connected iPhone (override: make device IOS_DEVICE="My iPhone")
+device: ## Dev build on iPhone — embeds JS; open app once so widgets register
 	$(call require_app)
+	@printf 'unset SKIP_BUNDLING\n' > "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npx expo run:ios --device "$(IOS_DEVICE)"
+	@echo ""
+	@echo "After install: unlock the phone, open Standby, wait for the home screen,"
+	@echo "then remove and re-add widgets in StandBy if they still show red squares."
+
+standby: ## Release build on iPhone — best for StandBy widgets (no Metro required)
+	$(call require_app)
+	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npx expo run:ios --device "$(IOS_DEVICE)" --configuration Release
+	@echo ""
+	@echo "Open Standby once, then add Ultra Clock (left) and Ultra Gauge (right) in StandBy."
 
 android: ## Build native app and run on Android
 	$(call require_app)

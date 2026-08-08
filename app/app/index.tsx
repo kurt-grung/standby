@@ -17,7 +17,7 @@ import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 const GAUGE_STEP = 0.05;
 
 const standBySteps = [
-  'Open Standby on your iPhone and connect to Metro (dev build — same Wi‑Fi as Mac)',
+  'Run make standby on your Mac (best) or make device, then open Standby once on the phone',
   'Wait for the home screen to load (registers widget layouts)',
   'Plug in your iPhone and rotate to landscape',
   'Long-press StandBy, then tap Edit',

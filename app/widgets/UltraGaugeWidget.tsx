@@ -25,8 +25,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   const background = '#000000';
   const primary = '#FFFFFF';
   const secondary = '#8E8E93';
-  const accent = '#FF9F0A';
-  const accentGreen = '#30D158';
+  const accent = '#FF453A';
+  const accentMuted = '#FF6961';
   const isSmall = environment.widgetFamily === 'systemSmall';
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
@@ -103,7 +103,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
-              foregroundStyle(accentGreen),
+              foregroundStyle(accentMuted),
             ]}>
             {percent}
             {props.unit}
