@@ -7,7 +7,7 @@ const config: ExpoConfig = {
   version: '1.0.0',
   orientation: 'portrait',
   scheme: 'standby',
-  userInterfaceStyle: 'dark',
+  userInterfaceStyle: 'automatic',
   icon: './assets/icon.png',
   splash: {
     image: './assets/splash.png',

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ScrollView, View, type ScrollViewProps } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useTheme } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
 
 type ScreenShellProps = {
   children: ReactNode;
@@ -18,13 +18,13 @@ export function ScreenShell({
   overlay,
   showsVerticalScrollIndicator = false,
 }: ScreenShellProps) {
-  const { theme } = useTheme();
+  const chrome = useAppChrome();
 
   if (!scroll) {
     return (
       <SafeAreaView
         className="flex-1"
-        style={{ backgroundColor: theme.colors.bg }}
+        style={{ backgroundColor: chrome.colors.bg }}
         edges={['top', 'left', 'right', 'bottom']}>
         {overlay}
         <View className={`flex-1 ${contentClassName}`}>{children}</View>
@@ -35,7 +35,7 @@ export function ScreenShell({
   return (
     <SafeAreaView
       className="flex-1"
-      style={{ backgroundColor: theme.colors.bg }}
+      style={{ backgroundColor: chrome.colors.bg }}
       edges={['top', 'left', 'right', 'bottom']}>
       {overlay}
       <ScrollView

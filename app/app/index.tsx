@@ -5,13 +5,13 @@ import { View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LandscapePreviewFrame } from '../components/LandscapePreviewFrame';
-import { NavLink } from '../components/NavLink';
+import { NavIconLink } from '../components/NavIconLink';
 import { StandByPreview } from '../components/StandByPreview';
-import { useTheme } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
 
 export default function PreviewScreen() {
-  const { theme } = useTheme();
   const insets = useSafeAreaInsets();
+  const chrome = useAppChrome();
 
   useEffect(() => {
     void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
@@ -22,8 +22,8 @@ export default function PreviewScreen() {
 
   return (
     <>
-      <StatusBar style={theme.statusBar} hidden />
-      <SafeAreaView className="flex-1" style={{ backgroundColor: theme.colors.bg }} edges={[]}>
+      <StatusBar style={chrome.statusBar} hidden />
+      <SafeAreaView className="flex-1" style={{ backgroundColor: chrome.colors.bg }} edges={[]}>
         <View className="flex-1">
           <LandscapePreviewFrame inset={12}>
             <StandByPreview />
@@ -32,11 +32,11 @@ export default function PreviewScreen() {
             pointerEvents="box-none"
             style={{
               position: 'absolute',
-              right: 0,
-              top: insets.top + 16,
+              right: 18,
+              top: insets.top + 26,
               zIndex: 10,
             }}>
-            <NavLink href="/home" label="Home" />
+            <NavIconLink href="/home" symbol="house" accessibilityLabel="Home" />
           </View>
         </View>
       </SafeAreaView>

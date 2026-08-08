@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
-import { NavLink } from '../components/NavLink';
+import { NavIconLink } from '../components/NavIconLink';
 import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
@@ -12,6 +12,7 @@ import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
 import { ThemeBadge } from '../components/ThemeBadge';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { useTheme } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
 import { dayProgress, formatNightTime } from '../theme/ultra';
 import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 
@@ -35,6 +36,7 @@ const gaugePresets = [
 
 export default function HomeScreen() {
   const { theme } = useTheme();
+  const chrome = useAppChrome();
   const [gaugeValue, setGaugeValue] = useState(0);
   const [presetIndex, setPresetIndex] = useState(0);
   const [now, setNow] = useState(() => new Date());
@@ -55,24 +57,24 @@ export default function HomeScreen() {
 
   return (
     <>
-      <StatusBar style={theme.statusBar} />
+      <StatusBar style={chrome.statusBar} />
       <ScreenShell
         contentClassName="px-6 pb-10 pt-2 pr-24"
         overlay={
           <NavRail>
-            <NavLink href="/" label="Preview" />
-            <NavLink href="/ui" label="UI" />
+            <NavIconLink href="/" symbol="play.rectangle" accessibilityLabel="Preview" />
+            <NavIconLink href="/ui" symbol="square.grid.2x2" accessibilityLabel="UI" />
           </NavRail>
         }>
         <View className="mb-6 pr-2">
           <ThemeBadge />
-          <Text className="text-[42px] font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
+          <Text className="text-[42px] font-extralight tracking-tight" style={{ color: chrome.colors.primary }}>
             StandBy+
           </Text>
-          <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
+          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
             Ultra Night widgets for iPhone StandBy
           </Text>
-          <Text className="mt-4 text-3xl font-extralight" style={{ color: theme.colors.accent }}>
+          <Text className="mt-4 text-3xl font-extralight" style={{ color: chrome.colors.primary }}>
             {formatNightTime(now)}
           </Text>
         </View>
@@ -80,14 +82,14 @@ export default function HomeScreen() {
         <SectionCard label="Gauge">
           <View className="mt-2 flex-row items-end justify-between">
             <View className="flex-1">
-              <Text className="text-6xl font-extralight" style={{ color: theme.colors.primary }}>
+              <Text className="text-6xl font-extralight" style={{ color: chrome.colors.primary }}>
                 {percent}%
               </Text>
             </View>
             <View
               className="h-16 w-16 items-center justify-center rounded-full border-2"
-              style={{ borderColor: theme.colors.border }}>
-              <Text className="text-xs font-semibold" style={{ color: theme.colors.secondary }}>
+              style={{ borderColor: chrome.colors.border }}>
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
                 {activePreset.label}
               </Text>
             </View>
@@ -95,7 +97,7 @@ export default function HomeScreen() {
 
           <ProgressBar value={displayValue} />
 
-          <Text className="mt-4 text-sm leading-5" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-sm leading-5" style={{ color: chrome.colors.muted }}>
             Leave at 0% to mirror day progress automatically in the widget.
           </Text>
 
@@ -107,13 +109,13 @@ export default function HomeScreen() {
                   key={preset.label}
                   className={`mr-2 flex-1 items-center rounded-full border py-2.5 ${index === gaugePresets.length - 1 ? 'mr-0' : ''}`}
                   style={{
-                    borderColor: active ? theme.colors.accent : theme.colors.border,
-                    backgroundColor: active ? theme.colors.accentSoft : theme.colors.surface,
+                    borderColor: active ? chrome.colors.primary : chrome.colors.border,
+                    backgroundColor: active ? chrome.colors.accentSoft : chrome.colors.surface,
                   }}
                   onPress={() => setPresetIndex(index)}>
                   <Text
                     className="text-[11px] font-semibold uppercase tracking-wide"
-                    style={{ color: active ? theme.colors.accent : theme.colors.muted }}>
+                    style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}>
                     {preset.label}
                   </Text>
                 </Pressable>
@@ -123,10 +125,10 @@ export default function HomeScreen() {
 
           <View className="mt-4">
             <GaugeValueControls
-              accent={theme.colors.accent}
-              border={theme.colors.border}
-              surface={theme.colors.bg}
-              text={theme.colors.primary}
+              accent={chrome.colors.primary}
+              border={chrome.colors.border}
+              surface={chrome.colors.surface}
+              text={chrome.colors.primary}
               onDecrease={() => setGaugeValue((value) => Math.max(0, value - GAUGE_STEP))}
               onAuto={() => setGaugeValue(0)}
               onIncrease={() => setGaugeValue((value) => Math.min(1, value + GAUGE_STEP))}
@@ -139,10 +141,10 @@ export default function HomeScreen() {
           <View className="mt-5">
             {standBySteps.map((step, index) => (
               <View key={step} className={`flex-row ${index > 0 ? 'mt-3' : ''}`}>
-                <Text className="mr-3 w-5 text-sm font-semibold" style={{ color: theme.colors.accent }}>
+                <Text className="mr-3 w-5 text-sm font-semibold" style={{ color: chrome.colors.primary }}>
                   {index + 1}.
                 </Text>
-                <Text className="flex-1 text-sm leading-5" style={{ color: theme.colors.secondary }}>
+                <Text className="flex-1 text-sm leading-5" style={{ color: chrome.colors.secondary }}>
                   {step}
                 </Text>
               </View>

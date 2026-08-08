@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, Text } from 'react-native';
 
-import { useTheme } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
 
 type NavLinkProps = {
   href: '/' | '/home' | '/ui';
@@ -9,14 +9,19 @@ type NavLinkProps = {
 };
 
 export function NavLink({ href, label }: NavLinkProps) {
-  const { theme } = useTheme();
+  const chrome = useAppChrome();
 
   return (
     <Link href={href} asChild>
       <Pressable
         className="rounded-full border px-4 py-2 active:opacity-70"
-        style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.surface }}>
-        <Text className="text-xs font-semibold uppercase tracking-wide" style={{ color: theme.colors.secondary }}>
+        style={{
+          borderColor: chrome.colors.border,
+          backgroundColor: chrome.colors.surface,
+        }}>
+        <Text
+          className="text-xs font-semibold uppercase tracking-wide"
+          style={{ color: chrome.colors.secondary }}>
           {label}
         </Text>
       </Pressable>

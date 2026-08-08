@@ -2,12 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
-import { NavLink } from '../components/NavLink';
+import { NavIconLink } from '../components/NavIconLink';
 import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
 import { useTheme } from '../theme/ThemeContext';
+import { useAppChrome } from '../theme/useAppChrome';
 import { themeList, type ThemeId } from '../theme/themes';
 
 const typographyScale = [
@@ -261,27 +262,28 @@ const advertGenerations = [
 
 export default function UiScreen() {
   const { theme, themeId, setThemeId } = useTheme();
+  const chrome = useAppChrome();
 
   return (
     <>
-      <StatusBar style={theme.statusBar} />
+      <StatusBar style={chrome.statusBar} />
       <ScreenShell
         contentClassName="px-6 pb-10 pt-2 pr-24"
         overlay={
           <NavRail>
-            <NavLink href="/home" label="Home" />
+            <NavIconLink href="/home" symbol="house" accessibilityLabel="Home" />
           </NavRail>
         }>
         <View className="mb-8 pr-2">
           <Text
             className="text-[11px] font-semibold uppercase tracking-widest"
-            style={{ color: theme.colors.accent }}>
+            style={{ color: chrome.colors.secondary }}>
             Design System
           </Text>
-          <Text className="mt-2 text-[34px] font-extralight" style={{ color: theme.colors.primary }}>
+          <Text className="mt-2 text-[34px] font-extralight" style={{ color: chrome.colors.primary }}>
             UI
           </Text>
-          <Text className="mt-1 text-base" style={{ color: theme.colors.secondary }}>
+          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
             Icon, typography, branding, and themes
           </Text>
         </View>
@@ -295,8 +297,8 @@ export default function UiScreen() {
                   key={item.id}
                   className="mb-2 mr-2 rounded-2xl border px-4 py-3 active:opacity-70"
                   style={{
-                    borderColor: active ? item.colors.accent : theme.colors.border,
-                    backgroundColor: active ? item.colors.accentSoft : theme.colors.surface,
+                    borderColor: active ? item.colors.accent : chrome.colors.border,
+                    backgroundColor: active ? item.colors.accentSoft : chrome.colors.surface,
                   }}
                   onPress={() => setThemeId(item.id as ThemeId)}>
                   <View className="mb-2 flex-row items-center">
@@ -306,11 +308,11 @@ export default function UiScreen() {
                     />
                     <Text
                       className="text-sm font-semibold"
-                      style={{ color: active ? item.colors.accent : theme.colors.primary }}>
+                      style={{ color: active ? item.colors.accent : chrome.colors.primary }}>
                       {item.name}
                     </Text>
                   </View>
-                  <Text className="text-xs leading-4" style={{ color: theme.colors.muted }}>
+                  <Text className="text-xs leading-4" style={{ color: chrome.colors.muted }}>
                     {item.description}
                   </Text>
                 </Pressable>
@@ -329,7 +331,7 @@ export default function UiScreen() {
               className="h-28 w-28 rounded-[22px]"
               resizeMode="cover"
             />
-            <Text className="mt-4 text-center text-sm leading-5" style={{ color: theme.colors.secondary }}>
+            <Text className="mt-4 text-center text-sm leading-5" style={{ color: chrome.colors.secondary }}>
               Minimal ring, red night dot, landscape shelf. Dieter Rams clarity with Apple flat precision.
             </Text>
           </View>
@@ -341,7 +343,7 @@ export default function UiScreen() {
                   className="h-14 w-14 rounded-2xl"
                   resizeMode="cover"
                 />
-                <Text className="mt-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                <Text className="mt-1 text-[10px] font-semibold uppercase" style={{ color: chrome.colors.muted }}>
                   {item.label}
                 </Text>
               </View>
@@ -355,13 +357,13 @@ export default function UiScreen() {
               <View
                 key={item.name}
                 className={`${index > 0 ? 'mt-5 border-t pt-5' : ''}`}
-                style={{ borderColor: theme.colors.border }}>
+                style={{ borderColor: chrome.colors.border }}>
                 <Text
                   className="mb-1 text-[11px] font-semibold uppercase tracking-widest"
-                  style={{ color: theme.colors.muted }}>
+                  style={{ color: chrome.colors.muted }}>
                   {item.name}
                 </Text>
-                <Text className={item.className} style={{ color: theme.colors.primary }}>
+                <Text className={item.className} style={{ color: chrome.colors.primary }}>
                   {item.sample}
                 </Text>
               </View>
@@ -372,12 +374,12 @@ export default function UiScreen() {
         <SectionCard label="Review" title="Dark app · Light marketing">
           <View className="mt-4 flex-row">
             <View className="mr-3 flex-1">
-              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
                 Dark — App
               </Text>
               <View
                 className="items-center rounded-2xl border p-4"
-                style={{ borderColor: theme.colors.border, backgroundColor: '#000000' }}>
+                style={{ borderColor: chrome.colors.border, backgroundColor: '#000000' }}>
                 <Image
                   source={require('../assets/icon.png')}
                   className="h-20 w-20 rounded-[18px]"
@@ -394,9 +396,9 @@ export default function UiScreen() {
                   <View key={swatch.name} className="mb-2 mr-2 flex-row items-center">
                     <View
                       className="mr-1.5 h-5 w-5 rounded-md border"
-                      style={{ backgroundColor: swatch.value, borderColor: theme.colors.border }}
+                      style={{ backgroundColor: swatch.value, borderColor: chrome.colors.border }}
                     />
-                    <Text className="text-[10px]" style={{ color: theme.colors.muted }}>
+                    <Text className="text-[10px]" style={{ color: chrome.colors.muted }}>
                       {swatch.name}
                     </Text>
                   </View>
@@ -404,12 +406,12 @@ export default function UiScreen() {
               </View>
             </View>
             <View className="flex-1">
-              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
                 Light — Marketing
               </Text>
               <View
                 className="items-center rounded-2xl border p-4"
-                style={{ borderColor: theme.colors.border, backgroundColor: '#F2F2F0' }}>
+                style={{ borderColor: chrome.colors.border, backgroundColor: '#F2F2F0' }}>
                 <Image
                   source={require('../designs/icons/icon-light.png')}
                   className="h-20 w-20 rounded-[18px]"
@@ -426,9 +428,9 @@ export default function UiScreen() {
                   <View key={swatch.name} className="mb-2 mr-2 flex-row items-center">
                     <View
                       className="mr-1.5 h-5 w-5 rounded-md border"
-                      style={{ backgroundColor: swatch.value, borderColor: theme.colors.border }}
+                      style={{ backgroundColor: swatch.value, borderColor: chrome.colors.border }}
                     />
-                    <Text className="text-[10px]" style={{ color: theme.colors.muted }}>
+                    <Text className="text-[10px]" style={{ color: chrome.colors.muted }}>
                       {swatch.name}
                     </Text>
                   </View>
@@ -436,13 +438,13 @@ export default function UiScreen() {
               </View>
             </View>
           </View>
-          <Text className="mt-4 text-sm leading-5" style={{ color: theme.colors.secondary }}>
+          <Text className="mt-4 text-sm leading-5" style={{ color: chrome.colors.secondary }}>
             Same ring · dot · shelf mark. Night red on device; Stone palette for App Store and web.
           </Text>
         </SectionCard>
 
         <SectionCard label="Boards" title="Brand sheets">
-          <Text className="mt-1 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-1 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Dark — merged
           </Text>
           <Image
@@ -450,7 +452,7 @@ export default function UiScreen() {
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Light — marketing
           </Text>
           <Image
@@ -458,7 +460,7 @@ export default function UiScreen() {
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             ChatGPT reference
           </Text>
           <Image
@@ -466,45 +468,45 @@ export default function UiScreen() {
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Adverts — full bleed
           </Text>
           {advertGenerations.map((item) => (
             <View key={item.label} className="mt-2">
-              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: chrome.colors.muted }}>
                 {item.label}
               </Text>
               <Image source={item.source} className="h-44 w-full rounded-2xl" resizeMode="cover" />
             </View>
           ))}
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Hero boards — v21 layout + scenes
           </Text>
           {heroBoardGenerations.map((item) => (
             <View key={item.label} className="mt-2">
-              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: chrome.colors.muted }}>
                 {item.label}
               </Text>
               <Image source={item.source} className="h-44 w-full rounded-2xl" resizeMode="cover" />
             </View>
           ))}
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Phone ref scenes
           </Text>
           {phoneRefGenerations.map((item) => (
             <View key={item.label} className="mt-2">
-              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: chrome.colors.muted }}>
                 {item.label}
               </Text>
               <Image source={item.source} className="h-36 w-full rounded-2xl" resizeMode="cover" />
             </View>
           ))}
-          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: chrome.colors.muted }}>
             Generations archive
           </Text>
           {boardGenerations.map((item) => (
             <View key={item.label} className="mt-2">
-              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: chrome.colors.muted }}>
                 {item.label}
               </Text>
               <Image source={item.source} className="h-36 w-full rounded-2xl" resizeMode="cover" />
@@ -523,7 +525,7 @@ export default function UiScreen() {
             className="mt-5 h-32 w-full rounded-2xl"
             resizeMode="contain"
           />
-          <Text className="mt-2 text-base" style={{ color: theme.colors.secondary }}>
+          <Text className="mt-2 text-base" style={{ color: chrome.colors.secondary }}>
             StandBy, refined. Widgets for iPhone StandBy at a glance.
           </Text>
           <View className="mt-5 flex-row flex-wrap">
@@ -531,13 +533,13 @@ export default function UiScreen() {
               <View key={key} className="mb-3 mr-3 w-[46%] flex-row items-center">
                 <View
                   className="mr-2 h-8 w-8 rounded-lg border"
-                  style={{ backgroundColor: value, borderColor: theme.colors.border }}
+                  style={{ backgroundColor: value, borderColor: chrome.colors.border }}
                 />
                 <View>
-                  <Text className="text-xs font-semibold capitalize" style={{ color: theme.colors.primary }}>
+                  <Text className="text-xs font-semibold capitalize" style={{ color: chrome.colors.primary }}>
                     {key}
                   </Text>
-                  <Text className="text-[10px]" style={{ color: theme.colors.muted }}>
+                  <Text className="text-[10px]" style={{ color: chrome.colors.muted }}>
                     {value}
                   </Text>
                 </View>
@@ -549,7 +551,7 @@ export default function UiScreen() {
               <Text
                 key={line}
                 className={`text-sm leading-5 ${index > 0 ? 'mt-2' : ''}`}
-                style={{ color: theme.colors.secondary }}>
+                style={{ color: chrome.colors.secondary }}>
                 · {line}
               </Text>
             ))}
@@ -559,10 +561,10 @@ export default function UiScreen() {
         <SectionCard label="Components" title="UI kit" className="mb-0">
           <View className="mt-4">
             <GaugeValueControls
-              accent={theme.colors.accent}
-              border={theme.colors.border}
-              surface={theme.colors.bg}
-              text={theme.colors.primary}
+              accent={chrome.colors.accent}
+              border={chrome.colors.border}
+              surface={chrome.colors.surface}
+              text={chrome.colors.primary}
               onDecrease={() => undefined}
               onAuto={() => undefined}
               onIncrease={() => undefined}
@@ -571,22 +573,22 @@ export default function UiScreen() {
           <View className="mt-4 flex-row flex-wrap">
             <View
               className="mb-2 mr-2 rounded-full border px-4 py-2"
-              style={{ borderColor: theme.colors.accent, backgroundColor: theme.colors.accentSoft }}>
-              <Text className="text-xs font-semibold uppercase" style={{ color: theme.colors.accent }}>
+              style={{ borderColor: chrome.colors.accent, backgroundColor: chrome.colors.accentSoft }}>
+              <Text className="text-xs font-semibold uppercase" style={{ color: chrome.colors.accent }}>
                 Badge
               </Text>
             </View>
             <View
               className="mb-2 mr-2 rounded-xl border px-4 py-2"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}>
-              <Text className="text-xs font-semibold" style={{ color: theme.colors.primary }}>
+              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.bg }}>
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.primary }}>
                 Button
               </Text>
             </View>
             <View
               className="mb-2 rounded-xl border px-4 py-2"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.surface }}>
-              <Text className="text-xs font-semibold" style={{ color: theme.colors.secondary }}>
+              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.surface }}>
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
                 Surface
               </Text>
             </View>
