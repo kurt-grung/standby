@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i run start s ios device standby android web kill clean prebuild rebuild tsc typecheck \
+.PHONY: help install i app run start s ios device standby android web kill clean prebuild rebuild tsc typecheck \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -26,7 +26,9 @@ install: ## Install app dependencies
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm install
 
-i: ios ## Shorthand for ios
+i: install ## Shorthand for install
+
+app: ios ## Build native app and run on iOS simulator
 
 run: ## Start Expo dev server (Metro)
 	$(call require_app)

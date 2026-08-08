@@ -14,19 +14,33 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
     return <View className="flex-1">{children}</View>;
   }
 
+  const landscapeWidth = height;
+  const landscapeHeight = width;
   const availableWidth = width - inset * 2;
   const availableHeight = height - inset * 2;
   const scale = Math.min(availableWidth / width, availableHeight / height);
+  const frameWidth = width * scale;
+  const frameHeight = height * scale;
 
   return (
-    <View className="flex-1 items-center justify-center overflow-hidden">
+    <View className="flex-1 items-center justify-center">
       <View
         style={{
-          width: height,
-          height: width,
-          transform: [{ rotate: '90deg' }, { scale }],
+          width: frameWidth,
+          height: frameHeight,
+          overflow: 'hidden',
         }}>
-        {children}
+        <View
+          style={{
+            position: 'absolute',
+            width: landscapeWidth,
+            height: landscapeHeight,
+            left: frameWidth / 2 - landscapeWidth / 2,
+            top: frameHeight / 2 - landscapeHeight / 2,
+            transform: [{ rotate: '90deg' }, { scale }],
+          }}>
+          {children}
+        </View>
       </View>
     </View>
   );

@@ -24,8 +24,8 @@ StandBy promotes `systemSmall` and `systemMedium` home-screen widgets when your 
 ## Run
 
 ```bash
-make install
-make i         # build + run on iOS simulator (same as make ios)
+make i         # install dependencies (same as make install)
+make app       # build + run on iOS simulator (same as make ios)
 make device    # build + run on connected iPhone (default: K Phone)
 ```
 

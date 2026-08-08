@@ -28,7 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>standby</string>
-				<string>Standby</string>
+				<string>com.kurtgrung.standby</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,6 +42,8 @@
 	<string>1</string>
 	<key>DEV_CLIENT_DEFAULT_LAUNCHER_URL</key>
 	<string>http://localhost:8081</string>
+	<key>EXDefaultScreenOrientationMask</key>
+	<string>UIInterfaceOrientationMaskPortrait</string>
 	<key>EXDevMenuIsOnboardingFinished</key>
 	<true/>
 	<key>EXDevMenuShowsAtLaunch</key>
@@ -92,8 +94,7 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
