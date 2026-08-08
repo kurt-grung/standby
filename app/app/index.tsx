@@ -9,15 +9,16 @@ import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
 import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
 import { ThemeBadge } from '../components/ThemeBadge';
+import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { useTheme } from '../theme/ThemeContext';
-import { buildMinuteTimeline, dayProgress, formatNightTime } from '../theme/ultra';
-import UltraClockWidget from '../widgets/UltraClockWidget';
-import UltraGaugeWidget, { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
+import { dayProgress, formatNightTime } from '../theme/ultra';
+import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 
-const TIMELINE_HOURS = 24;
 const GAUGE_STEP = 0.05;
 
 const standBySteps = [
+  'Open Standby on your iPhone and connect to Metro (dev build — same Wi‑Fi as Mac)',
+  'Wait for the home screen to load (registers widget layouts)',
   'Plug in your iPhone and rotate to landscape',
   'Long-press StandBy, then tap Edit',
   'Tap the left column and add Ultra Clock (Small)',
@@ -31,21 +32,6 @@ const gaugePresets = [
   { label: 'FOCUS', icon: 'scope' },
 ] as const satisfies readonly Pick<UltraGaugeWidgetProps, 'label' | 'icon'>[];
 
-function refreshWidgets(gaugeValue: number, presetIndex: number) {
-  const preset = gaugePresets[presetIndex] ?? gaugePresets[0];
-
-  UltraClockWidget.updateTimeline(buildMinuteTimeline(TIMELINE_HOURS, () => ({})));
-
-  UltraGaugeWidget.updateTimeline(
-    buildMinuteTimeline(TIMELINE_HOURS, (date) => ({
-      label: preset.label,
-      icon: preset.icon,
-      unit: '%',
-      value: gaugeValue > 0 ? gaugeValue : dayProgress(date),
-    })),
-  );
-}
-
 export default function HomeScreen() {
   const { theme } = useTheme();
   const [gaugeValue, setGaugeValue] = useState(0);
@@ -53,7 +39,8 @@ export default function HomeScreen() {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    refreshWidgets(gaugeValue, presetIndex);
+    const preset = gaugePresets[presetIndex] ?? gaugePresets[0];
+    refreshStandbyWidgets(gaugeValue, preset);
   }, [gaugeValue, presetIndex]);
 
   useEffect(() => {

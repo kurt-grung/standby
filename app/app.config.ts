@@ -11,7 +11,7 @@ const config: ExpoConfig = {
   icon: './assets/icon.png',
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'Standby',
+    bundleIdentifier: 'com.kurtgrung.standby',
     appleTeamId: '85FP2SN2JN',
     deploymentTarget: '17.0',
     infoPlist: {
@@ -30,7 +30,7 @@ const config: ExpoConfig = {
     [
       'expo-widgets',
       {
-        bundleIdentifier: 'Standby.widgets',
+        bundleIdentifier: 'com.kurtgrung.standby.widgets',
         groupIdentifier: 'group.com.kurtgrung.standby',
         widgets: [
           {

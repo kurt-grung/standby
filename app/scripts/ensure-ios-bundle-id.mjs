@@ -8,27 +8,12 @@ const profilesDir = path.join(
   'Library/Developer/Xcode/UserData/Provisioning Profiles',
 );
 
-const appBundleId = 'Standby';
-const widgetBundleId = 'Standby.widgets';
+const preferredAppBundleId = 'Standby';
+const preferredWidgetBundleId = 'Standby.widgets';
+const fallbackAppBundleId = 'com.kurtgrung.standby';
+const fallbackWidgetBundleId = 'com.kurtgrung.standby.widgets';
 const appGroup = 'group.com.kurtgrung.standby';
 const developmentTeam = '85FP2SN2JN';
-
-const appEntitlements = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-  <dict>
-    <key>com.apple.security.application-groups</key>
-    <array>
-      <string>${appGroup}</string>
-    </array>
-  </dict>
-</plist>
-`;
-
-function syncEntitlements() {
-  fs.writeFileSync(path.join(root, 'ios/Standby/Standby.entitlements'), appEntitlements);
-  fs.writeFileSync(path.join(root, 'ios/ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements'), appEntitlements);
-}
 
 function removeStaleStandbyProfiles() {
   if (!fs.existsSync(profilesDir)) {
@@ -70,50 +55,7 @@ function syncTeamId() {
   }
 }
 
-function syncBundleIds() {
-  if (!fs.existsSync(pbxprojPath)) {
-    return;
-  }
-
-  let source = fs.readFileSync(pbxprojPath, 'utf8');
-  const mainAppIds = new Set(['Standby', 'standby.app', 'com.kurtgrung.standby', 'com.standby.app']);
-  const lines = source.split('\n');
-  let changed = false;
-
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    if (!line.includes('PRODUCT_BUNDLE_IDENTIFIER =')) {
-      continue;
-    }
-
-    const match = line.match(/PRODUCT_BUNDLE_IDENTIFIER = (.+);$/);
-    if (!match) {
-      continue;
-    }
-
-    const current = match[1].trim();
-    if (current === widgetBundleId) {
-      continue;
-    }
-
-    if (current !== appBundleId && mainAppIds.has(current)) {
-      lines[i] = line.replace(current, appBundleId);
-      changed = true;
-      continue;
-    }
-
-    if (current === 'com.kurtgrung.standby.widgets') {
-      lines[i] = line.replace(current, widgetBundleId);
-      changed = true;
-    }
-  }
-
-  if (changed) {
-    fs.writeFileSync(pbxprojPath, lines.join('\n'));
-  }
-}
-
-function profileSupportsAppGroup() {
+function profileSupportsAppGroup(appBundleId, widgetBundleId) {
   if (!fs.existsSync(profilesDir)) {
     return false;
   }
@@ -143,19 +85,96 @@ function profileSupportsAppGroup() {
   return hasMainProfile && hasWidgetProfile;
 }
 
+function resolveBundleIds() {
+  if (profileSupportsAppGroup(preferredAppBundleId, preferredWidgetBundleId)) {
+    return {
+      appBundleId: preferredAppBundleId,
+      widgetBundleId: preferredWidgetBundleId,
+      source: preferredAppBundleId,
+    };
+  }
+
+  if (profileSupportsAppGroup(fallbackAppBundleId, fallbackWidgetBundleId)) {
+    return {
+      appBundleId: fallbackAppBundleId,
+      widgetBundleId: fallbackWidgetBundleId,
+      source: fallbackAppBundleId,
+    };
+  }
+
+  return {
+    appBundleId: preferredAppBundleId,
+    widgetBundleId: preferredWidgetBundleId,
+    source: null,
+  };
+}
+
+function syncBundleIds(appBundleId, widgetBundleId) {
+  if (!fs.existsSync(pbxprojPath)) {
+    return;
+  }
+
+  const mainAppIds = new Set([
+    preferredAppBundleId,
+    fallbackAppBundleId,
+    'standby.app',
+    'com.standby.app',
+  ]);
+  const widgetAppIds = new Set([preferredWidgetBundleId, fallbackWidgetBundleId]);
+  const lines = fs.readFileSync(pbxprojPath, 'utf8').split('\n');
+  let changed = false;
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    if (!line.includes('PRODUCT_BUNDLE_IDENTIFIER =')) {
+      continue;
+    }
+
+    const match = line.match(/PRODUCT_BUNDLE_IDENTIFIER = (.+);$/);
+    if (!match) {
+      continue;
+    }
+
+    const current = match[1].trim();
+    if (widgetAppIds.has(current) && current !== widgetBundleId) {
+      lines[i] = line.replace(current, widgetBundleId);
+      changed = true;
+      continue;
+    }
+
+    if (mainAppIds.has(current) && current !== appBundleId) {
+      lines[i] = line.replace(current, appBundleId);
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    fs.writeFileSync(pbxprojPath, lines.join('\n'));
+  }
+}
+
+const { appBundleId, widgetBundleId, source } = resolveBundleIds();
+
 removeStaleStandbyProfiles();
 syncTeamId();
-syncBundleIds();
+syncBundleIds(appBundleId, widgetBundleId);
 
-syncEntitlements();
-
-if (!profileSupportsAppGroup()) {
+if (!source) {
   process.stderr.write(
     [
       'Widgets need App Groups in Apple Developer and matching provisioning profiles.',
-      `Main: ${appBundleId} + App Group ${appGroup}`,
-      `Widget: ${widgetBundleId} + same App Group`,
-      'Then rebuild (Xcode will refresh profiles): make device',
+      `Preferred: ${preferredAppBundleId} + ${preferredWidgetBundleId}`,
+      `Fallback: ${fallbackAppBundleId} + ${fallbackWidgetBundleId}`,
+      `App Group: ${appGroup}`,
+      'Then rebuild: make device',
+      '',
+    ].join('\n'),
+  );
+} else if (source === fallbackAppBundleId) {
+  process.stderr.write(
+    [
+      `Using ${fallbackAppBundleId} (profiles with App Groups are installed).`,
+      `Enable App Groups on ${preferredAppBundleId} in Apple Developer to switch back.`,
       '',
     ].join('\n'),
   );

@@ -12,15 +12,24 @@ import {
 } from '@expo/ui/swift-ui/modifiers';
 import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 
-import { dayProgress, ultraColors } from '../theme/ultra';
-
 type UltraClockWidgetProps = Record<string, never>;
 
 const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvironment) => {
   'widget';
+  const background = '#000000';
+  const primary = '#FFFFFF';
+  const secondary = '#8E8E93';
+  const accent = '#FF9F0A';
+  const date = environment.date;
+  const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
+  const hour12 = date.getHours() % 12 || 12;
+  const minute = date.getMinutes();
+  const minuteLabel = minute < 10 ? `0${minute}` : `${minute}`;
+  const timeLabel = `${hour12}:${minuteLabel}`;
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const dateLabel = `${monthNames[date.getMonth()]} ${date.getDate()}`;
   const isSmall = environment.widgetFamily === 'systemSmall';
   const isLarge = environment.widgetFamily === 'systemLarge';
-  const progress = dayProgress(environment.date);
   const timeSize = isSmall ? 40 : isLarge ? 88 : 72;
   const dateSize = isSmall ? 10 : 14;
   const ringSize = isSmall ? 32 : isLarge ? 56 : 44;
@@ -29,7 +38,7 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
     return (
       <ZStack
         modifiers={[
-          containerBackground(ultraColors.background, 'widget'),
+          containerBackground(background, 'widget'),
           clipShape('containerRelativeShape'),
         ]}>
         <VStack
@@ -43,19 +52,18 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             value={progress}
             modifiers={[
               gaugeStyle('circularCapacity'),
-              tint(ultraColors.accent),
+              tint(accent),
               frame({ width: ringSize, height: ringSize }),
             ]}
           />
           <Text
-            date={environment.date}
-            dateStyle="time"
             modifiers={[
-              font({ design: 'rounded', weight: 'ultraLight', size: timeSize }),
+              font({ design: 'rounded', weight: 'light', size: timeSize }),
               monospacedDigit(),
-              foregroundStyle(ultraColors.primary),
-            ]}
-          />
+              foregroundStyle(primary),
+            ]}>
+            {timeLabel}
+          </Text>
         </VStack>
       </ZStack>
     );
@@ -64,7 +72,7 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
   return (
     <ZStack
       modifiers={[
-        containerBackground(ultraColors.background, 'widget'),
+        containerBackground(background, 'widget'),
         clipShape('containerRelativeShape'),
       ]}>
       <VStack
@@ -76,19 +84,18 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
         ]}>
         <HStack spacing={12} modifiers={[frame({ maxWidth: Infinity })]}>
           <Text
-            date={environment.date}
-            dateStyle="date"
             modifiers={[
               font({ design: 'rounded', weight: 'semibold', size: dateSize }),
-              foregroundStyle(ultraColors.secondary),
-            ]}
-          />
+              foregroundStyle(secondary),
+            ]}>
+            {dateLabel}
+          </Text>
           <Spacer />
           <Gauge
             value={progress}
             modifiers={[
               gaugeStyle('circularCapacity'),
-              tint(ultraColors.accent),
+              tint(accent),
               frame({ width: ringSize, height: ringSize }),
             ]}
           />
@@ -97,20 +104,19 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
         <Spacer />
 
         <Text
-          date={environment.date}
-          dateStyle="time"
           modifiers={[
-            font({ design: 'rounded', weight: 'ultraLight', size: timeSize }),
+            font({ design: 'rounded', weight: 'light', size: timeSize }),
             monospacedDigit(),
-            foregroundStyle(ultraColors.primary),
-          ]}
-        />
+            foregroundStyle(primary),
+          ]}>
+          {timeLabel}
+        </Text>
 
         {!isSmall && (
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 12 }),
-              foregroundStyle(ultraColors.accent),
+              foregroundStyle(accent),
             ]}>
             STANDBY
           </Text>

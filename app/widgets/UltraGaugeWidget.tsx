@@ -13,8 +13,6 @@ import {
 import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 import type { SFSymbol } from 'sf-symbols-typescript';
 
-import { ultraColors } from '../theme/ultra';
-
 export type UltraGaugeWidgetProps = {
   label: string;
   value: number;
@@ -24,6 +22,11 @@ export type UltraGaugeWidgetProps = {
 
 const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvironment) => {
   'widget';
+  const background = '#000000';
+  const primary = '#FFFFFF';
+  const secondary = '#8E8E93';
+  const accent = '#FF9F0A';
+  const accentGreen = '#30D158';
   const isSmall = environment.widgetFamily === 'systemSmall';
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
@@ -34,7 +37,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
     return (
       <ZStack
         modifiers={[
-          containerBackground(ultraColors.background, 'widget'),
+          containerBackground(background, 'widget'),
           clipShape('containerRelativeShape'),
         ]}>
         <VStack
@@ -49,7 +52,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               value={clamped}
               modifiers={[
                 gaugeStyle('circularCapacity'),
-                tint(ultraColors.accent),
+                tint(accent),
                 frame({ width: gaugeSize, height: gaugeSize }),
               ]}
             />
@@ -57,7 +60,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               modifiers={[
                 font({ design: 'rounded', weight: 'light', size: valueSize }),
                 monospacedDigit(),
-                foregroundStyle(ultraColors.primary),
+                foregroundStyle(primary),
               ]}>
               {percent}
             </Text>
@@ -65,7 +68,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 10 }),
-              foregroundStyle(ultraColors.secondary),
+              foregroundStyle(secondary),
             ]}>
             {props.label}
           </Text>
@@ -77,7 +80,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   return (
     <ZStack
       modifiers={[
-        containerBackground(ultraColors.background, 'widget'),
+        containerBackground(background, 'widget'),
         clipShape('containerRelativeShape'),
       ]}>
       <VStack
@@ -88,11 +91,11 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           frame({ maxWidth: Infinity, maxHeight: Infinity }),
         ]}>
         <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
-          <Image systemName={props.icon} size={14} color={ultraColors.accent} />
+          <Image systemName={props.icon} size={14} color={accent} />
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 12 }),
-              foregroundStyle(ultraColors.secondary),
+              foregroundStyle(secondary),
             ]}>
             {props.label}
           </Text>
@@ -100,7 +103,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
-              foregroundStyle(ultraColors.accentGreen),
+              foregroundStyle(accentGreen),
             ]}>
             {percent}
             {props.unit}
@@ -114,7 +117,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
             value={clamped}
             modifiers={[
               gaugeStyle('circularCapacity'),
-              tint(ultraColors.accent),
+              tint(accent),
               frame({ width: gaugeSize, height: gaugeSize }),
             ]}
           />
@@ -122,7 +125,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
             modifiers={[
               font({ design: 'rounded', weight: 'light', size: valueSize }),
               monospacedDigit(),
-              foregroundStyle(ultraColors.primary),
+              foregroundStyle(primary),
             ]}>
             {percent}
           </Text>
@@ -132,7 +135,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'medium', size: 13 }),
-              foregroundStyle(ultraColors.secondary),
+              foregroundStyle(secondary),
             ]}>
             Ultra Night
           </Text>
