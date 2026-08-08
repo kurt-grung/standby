@@ -6,6 +6,7 @@ import { ActivityRings } from './ActivityRings';
 import { BatteryComplication, DateComplication, SunsetComplication } from './Complications';
 import { DayProgressStrip } from './DayProgressStrip';
 import { nightMode } from './nightColors';
+import { panelLayout, panelRingSize, panelTimeSize } from './panelLayout';
 import { SecondsBezel } from './SecondsBezel';
 
 type ModularUltraFaceProps = {
@@ -41,8 +42,8 @@ export function ModularUltraFace({
 }: ModularUltraFaceProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const timeLabel = formatTime(now);
-  const ringSize = size.width > 360 ? 56 : 48;
-  const timeSize = size.width > 360 ? 44 : 36;
+  const ringSize = panelRingSize(size.height);
+  const timeSize = panelTimeSize(size.height, size.width);
   const dateLabel = `${WEEKDAYS[now.getDay()]} ${MONTHS[now.getMonth()]} ${now.getDate()}`;
 
   const onLayout = (event: LayoutChangeEvent) => {
@@ -67,7 +68,12 @@ export function ModularUltraFace({
         cornerRadius={32}
       />
 
-      <View className="flex-1 justify-between px-7 py-6">
+      <View
+        className="flex-1"
+        style={{
+          paddingHorizontal: panelLayout.padX,
+          paddingVertical: panelLayout.padY,
+        }}>
         <View className="flex-row items-start justify-between">
           <TempComplication
             size={ringSize}
@@ -79,14 +85,19 @@ export function ModularUltraFace({
           <BatteryComplication size={ringSize} percent={batteryPercent} />
         </View>
 
-        <View className="items-center">
+        <View
+          className="min-h-0 flex-1 items-center justify-center"
+          style={{
+            marginTop: panelLayout.sectionGap,
+            marginBottom: panelLayout.sectionGap,
+          }}>
           <Text
             style={{
               color: nightMode.secondary,
               fontSize: 11,
               fontWeight: '800',
               letterSpacing: 2,
-              marginBottom: 2,
+              marginBottom: 4,
             }}>
             CLOCK
           </Text>
@@ -106,7 +117,7 @@ export function ModularUltraFace({
           </Text>
           <Text
             style={{
-              marginTop: 2,
+              marginTop: 4,
               color: nightMode.secondary,
               fontSize: 12,
               fontWeight: '800',
@@ -116,7 +127,9 @@ export function ModularUltraFace({
           </Text>
         </View>
 
-        <DayProgressStrip now={now} batteryPercent={batteryPercent} />
+        <View style={{ marginBottom: panelLayout.sectionGap }}>
+          <DayProgressStrip now={now} batteryPercent={batteryPercent} />
+        </View>
 
         <View className="flex-row items-start justify-between">
           <ActivityRings size={ringSize} />

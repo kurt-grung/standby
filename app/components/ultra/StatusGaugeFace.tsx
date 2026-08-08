@@ -5,6 +5,7 @@ import { ArcGauge, TempComplication, UvComplication } from './ArcGauge';
 import { ActivityRings } from './ActivityRings';
 import { BatteryComplication, NoiseComplication, SunsetComplication } from './Complications';
 import { nightMode } from './nightColors';
+import { panelHeroSize, panelLayout, panelRingSize } from './panelLayout';
 import { dayProgress } from '../../theme/ultra';
 
 type StatusGaugeFaceProps = {
@@ -30,7 +31,7 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
   const percent = Math.round(Math.min(1, Math.max(0, progress)) * 100);
 
   return (
-    <View style={{ marginBottom: last ? 0 : 8 }}>
+    <View style={{ marginBottom: last ? 0 : panelLayout.metricGap }}>
       <View className="mb-1 flex-row items-end justify-between">
         <Text
           style={{
@@ -78,15 +79,8 @@ export function StatusGaugeFace({
   const progress = dayProgress(now);
   const dayPercent = Math.round(progress * 100);
   const focus = focusPercent ?? Math.max(0.2, 1 - progress);
-
-  const ringSize =
-    size.height > 0
-      ? Math.min(50, Math.max(38, size.height * 0.125))
-      : 44;
-  const heroSize =
-    size.height > 0
-      ? Math.min(124, Math.max(88, size.height * 0.3))
-      : 108;
+  const ringSize = panelRingSize(size.height);
+  const heroSize = panelHeroSize(size.height);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -102,7 +96,12 @@ export function StatusGaugeFace({
         borderColor: nightMode.border,
       }}
       onLayout={onLayout}>
-      <View className="flex-1 px-6 py-4">
+      <View
+        className="flex-1"
+        style={{
+          paddingHorizontal: panelLayout.padX,
+          paddingVertical: panelLayout.padY,
+        }}>
         <View className="flex-row items-start justify-between">
           <TempComplication
             size={ringSize}
@@ -114,14 +113,19 @@ export function StatusGaugeFace({
           <BatteryComplication size={ringSize} percent={batteryPercent} />
         </View>
 
-        <View className="min-h-0 flex-1 items-center justify-center">
+        <View
+          className="min-h-0 flex-1 items-center justify-center"
+          style={{
+            marginTop: panelLayout.sectionGap,
+            marginBottom: panelLayout.sectionGap,
+          }}>
           <Text
             style={{
               color: nightMode.secondary,
               fontSize: 11,
               fontWeight: '800',
               letterSpacing: 2,
-              marginBottom: 4,
+              marginBottom: 6,
             }}>
             STATUS
           </Text>
@@ -151,7 +155,7 @@ export function StatusGaugeFace({
           </ArcGauge>
         </View>
 
-        <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: panelLayout.sectionGap }}>
           <MetricRow
             label="FOCUS"
             value={`${Math.round(focus * 100)}%`}
