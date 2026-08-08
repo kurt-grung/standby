@@ -15,7 +15,7 @@
     "eas:build:preview": "eas build --profile preview --platform ios",
     "eas:build:production": "eas build --profile production --platform ios",
     "eas:submit": "eas submit --profile production --platform ios",
-    "postinstall": "patch-package"
+    "postinstall": "node scripts/patch-expo-modules-jsi.mjs"
   },
   "dependencies": {
     "@expo/ui": "~57.0.2",
@@ -23,6 +23,7 @@
     "expo-asset": "~57.0.2",
     "expo-dev-client": "~57.0.10",
     "expo-file-system": "~57.0.0",
+    "expo-status-bar": "~57.0.1",
     "expo-widgets": "~57.0.1",
     "nativewind": "^4.2.6",
     "react": "19.2.3",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "@types/react": "~19.2.14",
     "babel-preset-expo": "^57.0.6",
-    "patch-package": "^8.0.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^3.4.19",
     "typescript": "~6.0.3"

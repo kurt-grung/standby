@@ -8,6 +8,19 @@ export const ultraColors = {
   ringTrack: '#2C2C2E',
 } as const;
 
+export const nightColors = {
+  background: '#000000',
+  surface: '#111111',
+  card: '#161616',
+  border: '#2A2A2C',
+  primary: '#F5F5F7',
+  secondary: '#8E8E93',
+  muted: '#636366',
+  accent: '#FF453A',
+  orange: '#FF9F0A',
+  track: '#1F1F1F',
+} as const;
+
 export function dayProgress(date: Date): number {
   const seconds =
     date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
@@ -28,4 +41,11 @@ export function buildMinuteTimeline<T>(
   }
 
   return entries;
+}
+
+export function formatNightTime(date: Date): string {
+  return date.toLocaleTimeString(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
 }
