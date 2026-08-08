@@ -5,10 +5,15 @@ const config: ExpoConfig = {
   slug: 'standby',
   owner: 'kurtgrung',
   version: '1.0.0',
-  orientation: 'landscape',
+  orientation: 'portrait',
   scheme: 'standby',
   userInterfaceStyle: 'dark',
   icon: './assets/icon.png',
+  splash: {
+    image: './assets/splash.png',
+    resizeMode: 'contain',
+    backgroundColor: '#000000',
+  },
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.kurtgrung.standby',
@@ -41,7 +46,7 @@ const config: ExpoConfig = {
     [
       'expo-screen-orientation',
       {
-        initialOrientation: 'LANDSCAPE',
+        initialOrientation: 'PORTRAIT_UP',
       },
     ],
     [

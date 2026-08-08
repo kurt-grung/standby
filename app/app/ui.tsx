@@ -25,6 +25,239 @@ const brandPrinciples = [
   'StandBy-first: glanceable, night-safe, Ultra-inspired',
 ] as const;
 
+const iconVariants = [
+  { label: 'Night', source: require('../designs/icons/icon-night.png') },
+  { label: 'Ultra', source: require('../designs/icons/icon-ultra.png') },
+  { label: 'Graphite', source: require('../designs/icons/icon-graphite.png') },
+  { label: 'Mono', source: require('../assets/adaptive-icon.png') },
+] as const;
+
+const marketingPalette = [
+  { name: 'Stone', value: '#F2F2F0' },
+  { name: 'Graphite', value: '#1D1D1D' },
+  { name: 'Concrete', value: '#8E8E8E' },
+  { name: 'Signal', value: '#FF5A1F' },
+] as const;
+
+const appPalette = [
+  { name: 'Black', value: '#000000' },
+  { name: 'White', value: '#FFFFFF' },
+  { name: 'Night', value: '#FF453A' },
+  { name: 'Ultra', value: '#FF9F0A' },
+] as const;
+
+const boardGenerations = [
+  {
+    label: 'v26 — hero N Japanese minimal',
+    source: require('../designs/generations/hero-boards/brand-board-v26-hero-n-japanese-minimal.png'),
+  },
+  {
+    label: 'v25 — hero L side rim light',
+    source: require('../designs/generations/hero-boards/brand-board-v25-hero-l-side-rim-light.png'),
+  },
+  {
+    label: 'v24 — hero M tech noir',
+    source: require('../designs/generations/hero-boards/brand-board-v24-hero-m-tech-noir.png'),
+  },
+  {
+    label: 'v23 — hero K red glow',
+    source: require('../designs/generations/hero-boards/brand-board-v23-hero-k-red-glow.png'),
+  },
+  {
+    label: 'v22 — hero A medium concrete',
+    source: require('../designs/generations/hero-boards/brand-board-v22-hero-a-medium-concrete.png'),
+  },
+  {
+    label: 'v21 — clean hi-res',
+    source: require('../designs/generations/brand-board-dark-v21-clean-hires.png'),
+  },
+  {
+    label: 'v20 — medium concrete',
+    source: require('../designs/generations/brand-board-dark-v20-medium-concrete.png'),
+  },
+  {
+    label: 'v19 — header alignment',
+    source: require('../designs/generations/brand-board-dark-v19-header-alignment.png'),
+  },
+  {
+    label: 'v18 — no essence header',
+    source: require('../designs/generations/brand-board-dark-v18-no-essence-header.png'),
+  },
+  {
+    label: 'v17 — thin concrete',
+    source: require('../designs/generations/brand-board-dark-v17-thin-concrete.png'),
+  },
+  {
+    label: 'v16 — light wordmark',
+    source: require('../designs/generations/brand-board-dark-v16-light-wordmark.png'),
+  },
+  {
+    label: 'v15 — monochrome toggles',
+    source: require('../designs/generations/brand-board-dark-v15-monochrome-toggles.png'),
+  },
+  {
+    label: 'v14 — concrete dock',
+    source: require('../designs/generations/brand-board-dark-v14-concrete-dock.png'),
+  },
+  {
+    label: 'v13 — Complications spacing',
+    source: require('../designs/generations/brand-board-dark-v13-complications-spacing.png'),
+  },
+  {
+    label: 'v12 — no preview labels',
+    source: require('../designs/generations/brand-board-dark-v12-no-preview-labels.png'),
+  },
+  {
+    label: 'v11 — complications label',
+    source: require('../designs/generations/brand-board-dark-v11-complications-label.png'),
+  },
+  {
+    label: 'v10 — v07 layout · StandBy, refined.',
+    source: require('../designs/generations/brand-board-dark-v10-v07-layout-refined.png'),
+  },
+  {
+    label: 'v09 — StandBy, refined.',
+    source: require('../designs/generations/brand-board-dark-v09-standby-refined.png'),
+  },
+  {
+    label: 'v08 — standby.run · complications',
+    source: require('../designs/generations/brand-board-dark-v08-standby-run-complications.png'),
+  },
+  {
+    label: 'v07 — two panel tight',
+    source: require('../designs/generations/brand-board-dark-v07-two-panel-tight.png'),
+  },
+  {
+    label: 'v01 light — stone palette',
+    source: require('../designs/generations/brand-board-light-v01-stone-palette.png'),
+  },
+] as const;
+
+const phoneRefGenerations = [
+  {
+    label: 'A — medium concrete',
+    source: require('../designs/generations/phone-refs/phone-ref-a-medium-concrete.png'),
+  },
+  {
+    label: 'B — pure black float',
+    source: require('../designs/generations/phone-refs/phone-ref-b-pure-black.png'),
+  },
+  {
+    label: 'C — nightstand cable',
+    source: require('../designs/generations/phone-refs/phone-ref-c-nightstand-cable.png'),
+  },
+  {
+    label: 'D — thick concrete',
+    source: require('../designs/generations/phone-refs/phone-ref-d-thick-concrete.png'),
+  },
+  {
+    label: 'E — angled',
+    source: require('../designs/generations/phone-refs/phone-ref-e-angled.png'),
+  },
+  {
+    label: 'F — screen crop',
+    source: require('../designs/generations/phone-refs/phone-ref-f-screen-crop.png'),
+  },
+  {
+    label: 'G — dark bedroom',
+    source: require('../designs/generations/phone-refs/phone-ref-g-dark-bedroom.png'),
+  },
+  {
+    label: 'H — top down',
+    source: require('../designs/generations/phone-refs/phone-ref-h-top-down.png'),
+  },
+  {
+    label: 'I — side profile',
+    source: require('../designs/generations/phone-refs/phone-ref-i-side-profile.png'),
+  },
+  {
+    label: 'J — MagSafe',
+    source: require('../designs/generations/phone-refs/phone-ref-j-magsafe.png'),
+  },
+  {
+    label: 'K — red glow',
+    source: require('../designs/generations/phone-refs/phone-ref-k-red-glow.png'),
+  },
+  {
+    label: 'L — side rim light',
+    source: require('../designs/generations/phone-refs/phone-ref-l-side-rim-light.png'),
+  },
+  {
+    label: 'M — tech noir',
+    source: require('../designs/generations/phone-refs/phone-ref-m-tech-noir.png'),
+  },
+  {
+    label: 'N — Japanese minimal',
+    source: require('../designs/generations/phone-refs/phone-ref-n-japanese-minimal.png'),
+  },
+  {
+    label: 'O — brutalist',
+    source: require('../designs/generations/phone-refs/phone-ref-o-brutalist.png'),
+  },
+  {
+    label: 'P — Tokyo bokeh',
+    source: require('../designs/generations/phone-refs/phone-ref-p-tokyo-bokeh.png'),
+  },
+  {
+    label: 'Q — backlit glow',
+    source: require('../designs/generations/phone-refs/phone-ref-q-backlit-glow.png'),
+  },
+  {
+    label: 'R — concrete alcove',
+    source: require('../designs/generations/phone-refs/phone-ref-r-concrete-alcove.png'),
+  },
+  {
+    label: 'S — ceramic tray',
+    source: require('../designs/generations/phone-refs/phone-ref-s-ceramic-tray.png'),
+  },
+] as const;
+
+const heroBoardGenerations = [
+  {
+    label: 'v22 — hero A medium concrete',
+    source: require('../designs/generations/hero-boards/brand-board-v22-hero-a-medium-concrete.png'),
+  },
+  {
+    label: 'v23 — hero K red glow',
+    source: require('../designs/generations/hero-boards/brand-board-v23-hero-k-red-glow.png'),
+  },
+  {
+    label: 'v24 — hero M tech noir',
+    source: require('../designs/generations/hero-boards/brand-board-v24-hero-m-tech-noir.png'),
+  },
+  {
+    label: 'v25 — hero L side rim light',
+    source: require('../designs/generations/hero-boards/brand-board-v25-hero-l-side-rim-light.png'),
+  },
+  {
+    label: 'v26 — hero N Japanese minimal',
+    source: require('../designs/generations/hero-boards/brand-board-v26-hero-n-japanese-minimal.png'),
+  },
+] as const;
+
+const advertGenerations = [
+  {
+    label: 'A — medium concrete',
+    source: require('../designs/generations/adverts/advert-a-medium-concrete.png'),
+  },
+  {
+    label: 'K — red glow',
+    source: require('../designs/generations/adverts/advert-k-red-glow.png'),
+  },
+  {
+    label: 'M — tech noir',
+    source: require('../designs/generations/adverts/advert-m-tech-noir.png'),
+  },
+  {
+    label: 'L — side rim light',
+    source: require('../designs/generations/adverts/advert-l-side-rim-light.png'),
+  },
+  {
+    label: 'N — Japanese minimal',
+    source: require('../designs/generations/adverts/advert-n-japanese-minimal.png'),
+  },
+] as const;
+
 export default function UiScreen() {
   const { theme, themeId, setThemeId } = useTheme();
 
@@ -96,28 +329,19 @@ export default function UiScreen() {
               Minimal ring, red night dot, landscape shelf. Dieter Rams clarity with Apple flat precision.
             </Text>
           </View>
-          <View className="mt-5 flex-row justify-center">
-            <View
-              className="mx-1 h-14 w-14 items-center justify-center rounded-2xl border"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}>
-              <View
-                className="h-8 w-8 rounded-full border-2"
-                style={{ borderColor: theme.colors.primary }}
-              />
-            </View>
-            <View
-              className="mx-1 h-14 w-14 items-center justify-center rounded-2xl border"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}>
-              <View
-                className="h-8 w-8 rounded-full border-2"
-                style={{ borderColor: theme.colors.accent }}
-              />
-            </View>
-            <View
-              className="mx-1 h-14 w-14 items-center justify-center rounded-2xl border"
-              style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.bg }}>
-              <View className="h-0.5 w-6 rounded-full" style={{ backgroundColor: theme.colors.primary }} />
-            </View>
+          <View className="mt-5 flex-row flex-wrap justify-center">
+            {iconVariants.map((item) => (
+              <View key={item.label} className="mx-1 mb-2 items-center">
+                <Image
+                  source={item.source}
+                  className="h-14 w-14 rounded-2xl"
+                  resizeMode="cover"
+                />
+                <Text className="mt-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                  {item.label}
+                </Text>
+              </View>
+            ))}
           </View>
         </SectionCard>
 
@@ -141,12 +365,162 @@ export default function UiScreen() {
           </View>
         </SectionCard>
 
-        <SectionCard label="Branding" title="StandBy+ identity">
-          <Text className="mt-2 text-5xl font-extralight tracking-tight" style={{ color: theme.colors.primary }}>
-            StandBy+
+        <SectionCard label="Review" title="Dark app · Light marketing">
+          <View className="mt-4 flex-row">
+            <View className="mr-3 flex-1">
+              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+                Dark — App
+              </Text>
+              <View
+                className="items-center rounded-2xl border p-4"
+                style={{ borderColor: theme.colors.border, backgroundColor: '#000000' }}>
+                <Image
+                  source={require('../assets/icon.png')}
+                  className="h-20 w-20 rounded-[18px]"
+                  resizeMode="cover"
+                />
+                <Image
+                  source={require('../assets/branding/wordmark.png')}
+                  className="mt-3 h-10 w-full"
+                  resizeMode="contain"
+                />
+              </View>
+              <View className="mt-3 flex-row flex-wrap">
+                {appPalette.map((swatch) => (
+                  <View key={swatch.name} className="mb-2 mr-2 flex-row items-center">
+                    <View
+                      className="mr-1.5 h-5 w-5 rounded-md border"
+                      style={{ backgroundColor: swatch.value, borderColor: theme.colors.border }}
+                    />
+                    <Text className="text-[10px]" style={{ color: theme.colors.muted }}>
+                      {swatch.name}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+            <View className="flex-1">
+              <Text className="mb-2 text-[11px] font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+                Light — Marketing
+              </Text>
+              <View
+                className="items-center rounded-2xl border p-4"
+                style={{ borderColor: theme.colors.border, backgroundColor: '#F2F2F0' }}>
+                <Image
+                  source={require('../designs/icons/icon-light.png')}
+                  className="h-20 w-20 rounded-[18px]"
+                  resizeMode="cover"
+                />
+                <Image
+                  source={require('../designs/wordmarks/wordmark-light.png')}
+                  className="mt-3 h-10 w-full"
+                  resizeMode="contain"
+                />
+              </View>
+              <View className="mt-3 flex-row flex-wrap">
+                {marketingPalette.map((swatch) => (
+                  <View key={swatch.name} className="mb-2 mr-2 flex-row items-center">
+                    <View
+                      className="mr-1.5 h-5 w-5 rounded-md border"
+                      style={{ backgroundColor: swatch.value, borderColor: theme.colors.border }}
+                    />
+                    <Text className="text-[10px]" style={{ color: theme.colors.muted }}>
+                      {swatch.name}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
+          <Text className="mt-4 text-sm leading-5" style={{ color: theme.colors.secondary }}>
+            Same ring · dot · shelf mark. Night red on device; Stone palette for App Store and web.
           </Text>
+        </SectionCard>
+
+        <SectionCard label="Boards" title="Brand sheets">
+          <Text className="mt-1 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Dark — merged
+          </Text>
+          <Image
+            source={require('../assets/branding/brand-board-dark.png')}
+            className="mt-2 h-44 w-full rounded-2xl"
+            resizeMode="cover"
+          />
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Light — marketing
+          </Text>
+          <Image
+            source={require('../designs/boards/brand-board-light.png')}
+            className="mt-2 h-44 w-full rounded-2xl"
+            resizeMode="cover"
+          />
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            ChatGPT reference
+          </Text>
+          <Image
+            source={require('../designs/boards/chatgpt-reference.png')}
+            className="mt-2 h-44 w-full rounded-2xl"
+            resizeMode="cover"
+          />
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Adverts — full bleed
+          </Text>
+          {advertGenerations.map((item) => (
+            <View key={item.label} className="mt-2">
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </Text>
+              <Image source={item.source} className="h-44 w-full rounded-2xl" resizeMode="cover" />
+            </View>
+          ))}
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Hero boards — v21 layout + scenes
+          </Text>
+          {heroBoardGenerations.map((item) => (
+            <View key={item.label} className="mt-2">
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </Text>
+              <Image source={item.source} className="h-44 w-full rounded-2xl" resizeMode="cover" />
+            </View>
+          ))}
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Phone ref scenes
+          </Text>
+          {phoneRefGenerations.map((item) => (
+            <View key={item.label} className="mt-2">
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </Text>
+              <Image source={item.source} className="h-36 w-full rounded-2xl" resizeMode="cover" />
+            </View>
+          ))}
+          <Text className="mt-4 text-xs font-semibold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Generations archive
+          </Text>
+          {boardGenerations.map((item) => (
+            <View key={item.label} className="mt-2">
+              <Text className="mb-1 text-[10px] font-semibold uppercase" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </Text>
+              <Image source={item.source} className="h-36 w-full rounded-2xl" resizeMode="cover" />
+            </View>
+          ))}
+        </SectionCard>
+
+        <SectionCard label="Branding" title="StandBy+ identity">
+          <Image
+            source={require('../assets/branding/wordmark.png')}
+            className="mt-2 h-16 w-full"
+            resizeMode="contain"
+          />
+          <Image
+            source={require('../assets/splash.png')}
+            className="mt-5 h-32 w-full rounded-2xl"
+            resizeMode="contain"
+          />
           <Text className="mt-2 text-base" style={{ color: theme.colors.secondary }}>
-            Ultra Night widgets for iPhone StandBy
+            StandBy, refined. Widgets for iPhone StandBy at a glance.
           </Text>
           <View className="mt-5 flex-row flex-wrap">
             {Object.entries(theme.colors).map(([key, value]) => (

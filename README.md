@@ -44,6 +44,13 @@ make run
 make kill   # stop dev servers
 ```
 
+Regenerate the native iOS project (after `app.config.ts` or widget changes):
+
+```bash
+make prebuild   # expo prebuild --platform ios + widget patch + pod install
+make rebuild    # clean caches, reinstall, prebuild (full reset)
+```
+
 ## Expo project
 
 - Account: [kurtgrung](https://expo.dev/accounts/kurtgrung)
