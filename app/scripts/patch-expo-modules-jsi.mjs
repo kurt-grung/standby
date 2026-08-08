@@ -9,12 +9,18 @@ if (!fs.existsSync(target)) {
   process.exit(0);
 }
 
-const source = fs.readFileSync(target, 'utf8');
-const patched = source.replace(
-  'abs(milliseconds) <= maxJavaScriptDateMilliseconds',
-  'Swift.abs(milliseconds) <= maxJavaScriptDateMilliseconds',
-);
+const needle = 'abs(milliseconds) <= maxJavaScriptDateMilliseconds';
+const replacement = 'Swift.abs(milliseconds) <= maxJavaScriptDateMilliseconds';
 
-if (patched !== source) {
-  fs.writeFileSync(target, patched);
+let source = fs.readFileSync(target, 'utf8');
+source = source.replace(/Swift\.(Swift\.)*abs\(milliseconds\)/g, 'abs(milliseconds)');
+
+if (source.includes(replacement)) {
+  process.exit(0);
 }
+
+if (!source.includes(needle)) {
+  process.exit(0);
+}
+
+fs.writeFileSync(target, source.replace(needle, replacement));

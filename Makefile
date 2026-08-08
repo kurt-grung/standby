@@ -3,6 +3,7 @@
 APP_DIR := app
 ROOT := $(abspath $(CURDIR))
 EXPO_PORT ?= 8081
+IOS_DEVICE ?= K Phone
 
 define require_app
 	@if [ ! -f "$(ROOT)/$(APP_DIR)/package.json" ]; then \
@@ -11,7 +12,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i run start s ios android web kill clean prebuild rebuild tsc typecheck \
+.PHONY: help install i run start s ios device android web kill clean prebuild rebuild tsc typecheck \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -24,7 +25,7 @@ install: ## Install app dependencies
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm install
 
-i: install ## Shorthand for install
+i: ios ## Shorthand for ios
 
 run: ## Start Expo dev server (Metro)
 	$(call require_app)
@@ -34,7 +35,11 @@ start s: run ## Alias for run
 
 ios: ## Build native app and run on iOS simulator (widgets need this, not Expo Go)
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && npm run ios
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && npm run ios
+
+device: ## Build and run on a connected iPhone (override: make device IOS_DEVICE="My iPhone")
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && npx expo run:ios --device "$(IOS_DEVICE)"
 
 android: ## Build native app and run on Android
 	$(call require_app)

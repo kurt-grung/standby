@@ -25,8 +25,17 @@ StandBy promotes `systemSmall` and `systemMedium` home-screen widgets when your 
 
 ```bash
 make install
-make ios
+make i         # build + run on iOS simulator (same as make ios)
+make device    # build + run on connected iPhone (default: K Phone)
 ```
+
+Override the device name:
+
+```bash
+make device IOS_DEVICE="My iPhone"
+```
+
+Phone must be USB-connected, unlocked, and trusted in Xcode (**Window → Devices and Simulators**).
 
 Or start Metro only:
 
@@ -77,14 +86,13 @@ Open the app to:
 ```
 standby/
 └── app/
-    ├── App.tsx                    # Tailwind/NativeWind control screen
-    ├── app.config.ts              # Expo + widgets + EAS config
-    ├── eas.json                   # EAS build profiles
-    ├── global.css                 # Tailwind entry
-    ├── tailwind.config.js         # Ultra color tokens
-    ├── theme/ultra.ts             # Widget timeline helpers
-    ├── widgets/
-    │   ├── UltraClockWidget.tsx   # StandBy clock widget
-    │   └── UltraGaugeWidget.tsx   # StandBy gauge widget
-    └── babel.config.js            # NativeWind + Reanimated
+    ├── app/
+    │   ├── index.tsx              # Home screen
+    │   └── ui.tsx                 # Design system (/ui)
+    ├── assets/icon.png            # App icon
+    ├── components/                # Shared UI components
+    ├── theme/
+    │   ├── themes.ts              # Night, Ultra, Mono, Graphite
+    │   └── ThemeContext.tsx       # Theme provider
+    └── widgets/                   # StandBy widget UIs
 ```

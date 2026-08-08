@@ -7,6 +7,7 @@ const config: ExpoConfig = {
   orientation: 'portrait',
   scheme: 'standby',
   userInterfaceStyle: 'dark',
+  icon: './assets/icon.png',
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.standby.app',
@@ -21,6 +22,7 @@ const config: ExpoConfig = {
     policy: 'appVersion',
   },
   plugins: [
+    'expo-router',
     'expo-dev-client',
     [
       'expo-widgets',
