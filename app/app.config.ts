@@ -12,6 +12,7 @@ const config: ExpoConfig = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'Standby',
+    deploymentTarget: '17.0',
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },

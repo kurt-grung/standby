@@ -7,8 +7,14 @@ struct UltraGaugeWidget: Widget {
 
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: name, provider: WidgetsTimelineProvider(name: name)) { entry in
-      WidgetsEntryView(entry: entry)
-        .containerBackground(Color.black, for: .widget)
+      Group {
+        if #available(iOS 17.0, *) {
+          WidgetsEntryView(entry: entry)
+            .containerBackground(Color.black, for: .widget)
+        } else {
+          WidgetsEntryView(entry: entry)
+        }
+      }
     }
     .configurationDisplayName("Ultra Gauge")
     .description("Circular Ultra-style gauge for StandBy mode")

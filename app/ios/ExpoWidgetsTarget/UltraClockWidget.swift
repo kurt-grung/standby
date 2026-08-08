@@ -7,8 +7,14 @@ struct UltraClockWidget: Widget {
 
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: name, provider: WidgetsTimelineProvider(name: name)) { entry in
-      WidgetsEntryView(entry: entry)
-        .containerBackground(Color.black, for: .widget)
+      Group {
+        if #available(iOS 17.0, *) {
+          WidgetsEntryView(entry: entry)
+            .containerBackground(Color.black, for: .widget)
+        } else {
+          WidgetsEntryView(entry: entry)
+        }
+      }
     }
     .configurationDisplayName("Ultra Clock")
     .description("Apple Watch Ultra-style night clock for StandBy mode")
