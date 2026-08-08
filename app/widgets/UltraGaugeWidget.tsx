@@ -24,14 +24,21 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   'widget';
   const background = '#000000';
   const primary = '#FF453A';
-  const secondary = '#A8423A';
+  const secondary = '#C23B33';
+  const muted = '#5C221E';
   const accent = '#FF453A';
-  const accentMuted = '#C44E45';
   const isSmall = environment.widgetFamily === 'systemSmall';
+  const isLarge = environment.widgetFamily === 'systemLarge';
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
-  const gaugeSize = isSmall ? 64 : 112;
-  const valueSize = isSmall ? 22 : 40;
+  const date = environment.date;
+  const dayProgress =
+    (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
+  const temp = 68;
+  const uv = 4;
+  const battery = 74;
+  const gaugeSize = isSmall ? 52 : isLarge ? 96 : 78;
+  const valueSize = isSmall ? 20 : isLarge ? 36 : 28;
 
   if (isSmall) {
     return (
@@ -42,11 +49,39 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
         ]}>
         <VStack
           alignment="center"
-          spacing={6}
+          spacing={4}
           modifiers={[
-            padding({ all: 12 }),
+            padding({ all: 10 }),
             frame({ maxWidth: Infinity, maxHeight: Infinity }),
           ]}>
+          <HStack spacing={6} modifiers={[frame({ maxWidth: Infinity })]}>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                monospacedDigit(),
+                foregroundStyle(secondary),
+              ]}>
+              {temp}°
+            </Text>
+            <Spacer />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                monospacedDigit(),
+                foregroundStyle(primary),
+              ]}>
+              {battery}%
+            </Text>
+            <Spacer />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                foregroundStyle(secondary),
+              ]}>
+              UV {uv}
+            </Text>
+          </HStack>
+
           <ZStack>
             <Gauge
               value={clamped}
@@ -58,20 +93,31 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
             />
             <Text
               modifiers={[
-                font({ design: 'rounded', weight: 'light', size: valueSize }),
+                font({ design: 'rounded', weight: 'semibold', size: valueSize }),
                 monospacedDigit(),
                 foregroundStyle(primary),
               ]}>
               {percent}
             </Text>
           </ZStack>
-          <Text
-            modifiers={[
-              font({ design: 'rounded', weight: 'bold', size: 10 }),
-              foregroundStyle(secondary),
-            ]}>
-            {props.label}
-          </Text>
+
+          <HStack spacing={8}>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                foregroundStyle(secondary),
+              ]}>
+              {props.label}
+            </Text>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'semibold', size: 10 }),
+                monospacedDigit(),
+                foregroundStyle(primary),
+              ]}>
+              DAY {Math.round(dayProgress * 100)}%
+            </Text>
+          </HStack>
         </VStack>
       </ZStack>
     );
@@ -85,9 +131,9 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
       ]}>
       <VStack
         alignment="center"
-        spacing={isSmall ? 8 : 12}
+        spacing={10}
         modifiers={[
-          padding({ all: isSmall ? 14 : 20 }),
+          padding({ all: isLarge ? 18 : 14 }),
           frame({ maxWidth: Infinity, maxHeight: Infinity }),
         ]}>
         <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
@@ -103,43 +149,69 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
-              foregroundStyle(accentMuted),
+              monospacedDigit(),
+              foregroundStyle(primary),
             ]}>
-            {percent}
-            {props.unit}
+            {battery}%
           </Text>
         </HStack>
 
         <Spacer />
 
-        <ZStack>
+        <HStack spacing={16}>
           <Gauge
-            value={clamped}
+            value={(temp - 49) / 35}
             modifiers={[
               gaugeStyle('circularCapacity'),
               tint(accent),
-              frame({ width: gaugeSize, height: gaugeSize }),
+              frame({ width: 44, height: 44 }),
             ]}
           />
+          <ZStack>
+            <Gauge
+              value={clamped}
+              modifiers={[
+                gaugeStyle('circularCapacity'),
+                tint(accent),
+                frame({ width: gaugeSize, height: gaugeSize }),
+              ]}
+            />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'semibold', size: valueSize }),
+                monospacedDigit(),
+                foregroundStyle(primary),
+              ]}>
+              {percent}
+            </Text>
+          </ZStack>
+          <Gauge
+            value={uv / 11}
+            modifiers={[
+              gaugeStyle('circularCapacity'),
+              tint(accent),
+              frame({ width: 44, height: 44 }),
+            ]}
+          />
+        </HStack>
+
+        <HStack spacing={12}>
           <Text
             modifiers={[
-              font({ design: 'rounded', weight: 'light', size: valueSize }),
+              font({ design: 'rounded', weight: 'semibold', size: 12 }),
               monospacedDigit(),
               foregroundStyle(primary),
             ]}>
-            {percent}
+            DAY {Math.round(dayProgress * 100)}%
           </Text>
-        </ZStack>
-
-        {!isSmall && (
           <Text
             modifiers={[
-              font({ design: 'rounded', weight: 'medium', size: 13 }),
-              foregroundStyle(secondary),
+              font({ design: 'rounded', weight: 'bold', size: 11 }),
+              foregroundStyle(muted),
             ]}>
-            Ultra Night
+            STANDBY
           </Text>
-        )}
+        </HStack>
       </VStack>
     </ZStack>
   );

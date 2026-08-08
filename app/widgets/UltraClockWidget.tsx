@@ -14,25 +14,31 @@ import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 
 type UltraClockWidgetProps = Record<string, never>;
 
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
 const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvironment) => {
   'widget';
   const background = '#000000';
   const primary = '#FF453A';
-  const secondary = '#A8423A';
+  const secondary = '#C23B33';
+  const muted = '#5C221E';
   const accent = '#FF453A';
   const date = environment.date;
   const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
   const hour12 = date.getHours() % 12 || 12;
   const minute = date.getMinutes();
+  const second = date.getSeconds();
   const minuteLabel = minute < 10 ? `0${minute}` : `${minute}`;
+  const secondLabel = second < 10 ? `0${second}` : `${second}`;
   const timeLabel = `${hour12}:${minuteLabel}`;
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const dateLabel = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+  const timeWithSeconds = `${hour12}:${minuteLabel}:${secondLabel}`;
+  const dateLabel = `${MONTHS[date.getMonth()]} ${date.getDate()}`;
+  const temp = 72;
+  const uv = 5;
+  const dayPercent = Math.round(progress * 100);
   const isSmall = environment.widgetFamily === 'systemSmall';
   const isLarge = environment.widgetFamily === 'systemLarge';
-  const timeSize = isSmall ? 40 : isLarge ? 88 : 72;
-  const dateSize = isSmall ? 10 : 14;
-  const ringSize = isSmall ? 32 : isLarge ? 56 : 44;
+  const timeSize = isSmall ? 34 : isLarge ? 72 : 56;
 
   if (isSmall) {
     return (
@@ -43,27 +49,73 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
         ]}>
         <VStack
           alignment="center"
-          spacing={8}
+          spacing={5}
           modifiers={[
-            padding({ all: 12 }),
+            padding({ all: 10 }),
             frame({ maxWidth: Infinity, maxHeight: Infinity }),
           ]}>
-          <Gauge
-            value={progress}
-            modifiers={[
-              gaugeStyle('circularCapacity'),
-              tint(accent),
-              frame({ width: ringSize, height: ringSize }),
-            ]}
-          />
+          <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
+            <Gauge
+              value={(temp - 52) / 37}
+              modifiers={[
+                gaugeStyle('circularCapacity'),
+                tint(accent),
+                frame({ width: 28, height: 28 }),
+              ]}
+            />
+            <Spacer />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                foregroundStyle(secondary),
+              ]}>
+              {dateLabel}
+            </Text>
+            <Spacer />
+            <Gauge
+              value={uv / 11}
+              modifiers={[
+                gaugeStyle('circularCapacity'),
+                tint(accent),
+                frame({ width: 28, height: 28 }),
+              ]}
+            />
+          </HStack>
+
           <Text
             modifiers={[
-              font({ design: 'rounded', weight: 'light', size: timeSize }),
+              font({ design: 'rounded', weight: 'semibold', size: timeSize }),
               monospacedDigit(),
               foregroundStyle(primary),
             ]}>
             {timeLabel}
           </Text>
+
+          <HStack spacing={10} modifiers={[frame({ maxWidth: Infinity })]}>
+            <Gauge
+              value={progress}
+              modifiers={[
+                gaugeStyle('circularCapacity'),
+                tint(accent),
+                frame({ width: 22, height: 22 }),
+              ]}
+            />
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'semibold', size: 11 }),
+                monospacedDigit(),
+                foregroundStyle(primary),
+              ]}>
+              DAY {dayPercent}%
+            </Text>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'bold', size: 10 }),
+                foregroundStyle(muted),
+              ]}>
+              UV {uv}
+            </Text>
+          </HStack>
         </VStack>
       </ZStack>
     );
@@ -77,18 +129,65 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
       ]}>
       <VStack
         alignment="leading"
-        spacing={isSmall ? 6 : 10}
+        spacing={8}
         modifiers={[
-          padding({ all: isSmall ? 14 : 20 }),
+          padding({ all: isLarge ? 18 : 14 }),
           frame({ maxWidth: Infinity, maxHeight: Infinity, alignment: 'leading' }),
         ]}>
+        <HStack spacing={10} modifiers={[frame({ maxWidth: Infinity })]}>
+          <Gauge
+            value={(temp - 52) / 37}
+            modifiers={[
+              gaugeStyle('circularCapacity'),
+              tint(accent),
+              frame({ width: 36, height: 36 }),
+            ]}
+          />
+          <VStack alignment="leading" spacing={2}>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'semibold', size: 12 }),
+                foregroundStyle(secondary),
+              ]}>
+              {temp}°
+            </Text>
+            <Text
+              modifiers={[
+                font({ design: 'rounded', weight: 'medium', size: 10 }),
+                foregroundStyle(muted),
+              ]}>
+              52 / 89
+            </Text>
+          </VStack>
+          <Spacer />
+          <Text
+            modifiers={[
+              font({ design: 'rounded', weight: 'bold', size: 13 }),
+              foregroundStyle(primary),
+            ]}>
+            {dateLabel}
+          </Text>
+        </HStack>
+
+        <Spacer />
+
+        <Text
+          modifiers={[
+            font({ design: 'rounded', weight: 'semibold', size: timeSize }),
+            monospacedDigit(),
+            foregroundStyle(primary),
+          ]}>
+          {isLarge ? timeWithSeconds : timeLabel}
+        </Text>
+
         <HStack spacing={12} modifiers={[frame({ maxWidth: Infinity })]}>
           <Text
             modifiers={[
-              font({ design: 'rounded', weight: 'semibold', size: dateSize }),
-              foregroundStyle(secondary),
+              font({ design: 'rounded', weight: 'semibold', size: 12 }),
+              monospacedDigit(),
+              foregroundStyle(primary),
             ]}>
-            {dateLabel}
+            DAY {dayPercent}%
           </Text>
           <Spacer />
           <Gauge
@@ -96,31 +195,17 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             modifiers={[
               gaugeStyle('circularCapacity'),
               tint(accent),
-              frame({ width: ringSize, height: ringSize }),
+              frame({ width: 28, height: 28 }),
             ]}
           />
-        </HStack>
-
-        <Spacer />
-
-        <Text
-          modifiers={[
-            font({ design: 'rounded', weight: 'light', size: timeSize }),
-            monospacedDigit(),
-            foregroundStyle(primary),
-          ]}>
-          {timeLabel}
-        </Text>
-
-        {!isSmall && (
           <Text
             modifiers={[
-              font({ design: 'rounded', weight: 'bold', size: 12 }),
-              foregroundStyle(accent),
+              font({ design: 'rounded', weight: 'bold', size: 11 }),
+              foregroundStyle(secondary),
             ]}>
-            STANDBY
+            UV {uv}
           </Text>
-        )}
+        </HStack>
       </VStack>
     </ZStack>
   );
