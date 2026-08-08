@@ -12,6 +12,7 @@ const config: ExpoConfig = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'Standby',
+    appleTeamId: '85FP2SN2JN',
     deploymentTarget: '17.0',
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
@@ -30,7 +31,7 @@ const config: ExpoConfig = {
       'expo-widgets',
       {
         bundleIdentifier: 'Standby.widgets',
-        groupIdentifier: 'group.Standby',
+        groupIdentifier: 'group.com.kurtgrung.standby',
         widgets: [
           {
             name: 'UltraClockWidget',
