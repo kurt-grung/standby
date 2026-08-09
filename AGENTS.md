@@ -13,4 +13,4 @@ Run Expo/EAS CLI as `kurtgrung`. Do not link the repo to other Expo accounts or 
 
 ## After app changes
 
-Run `npx tsc --noEmit` in `app/`, lint touched files, and use Expo MCP docs (v57) when unsure. Fix failures before finishing. See `.cursor/rules/app-verify-mcp.mdc`.
+Run `make verify` before committing app changes. Before push or dependency/config updates, run `make audit`. After dependency or SDK updates, run `make fix` then `make audit`. Lint touched files and use Expo MCP docs (v57) when unsure. Fix failures before finishing. Install git hooks once with `make hooks`. See `.cursor/rules/app-verify-mcp.mdc`.

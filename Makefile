@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify audit fix hooks \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -85,6 +85,32 @@ rebuild: clean install prebuild ## Clean caches, reinstall, and prebuild iOS
 tsc typecheck: ## Typecheck the app
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npx tsc --noEmit
+
+compat: ## Check Expo SDK 57 router compatibility and dependency versions
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run compat
+
+doc: ## Run expo-doctor project health checks
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run doc
+
+verify: ## Fast app checks before commit (typecheck + Expo compat)
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run verify
+
+audit: ## Full static audit before push or dependency updates
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run audit
+
+fix: ## Auto-fix Expo deps, router imports, and patches
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run fix
+
+hooks: ## Install local git pre-commit hook for app verification
+	@mkdir -p "$(ROOT)/.git/hooks"
+	@ln -sf "$(ROOT)/.githooks/pre-commit" "$(ROOT)/.git/hooks/pre-commit"
+	@chmod +x "$(ROOT)/.githooks/pre-commit"
+	@echo "Installed pre-commit hook → runs 'make verify' when app/ changes are staged."
 
 clean: ## Remove Expo / Metro caches (keeps node_modules and ios/)
 	@rm -rf "$(ROOT)/$(APP_DIR)/.expo" \

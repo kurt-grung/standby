@@ -111,7 +111,7 @@ function resolveBundleIds() {
 
 function syncBundleIds(appBundleId, widgetBundleId) {
   if (!fs.existsSync(pbxprojPath)) {
-    return;
+    return false;
   }
 
   const mainAppIds = new Set([
@@ -151,13 +151,15 @@ function syncBundleIds(appBundleId, widgetBundleId) {
   if (changed) {
     fs.writeFileSync(pbxprojPath, lines.join('\n'));
   }
+
+  return changed;
 }
 
 const { appBundleId, widgetBundleId, source } = resolveBundleIds();
 
 removeStaleStandbyProfiles();
 syncTeamId();
-syncBundleIds(appBundleId, widgetBundleId);
+const bundleIdsChanged = syncBundleIds(appBundleId, widgetBundleId);
 
 if (!source) {
   process.stderr.write(
@@ -170,7 +172,7 @@ if (!source) {
       '',
     ].join('\n'),
   );
-} else if (source === fallbackAppBundleId) {
+} else if (source === fallbackAppBundleId && bundleIdsChanged) {
   process.stderr.write(
     [
       `Using ${fallbackAppBundleId} (profiles with App Groups are installed).`,

@@ -7,11 +7,16 @@ alwaysApply: true
 
 When editing files under `app/`, run checks before marking work complete:
 
-1. **Typecheck**: `cd app && npx tsc --noEmit` — fix all errors.
+1. **Verify**: `make verify` — typecheck + Expo SDK 57 compat (`tsc` + `compat`).
 2. **Lints**: `read_lints` on every file touched.
 3. **Expo MCP** (when changing config, native, widgets, or routing): authenticate if needed, then use `read_documentation` for Expo v57 APIs before guessing.
-4. **Vitest MCP** (when tests exist): `set_project_root` → `run_tests` for affected paths.
-5. **Maestro MCP** (when UI/navigation changed): `list_devices` → smoke flow on preview/home if a simulator is available.
+4. **Doctor** (when changing `package.json`, `package-lock.json`, or `app.config.ts`): `make doc`, or `make audit` before push.
+5. **Audit** (before push, EAS build, or SDK/dependency updates): `make audit` — verify + doctor + iOS bundle export.
+6. **Bundle** (when changing routing or native navigation): covered by `make audit`, or `npx expo export --platform ios` in `app/`.
+7. **Vitest MCP** (when tests exist): `set_project_root` → `run_tests` for affected paths.
+8. **Maestro MCP** (when UI/navigation changed): `list_devices` → smoke flow on preview/home if a simulator is available.
+
+Git commits that touch `app/` should pass `make verify` (install once with `make hooks`).
 
 If a check fails, fix it in the same turn. Do not leave broken typecheck or linter errors.
 
