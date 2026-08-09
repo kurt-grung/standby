@@ -1,6 +1,6 @@
 import '../global.css';
 
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useEffect } from 'react';
 import { AppState, DynamicColorIOS, useColorScheme } from 'react-native';
