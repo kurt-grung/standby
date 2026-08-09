@@ -100,13 +100,10 @@ Open the app to:
 ```
 standby/
 └── app/
-    ├── app/
-    │   ├── index.tsx              # Home screen
-    │   └── ui.tsx                 # Design system (/ui)
-    ├── assets/icon.png            # App icon
-    ├── components/                # Shared UI components
-    ├── theme/
-    │   ├── themes.ts              # Night, Ultra, Mono, Graphite
-    │   └── ThemeContext.tsx       # Theme provider
+    ├── app/                       # Expo Router screens (index, preview, ui)
+    ├── config.ts                  # App + brand config
+    ├── design-system.ts           # UI tokens and themes
+    ├── ui/                        # All shared and custom components
+    ├── theme/                     # Theme re-exports + ThemeContext
     └── widgets/                   # StandBy widget UIs
 ```

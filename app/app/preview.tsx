@@ -5,10 +5,10 @@ import { useCallback } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { LandscapePreviewFrame } from '../components/LandscapePreviewFrame';
-import { PreviewGlassBackButton } from '../components/PreviewGlassBackButton';
-import { StandByPreview } from '../components/StandByPreview';
-import { nightMode } from '../components/ultra/nightColors';
+import { LandscapePreviewFrame } from '../ui/LandscapePreviewFrame';
+import { PreviewGlassBackButton } from '../ui/PreviewGlassBackButton';
+import { StandByPreview } from '../ui/StandByPreview';
+import { nightMode } from '../ui/ultra/nightColors';
 
 const previewBg = nightMode.bg;
 

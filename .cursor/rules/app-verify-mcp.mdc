@@ -20,4 +20,6 @@ Git commits that touch `app/` should pass `make verify` (install once with `make
 
 If a check fails, fix it in the same turn. Do not leave broken typecheck or linter errors.
 
-Widget preview (`StandByPreview`, `nightMode`) stays night-themed; app chrome uses `useAppChrome()` for system light/dark.
+Widget preview (`StandByPreview`, `nightMode` from `ui/ultra/nightColors`) stays night-themed; app chrome uses `useAppChrome()` for system light/dark.
+
+New React components belong in `app/ui/`, not `app/components/`. Screens live in `app/app/` only. See `AGENTS.md` for full layout.

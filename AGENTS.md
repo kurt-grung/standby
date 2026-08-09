@@ -11,6 +11,29 @@ Use only this Expo account and project for Standby:
 
 Run Expo/EAS CLI as `kurtgrung`. Do not link the repo to other Expo accounts or projects. Do not run `eas init` unless re-linking to this project (`owner: kurtgrung`, `slug: standby`, project ID `c112d885-1090-4f24-81fc-74ec7a64ad98`).
 
+## Project layout
+
+All paths are under `app/` unless noted.
+
+| Path | Purpose |
+|------|---------|
+| `app/app/` | Expo Router **screens only** (`index`, `preview`, `ui`, `_layout`) |
+| `app/ui/` | **All components** — shared UI, custom components, glass buttons, shells, widget faces (`ui/ultra/`) |
+| `app/config.ts` | App identity, Expo/iOS/widget IDs, brand asset tuning (splash size, icon geometry) |
+| `app/design-system.ts` | UI tokens — typography, spacing, themes, layout metrics, widget night colors |
+| `app/theme/` | Thin re-exports from `design-system.ts` plus `ThemeContext` / `useAppChrome` |
+| `app/widgets/` | StandBy widget UIs (Swift UI via expo-widgets) |
+| `app/hooks/`, `app/lib/` | Hooks and utilities |
+| `app/assets/` | Icons, splash, branding PNGs |
+| `app/scripts/` | Asset generation, Expo checks, dev reload |
+
+**Conventions**
+
+- New React components go in `app/ui/`, not `app/components/`.
+- Screens import from `../ui/…`, never inline large UI in `app/app/`.
+- Tune brand/splash in `config.ts`; tune UI spacing, type, and themes in `design-system.ts`.
+- Widget preview surfaces (`StandByPreview`, `nightMode`) stay night-themed; app chrome uses `useAppChrome()` for system light/dark.
+
 ## After app changes
 
 Run `make verify` before committing app changes (includes auto-reload when Metro is running). Keep `make dev` running in a terminal. A Cursor `stop` hook also reloads the dev client after each agent turn. Before push or dependency/config updates, run `make audit`. After dependency or SDK updates, run `make fix` then `make audit`. Lint touched files and use Expo MCP docs (v57) when unsure. Fix failures before finishing. Install git hooks once with `make hooks`. See `.cursor/rules/app-verify-mcp.mdc`.

@@ -8,19 +8,19 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { GaugeValueControls } from '../components/GaugeValueControls';
-import { AppWordmarkHeader, StickyWordmarkPlus } from '../components/AppWordmarkHeader';
+import { GaugeValueControls } from '../ui/GaugeValueControls';
+import { AppWordmarkHeader, StickyWordmarkPlus } from '../ui/AppWordmarkHeader';
 import {
   GroupedDivider,
   GroupedInset,
   GroupedSection,
   GroupedStepRows,
-} from '../components/GroupedSection';
+} from '../ui/GroupedSection';
 import { useLiveClock } from '../hooks/useLiveClock';
-import { ScreenShell } from '../components/ScreenShell';
-import { HomeWidgetPlaceholder } from '../components/HomeWidgetPlaceholder';
-import { ArcGauge } from '../components/ultra/ArcGauge';
-import { nightMode } from '../components/ultra/nightColors';
+import { ScreenShell } from '../ui/ScreenShell';
+import { HomeWidgetPlaceholder } from '../ui/HomeWidgetPlaceholder';
+import { ArcGauge } from '../ui/ultra/ArcGauge';
+import { nightMode } from '../ui/ultra/nightColors';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import {
   groupedHeroInset,

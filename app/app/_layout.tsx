@@ -7,8 +7,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { AppState, DynamicColorIOS, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { SplashBrandScreen } from '../components/SplashBrandScreen';
-import { nightMode } from '../components/ultra/nightColors';
+import { SplashBrandScreen } from '../ui/SplashBrandScreen';
+import { nightMode } from '../ui/ultra/nightColors';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
 

@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
-import { GaugeValueControls } from '../components/GaugeValueControls';
-import { PreviewGlassBackButton } from '../components/PreviewGlassBackButton';
-import { StandByWordmark } from '../components/StandByWordmark';
-import { nightMode } from '../components/ultra/nightColors';
-import { ProgressBar } from '../components/ProgressBar';
-import { ScreenShell } from '../components/ScreenShell';
-import { SectionCard } from '../components/SectionCard';
+import { GaugeValueControls } from '../ui/GaugeValueControls';
+import { PreviewGlassBackButton } from '../ui/PreviewGlassBackButton';
+import { StandByWordmark } from '../ui/StandByWordmark';
+import { nightMode } from '../ui/ultra/nightColors';
+import { ProgressBar } from '../ui/ProgressBar';
+import { ScreenShell } from '../ui/ScreenShell';
+import { SectionCard } from '../ui/SectionCard';
 import { useTheme } from '../theme/ThemeContext';
 import {
   groupedScreenPadding,
