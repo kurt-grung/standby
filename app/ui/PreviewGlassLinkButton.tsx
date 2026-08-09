@@ -5,6 +5,7 @@ import { SymbolView } from 'expo-symbols';
 import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { standbyConfig } from '../config';
 import {
   homePreviewGlassGap,
   homePreviewGlassHeight,
@@ -13,7 +14,6 @@ import {
   homePreviewGlassWidth,
 } from '../theme/standByPreviewLayout';
 import { PillOutline, derivePillOutlineSize } from './OutlineShape';
-import { nightMode } from './ultra/nightColors';
 
 type NativeGlassViewProps = GlassViewProps & {
   borderRadius?: number;
@@ -27,6 +27,7 @@ const outline = derivePillOutlineSize(
   homePreviewGlassHeight,
   homePreviewGlassOutlineInset,
 );
+const previewGlassForeground = standbyConfig.brand.textColor;
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
 type PreviewGlassLinkButtonProps = {
@@ -76,7 +77,7 @@ export function PreviewGlassLinkButton({
             <SymbolView
               name="chevron.right"
               size={12}
-              tintColor={nightMode.primary}
+              tintColor={previewGlassForeground}
               weight="semibold"
             />
           </Pressable>
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: homePreviewGlassPaddingH,
   },
   label: {
-    color: nightMode.primary,
+    color: previewGlassForeground,
     fontSize: 15,
     fontWeight: '600',
     letterSpacing: -0.2,
