@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import { useLiveClock } from '../hooks/useLiveClock';
 import { NavIconLink } from '../components/NavIconLink';
 import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
@@ -11,7 +12,6 @@ import { SectionCard } from '../components/SectionCard';
 import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
 import { ThemeBadge } from '../components/ThemeBadge';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
-import { useTheme } from '../theme/ThemeContext';
 import { useAppChrome } from '../theme/useAppChrome';
 import { dayProgress, formatNightTime } from '../theme/ultra';
 import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
@@ -35,24 +35,18 @@ const gaugePresets = [
 ] as const satisfies readonly Pick<UltraGaugeWidgetProps, 'label' | 'icon'>[];
 
 export default function HomeScreen() {
-  const { theme } = useTheme();
   const chrome = useAppChrome();
   const [gaugeValue, setGaugeValue] = useState(0);
   const [presetIndex, setPresetIndex] = useState(0);
-  const [now, setNow] = useState(() => new Date());
+  const now = useLiveClock();
 
   useEffect(() => {
     const preset = gaugePresets[presetIndex] ?? gaugePresets[0];
     refreshStandbyWidgets(gaugeValue, preset);
   }, [gaugeValue, presetIndex]);
 
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 30_000);
-    return () => clearInterval(timer);
-  }, []);
-
   const activePreset = gaugePresets[presetIndex] ?? gaugePresets[0];
-  const displayValue = gaugeValue > 0 ? gaugeValue : dayProgress(new Date());
+  const displayValue = gaugeValue > 0 ? gaugeValue : dayProgress(now);
   const percent = Math.round(displayValue * 100);
 
   return (

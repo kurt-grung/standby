@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, type LayoutChangeEvent } from 'react-native';
 
+import { useLiveClock } from '../hooks/useLiveClock';
 import { ModularUltraFace } from './ultra/ModularUltraFace';
 import { StatusGaugeFace } from './ultra/StatusGaugeFace';
 import { nightMode } from './ultra/nightColors';
@@ -21,18 +22,8 @@ function widgetSize(width: number, height: number) {
 }
 
 export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
-  const [now, setNow] = useState(() => new Date());
+  const now = useLiveClock();
   const [frame, setFrame] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    let frameId = 0;
-    const tick = () => {
-      setNow(new Date());
-      frameId = requestAnimationFrame(tick);
-    };
-    frameId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;

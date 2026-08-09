@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Text, View, type LayoutChangeEvent } from 'react-native';
 
 import { TempComplication, UvComplication } from './ArcGauge';
@@ -31,7 +31,7 @@ function formatTime(date: Date): string {
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'] as const;
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] as const;
 
-export function ModularUltraFace({
+export const ModularUltraFace = memo(function ModularUltraFace({
   now,
   temperature = 72,
   tempLow = 52,
@@ -60,13 +60,7 @@ export function ModularUltraFace({
         borderColor: nightMode.border,
       }}
       onLayout={onLayout}>
-      <SecondsBezel
-        width={size.width}
-        height={size.height}
-        seconds={now.getSeconds() + now.getMilliseconds() / 1000}
-        inset={1.5}
-        cornerRadius={32}
-      />
+      <SecondsBezel width={size.width} height={size.height} inset={1.5} cornerRadius={32} />
 
       <View
         className="flex-1"
@@ -139,4 +133,4 @@ export function ModularUltraFace({
       </View>
     </View>
   );
-}
+});

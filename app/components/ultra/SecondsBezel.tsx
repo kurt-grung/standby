@@ -1,17 +1,17 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import Svg, { Circle, Defs, Line, RadialGradient, Stop } from 'react-native-svg';
 
 import { nightMode } from './nightColors';
 
-const TICK_COUNT = 180;
+const TICK_COUNT = 60;
 const SECONDS = 60;
 const FINE_PER_SECOND = TICK_COUNT / SECONDS;
+const BEZEL_FRAME_MS = 1000 / 30;
 
 type SecondsBezelProps = {
   width: number;
   height: number;
-  seconds: number;
   inset?: number;
   cornerRadius?: number;
 };
@@ -193,13 +193,35 @@ function buildGeometry(
   return { ticks, perimeter, left, top, right, bottom, radius };
 }
 
+function readSubSecondClock() {
+  const now = new Date();
+  return now.getSeconds() + now.getMilliseconds() / 1000;
+}
+
 export function SecondsBezel({
   width,
   height,
-  seconds,
   inset = 1.5,
   cornerRadius = 34,
 }: SecondsBezelProps) {
+  const [seconds, setSeconds] = useState(readSubSecondClock);
+
+  useEffect(() => {
+    let frameId = 0;
+    let lastFrame = 0;
+
+    const tick = (timestamp: number) => {
+      if (timestamp - lastFrame >= BEZEL_FRAME_MS) {
+        lastFrame = timestamp;
+        setSeconds(readSubSecondClock());
+      }
+      frameId = requestAnimationFrame(tick);
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
   const geometry = useMemo(() => {
     if (width < 40 || height < 40) {
       return null;
@@ -251,7 +273,7 @@ export function SecondsBezel({
         {geometry.ticks.map((tick, index) => {
           const lit = index <= activeTick;
           const age = lit ? activeTick - index : 0;
-          const trail = lit ? Math.max(0.28, 1 - age / 40) : 0;
+          const trail = lit ? Math.max(0.28, 1 - age / 15) : 0;
           const pending =
             tick.kind === 'major' ? 0.62 : tick.kind === 'second' ? 0.48 : 0.34;
           const litBase =

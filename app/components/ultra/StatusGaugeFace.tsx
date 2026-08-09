@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Text, View, type LayoutChangeEvent } from 'react-native';
 
 import { ArcGauge, TempComplication, UvComplication } from './ArcGauge';
@@ -64,7 +64,7 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
   );
 }
 
-export function StatusGaugeFace({
+export const StatusGaugeFace = memo(function StatusGaugeFace({
   now,
   temperature = 68,
   tempLow = 49,
@@ -182,4 +182,4 @@ export function StatusGaugeFace({
       </View>
     </View>
   );
-}
+});
