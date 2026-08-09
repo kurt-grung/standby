@@ -9,7 +9,11 @@ import {
   nativeTabBarIconSize,
   previewBackGlassColorScheme,
   previewBackGlassTintColor,
-  previewBackNightCircleSize,
+  previewBackNightOutlineBorderWidth,
+  previewBackNightOutlineHeight,
+  previewBackNightOutlineOpacity,
+  previewBackNightOutlineRadius,
+  previewBackNightOutlineWidth,
   previewBackPillHeight,
   previewBackPillRadius,
   previewBackPillWidth,
@@ -30,7 +34,7 @@ const iconTint = DynamicColorIOS({
 export function PreviewGlassBackButton() {
   return (
     <View style={styles.wrap}>
-      <View style={styles.nightCircle} />
+      <View style={styles.nightOutline} />
       <NativeGlassView
         isInteractive
         glassEffectStyle="clear"
@@ -62,12 +66,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'visible',
   },
-  nightCircle: {
+  nightOutline: {
     position: 'absolute',
-    width: previewBackNightCircleSize,
-    height: previewBackNightCircleSize,
-    borderRadius: previewBackNightCircleSize / 2,
-    backgroundColor: nightMode.primary,
+    width: previewBackNightOutlineWidth,
+    height: previewBackNightOutlineHeight,
+    borderRadius: previewBackNightOutlineRadius,
+    borderWidth: previewBackNightOutlineBorderWidth,
+    borderColor: nightMode.primary,
+    backgroundColor: 'transparent',
+    opacity: previewBackNightOutlineOpacity,
   },
   glass: {
     width: previewBackPillWidth,

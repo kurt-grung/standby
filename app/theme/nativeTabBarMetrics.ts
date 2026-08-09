@@ -18,4 +18,10 @@ export const previewBackGlassColorScheme = 'dark';
 export const previewBackPillHeight = nativeTabBarHeight;
 export const previewBackPillWidth = 72;
 export const previewBackPillRadius = previewBackPillHeight / 2;
-export const previewBackNightCircleSize = 4;
+
+export const previewBackNightOutlineInset = 50;
+export const previewBackNightOutlineWidth = previewBackPillWidth - previewBackNightOutlineInset;
+export const previewBackNightOutlineHeight = previewBackPillHeight - previewBackNightOutlineInset;
+export const previewBackNightOutlineRadius = previewBackNightOutlineHeight / 2;
+export const previewBackNightOutlineBorderWidth = 4;
+export const previewBackNightOutlineOpacity = 0.5;
