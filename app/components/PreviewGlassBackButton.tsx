@@ -24,6 +24,7 @@ export function PreviewGlassBackButton() {
 
   return (
     <NativeGlassView
+      isInteractive
       glassEffectStyle="clear"
       colorScheme="dark"
       borderRadius={radius}
