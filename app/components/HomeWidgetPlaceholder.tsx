@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
+  homePreviewGlassInset,
   homeWidgetDisplaySize,
   homeWidgetPairWidth,
   homeWidgetPreviewScale,
@@ -9,7 +10,8 @@ import {
   homeWidgetStripHeight,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
-import { GroupedLinkRow, GroupedSection } from './GroupedSection';
+import { GroupedSection } from './GroupedSection';
+import { PreviewGlassLinkButton } from './PreviewGlassLinkButton';
 import { StandByWidgetPair } from './StandByWidgetPair';
 import { nightMode } from './ultra/nightColors';
 
@@ -67,14 +69,16 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
               </View>
             </View>
           ) : null}
+          <View
+            style={{
+              position: 'absolute',
+              right: homePreviewGlassInset,
+              bottom: homePreviewGlassInset,
+            }}
+          >
+            <PreviewGlassLinkButton />
+          </View>
         </View>
-      </GroupedSection>
-      <GroupedSection className="mb-0">
-        <GroupedLinkRow
-          href="/preview"
-          label="Preview"
-          accessibilityLabel="Preview StandBy widgets"
-        />
       </GroupedSection>
     </View>
   );

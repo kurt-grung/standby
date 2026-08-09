@@ -2,13 +2,17 @@ import '../global.css';
 
 import { DarkTheme, DefaultTheme, ThemeProvider, usePathname } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
-import { useEffect } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback, useEffect, useState } from 'react';
 import { AppState, DynamicColorIOS, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { SplashBrandScreen } from '../components/SplashBrandScreen';
 import { nightMode } from '../components/ultra/nightColors';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
+
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const tabTint = DynamicColorIOS({
   dark: '#FFFFFF',
@@ -52,6 +56,13 @@ function TabNavigation() {
 }
 
 export default function RootLayout() {
+  const [splashVisible, setSplashVisible] = useState(true);
+
+  const onRootLayout = useCallback(() => {
+    SplashScreen.hideAsync().catch(() => {});
+    setSplashVisible(false);
+  }, []);
+
   useEffect(() => {
     refreshStandbyWidgets();
 
@@ -65,10 +76,11 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider onLayout={onRootLayout}>
       <StandbyThemeProvider>
         <TabNavigation />
       </StandbyThemeProvider>
+      {splashVisible ? <SplashBrandScreen /> : null}
     </SafeAreaProvider>
   );
 }

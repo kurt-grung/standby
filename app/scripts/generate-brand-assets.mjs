@@ -4,6 +4,11 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { standbyConfig } from '../config.ts';
+
+const { brand } = standbyConfig;
+const brandAssets = brand.assets;
+
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const assetsDir = join(appRoot, 'assets');
 const iosSplashDir = join(
@@ -26,21 +31,23 @@ const iconOutput = join(assetsDir, 'icon.png');
 const adaptiveOutput = join(assetsDir, 'adaptive-icon.png');
 const splashOutput = join(assetsDir, 'splash.png');
 
-const splashWidth = 1536;
-const splashHeight = 1024;
-const iconSize = 1024;
+const splashWidth = brandAssets.canvasSize;
+const splashHeight = brandAssets.canvasSize;
+const iconSize = brandAssets.canvasSize;
 
-const textColor = '#FFFFFF';
-const plusColor = '#FF453A';
-const backgroundColor = '#000000';
+const textColor = brand.textColor;
+const plusColor = brand.plusColor;
+const backgroundColor = brand.backgroundColor;
 
-const iconPointSize = 460;
-const iconPlusPointSize = 382;
-const iconLetterErode = 5.5;
-const iconPlusOffsetY = 6;
-const splashPointSize = 120;
-const splashKerning = -2;
-const splashResizeWidth = 780;
+const iconPointSize = brandAssets.iconPointSize;
+const iconPlusPointSize = brandAssets.iconPlusPointSize;
+const iconLetterErode = brandAssets.iconLetterErode;
+const iconPlusOffsetY = brandAssets.iconPlusOffsetY;
+const splashPointSize = brandAssets.splashPointSize;
+const splashKerning = brandAssets.splashKerning;
+const splashLogoMaxWidth = brandAssets.splashLogoMaxWidth;
+const iosSplashImageWidth = brand.splashImageWidth;
+const iconLogoMaxScale = brandAssets.iconLogoMaxScale;
 
 const fontCandidates = [
   '/System/Library/Fonts/SFNS.ttf',
@@ -192,7 +199,7 @@ function generateIcon() {
     width: iconSize,
     height: iconSize,
     output: iconOutput,
-    maxWidth: iconSize * 0.62,
+    maxWidth: iconSize * iconLogoMaxScale,
   });
 
   console.log(`Wrote ${iconOutput}`);
@@ -222,7 +229,7 @@ function generateSplash() {
     width: splashWidth,
     height: splashHeight,
     output: splashOutput,
-    maxWidth: splashResizeWidth,
+    maxWidth: splashLogoMaxWidth,
   });
 
   console.log(`Wrote ${splashOutput}`);
@@ -234,15 +241,19 @@ function syncIosSplashImages() {
     return;
   }
 
-  for (const size of [200, 400, 600]) {
-    const suffix = size === 200 ? '' : `@${size / 200}x`;
-    const output = join(iosSplashDir, `image${suffix}.png`);
-    run(
-      `magick "${splashOutput}" -resize ${size}x${size}\\> -background '${backgroundColor}' -gravity center -extent ${size}x${size} "${output}"`,
-    );
+  if (!existsSync(splashOutput)) {
+    console.error('splash.png missing — run generateSplash first');
+    process.exit(1);
   }
 
-  console.log(`Synced iOS splash imageset in ${iosSplashDir}`);
+  for (const ratio of [1, 2, 3]) {
+    const size = iosSplashImageWidth * ratio;
+    const suffix = ratio === 1 ? '' : `@${ratio}x`;
+    const output = join(iosSplashDir, `image${suffix}.png`);
+    run(`magick "${splashOutput}" -resize ${size}x${size}! "${output}"`);
+  }
+
+  console.log(`Synced iOS splash imageset from splash.png in ${iosSplashDir}`);
 }
 
 function syncIosAppIcon() {

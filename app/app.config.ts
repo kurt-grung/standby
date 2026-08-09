@@ -1,19 +1,21 @@
 import type { ExpoConfig } from 'expo/config';
 
+import { standbyConfig } from './config';
+
 const config: ExpoConfig = {
-  name: 'StandBy+',
-  slug: 'standby',
-  owner: 'kurtgrung',
-  version: '1.0.0',
-  orientation: 'portrait',
-  scheme: 'standby',
-  userInterfaceStyle: 'automatic',
-  icon: './assets/icon.png',
+  name: standbyConfig.name,
+  slug: standbyConfig.slug,
+  owner: standbyConfig.owner,
+  version: standbyConfig.version,
+  orientation: standbyConfig.orientation,
+  scheme: standbyConfig.scheme,
+  userInterfaceStyle: standbyConfig.userInterfaceStyle,
+  icon: standbyConfig.brand.icon,
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.kurtgrung.standby',
-    appleTeamId: '85FP2SN2JN',
-    deploymentTarget: '17.0',
+    bundleIdentifier: standbyConfig.ios.bundleIdentifier,
+    appleTeamId: standbyConfig.ios.appleTeamId,
+    deploymentTarget: standbyConfig.ios.deploymentTarget,
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -29,9 +31,10 @@ const config: ExpoConfig = {
     [
       'expo-splash-screen',
       {
-        image: './assets/splash.png',
-        resizeMode: 'contain',
-        backgroundColor: '#000000',
+        image: standbyConfig.brand.splash,
+        resizeMode: standbyConfig.brand.splashResizeMode,
+        backgroundColor: standbyConfig.brand.backgroundColor,
+        imageWidth: standbyConfig.brand.splashImageWidth,
       },
     ],
     [
@@ -55,8 +58,8 @@ const config: ExpoConfig = {
     [
       'expo-widgets',
       {
-        bundleIdentifier: 'com.kurtgrung.standby.widgets',
-        groupIdentifier: 'group.com.kurtgrung.standby',
+        bundleIdentifier: standbyConfig.widgets.bundleIdentifier,
+        groupIdentifier: standbyConfig.widgets.groupIdentifier,
         widgets: [
           {
             name: 'UltraClockWidget',
@@ -79,11 +82,11 @@ const config: ExpoConfig = {
   ],
   extra: {
     eas: {
-      projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',
+      projectId: standbyConfig.expo.projectId,
     },
   },
   updates: {
-    url: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
+    url: standbyConfig.expo.updatesUrl,
     checkAutomatically: process.env.EAS_BUILD === 'true' ? 'ON_LOAD' : 'NEVER',
   },
 };

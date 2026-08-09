@@ -1,0 +1,45 @@
+export const standbyConfig = {
+  name: 'StandBy+',
+  slug: 'standby',
+  owner: 'kurtgrung',
+  version: '1.0.0',
+  scheme: 'standby',
+  orientation: 'portrait' as const,
+  userInterfaceStyle: 'automatic' as const,
+  expo: {
+    projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',
+    updatesUrl: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
+  },
+  ios: {
+    bundleIdentifier: 'com.kurtgrung.standby',
+    appleTeamId: '85FP2SN2JN',
+    deploymentTarget: '17.0',
+  },
+  widgets: {
+    bundleIdentifier: 'com.kurtgrung.standby.widgets',
+    groupIdentifier: 'group.com.kurtgrung.standby',
+  },
+  brand: {
+    backgroundColor: '#000000',
+    textColor: '#FFFFFF',
+    plusColor: '#FF453A',
+    icon: './assets/icon.png',
+    adaptiveIcon: './assets/adaptive-icon.png',
+    splash: './assets/splash.png',
+    splashImageWidth: 280,
+    splashResizeMode: 'contain' as const,
+    assets: {
+      canvasSize: 1024,
+      iconPointSize: 460,
+      iconPlusPointSize: 382,
+      iconLetterErode: 5.5,
+      iconPlusOffsetY: 6,
+      splashPointSize: 200,
+      splashKerning: -2,
+      splashLogoMaxWidth: 880,
+      iconLogoMaxScale: 0.62,
+    },
+  },
+} as const;
+
+export type StandbyConfig = typeof standbyConfig;
