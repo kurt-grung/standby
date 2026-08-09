@@ -26,6 +26,7 @@ const iosAppIconPath = join(
   'AppIcon.appiconset',
   'App-Icon-1024x1024@1x.png',
 );
+const brandMarkScript = join(appRoot, 'scripts', 'render-brand-mark.swift');
 
 const iconOutput = join(assetsDir, 'icon.png');
 const adaptiveOutput = join(assetsDir, 'adaptive-icon.png');
@@ -41,34 +42,17 @@ const backgroundColor = brand.backgroundColor;
 
 const iconPointSize = brandAssets.iconPointSize;
 const iconPlusPointSize = brandAssets.iconPlusPointSize;
-const iconLetterErode = brandAssets.iconLetterErode;
 const iconPlusOffsetY = brandAssets.iconPlusOffsetY;
+const letterWeight = brand.wordmark.letterWeight;
+const plusWeight = brand.wordmark.plusWeight;
 const splashPointSize = brandAssets.splashPointSize;
 const splashKerning = brandAssets.splashKerning;
 const splashLogoMaxWidth = brandAssets.splashLogoMaxWidth;
-const splashLetterErode = brandAssets.splashLetterErode;
-const splashLetterWeight = brandAssets.splashLetterWeight;
-const splashPlusWeight = brandAssets.splashPlusWeight;
 const iosSplashImageWidth = brand.splashImageWidth;
 const iconLogoMaxScale = brandAssets.iconLogoMaxScale;
 
-const fontCandidates = [
-  '/System/Library/Fonts/SFNS.ttf',
-  '/System/Library/Fonts/HelveticaNeue.ttc',
-  '/System/Library/Fonts/Supplemental/Arial.ttf',
-  '/usr/share/fonts/truetype/dejavu/DejaVuSans-ExtraLight.ttf',
-];
-
 function run(command) {
   execSync(command, { stdio: 'inherit' });
-}
-
-function probeSize(imagePath) {
-  const output = execSync(`magick identify -format '%w %h' "${imagePath}"`, {
-    encoding: 'utf8',
-  }).trim();
-  const [width, height] = output.split(' ').map(Number);
-  return { width, height };
 }
 
 function ensureMagick() {
@@ -80,103 +64,44 @@ function ensureMagick() {
   }
 }
 
-function resolveFont() {
-  for (const candidate of fontCandidates) {
-    if (existsSync(candidate)) {
-      return candidate;
-    }
-  }
-
-  console.error('No supported font found for brand asset rendering');
-  process.exit(1);
-}
-
-function thinGlyph(inputPath, outputPath, erodeRadius) {
-  run(
-    `magick "${inputPath}" \\( -clone 0 -alpha extract -morphology Erode Disk:${erodeRadius} \\) -alpha off -compose CopyOpacity -composite "${outputPath}"`,
-  );
-}
-
-function renderAppendedLogo({
-  font,
+function renderBrandMark({
   tmpDir,
   prefix,
   letter,
   pointSize,
   plusPointSize = pointSize,
   kerning = 0,
-  thinLetter = false,
-  letterErode = iconLetterErode,
-  letterWeight = 200,
-  plusWeight = 300,
+  plusOffsetY = 0,
+  plusAlign,
+  letterWeight,
+  plusWeight,
 }) {
-  const letterRawPath = join(tmpDir, `${prefix}-letter-raw.png`);
-  const letterPath = join(tmpDir, `${prefix}-letter.png`);
-  const plusPath = join(tmpDir, `${prefix}-plus.png`);
   const logoPath = join(tmpDir, `${prefix}-logo.png`);
 
-  const letterCommand = [
-    `magick -background none -fill '${textColor}'`,
-    `-font "${font}" -weight ${letterWeight} -pointsize ${pointSize}`,
-    kerning ? `-kerning ${kerning}` : '',
-    `caption:'${letter}' "${letterRawPath}"`,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  run(letterCommand);
-
-  if (thinLetter) {
-    thinGlyph(letterRawPath, letterPath, letterErode);
-  } else {
-    copyFileSync(letterRawPath, letterPath);
-  }
-
   run(
     [
-      `magick -background none -fill '${plusColor}'`,
-      `-font "${font}" -weight ${plusWeight} -pointsize ${plusPointSize}`,
-      `caption:'+' "${plusPath}"`,
-    ].join(' '),
-  );
-
-  run(`magick "${letterPath}" "${plusPath}" +append "${logoPath}"`);
-
-  return logoPath;
-}
-
-function renderIconLogo({ font, tmpDir }) {
-  const letterRawPath = join(tmpDir, 'icon-letter-raw.png');
-  const letterPath = join(tmpDir, 'icon-letter.png');
-  const plusPath = join(tmpDir, 'icon-plus.png');
-  const logoPath = join(tmpDir, 'icon-logo.png');
-
-  run(
-    [
-      `magick -background none -fill '${textColor}'`,
-      `-font "${font}" -weight 200 -pointsize ${iconPointSize}`,
-      `caption:'S' "${letterRawPath}"`,
-    ].join(' '),
-  );
-
-  thinGlyph(letterRawPath, letterPath, iconLetterErode);
-
-  run(
-    [
-      `magick -background none -fill '${plusColor}'`,
-      `-font "${font}" -weight 300 -pointsize ${iconPlusPointSize}`,
-      `caption:'+' "${plusPath}"`,
-    ].join(' '),
-  );
-
-  const { width: letterWidth, height: letterHeight } = probeSize(letterPath);
-  const { width: plusWidth } = probeSize(plusPath);
-
-  run(
-    [
-      `magick -size ${letterWidth + plusWidth}x${letterHeight} xc:none`,
-      `\\( "${letterPath}" \\) -geometry +0+0 -composite`,
-      `\\( "${plusPath}" \\) -geometry +${letterWidth}+${iconPlusOffsetY} -composite`,
+      'swift',
+      `"${brandMarkScript}"`,
+      '--letter',
+      letter,
+      '--point-size',
+      String(pointSize),
+      '--plus-point-size',
+      String(plusPointSize),
+      '--kerning',
+      String(kerning),
+      '--plus-offset-y',
+      String(plusOffsetY),
+      ...(plusAlign ? ['--plus-align', plusAlign] : []),
+      '--letter-weight',
+      String(letterWeight),
+      '--plus-weight',
+      String(plusWeight),
+      '--text-color',
+      `'${textColor}'`,
+      '--plus-color',
+      `'${plusColor}'`,
+      '--output',
       `"${logoPath}"`,
     ].join(' '),
   );
@@ -194,11 +119,20 @@ function compositeLogo({ logoPath, width, height, output, maxWidth }) {
 }
 
 function generateIcon() {
-  const font = resolveFont();
   const tmpDir = join(tmpdir(), 'standby-brand-assets');
   mkdirSync(tmpDir, { recursive: true });
 
-  const logoPath = renderIconLogo({ font, tmpDir });
+  const logoPath = renderBrandMark({
+    tmpDir,
+    prefix: 'icon',
+    letter: 'S',
+    pointSize: iconPointSize,
+    plusPointSize: iconPlusPointSize,
+    plusOffsetY: iconPlusOffsetY,
+    plusAlign: 'top',
+    letterWeight,
+    plusWeight,
+  });
 
   compositeLogo({
     logoPath,
@@ -217,21 +151,17 @@ function generateAdaptiveIcon() {
 }
 
 function generateSplash() {
-  const font = resolveFont();
   const tmpDir = join(tmpdir(), 'standby-brand-assets');
   mkdirSync(tmpDir, { recursive: true });
 
-  const logoPath = renderAppendedLogo({
-    font,
+  const logoPath = renderBrandMark({
     tmpDir,
     prefix: 'splash',
     letter: 'StandBy',
     pointSize: splashPointSize,
     kerning: splashKerning,
-    thinLetter: true,
-    letterErode: splashLetterErode,
-    letterWeight: splashLetterWeight,
-    plusWeight: splashPlusWeight,
+    letterWeight,
+    plusWeight,
   });
 
   compositeLogo({
@@ -260,7 +190,14 @@ function syncIosSplashImages() {
     const size = iosSplashImageWidth * ratio;
     const suffix = ratio === 1 ? '' : `@${ratio}x`;
     const output = join(iosSplashDir, `image${suffix}.png`);
-    run(`magick "${splashOutput}" -resize ${size}x${size}! "${output}"`);
+    run(
+      [
+        `magick "${splashOutput}" -trim +repage`,
+        `-background '${backgroundColor}' -gravity center`,
+        `-filter Lanczos -resize ${size}x`,
+        `-extent ${size}x${size} "${output}"`,
+      ].join(' '),
+    );
   }
 
   console.log(`Synced iOS splash imageset from splash.png in ${iosSplashDir}`);

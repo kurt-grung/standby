@@ -10,6 +10,10 @@ export const standbyConfig = {
     projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',
     updatesUrl: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
   },
+  launch: {
+    initialRoute: '/' as const,
+    splashMinDurationMs: 700,
+  },
   devClient: {
     launchMode: 'most-recent' as const,
     defaultLaunchURL: 'http://localhost:8081',
@@ -35,21 +39,30 @@ export const standbyConfig = {
     splash: './assets/splash.png',
     splashImageWidth: 280,
     splashResizeMode: 'contain' as const,
+    wordmark: {
+      letterWeight: 200,
+      plusWeight: 300,
+    },
     assets: {
       canvasSize: 1024,
       iconPointSize: 460,
       iconPlusPointSize: 382,
-      iconLetterErode: 5.5,
-      iconPlusOffsetY: 6,
+      iconPlusOffsetY: 24,
       splashPointSize: 200,
       splashKerning: -2,
       splashLogoMaxWidth: 880,
-      splashLetterErode: 9,
-      splashLetterWeight: 200,
-      splashPlusWeight: 300,
       iconLogoMaxScale: 0.62,
     },
+    homeScenes: [
+      'phone-ref-c-nightstand-cable',
+      'phone-ref-n-japanese-minimal',
+      'phone-ref-a-medium-concrete',
+      'phone-ref-o-brutalist',
+      'phone-ref-k-red-glow',
+      'phone-ref-m-tech-noir',
+    ] as const,
   },
 } as const;
 
 export type StandbyConfig = typeof standbyConfig;
+export type HomeSceneId = (typeof standbyConfig.brand.homeScenes)[number];

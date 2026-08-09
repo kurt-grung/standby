@@ -11,6 +11,7 @@ import {
   homeWidgetStripHeight,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
+import { useSplashVisible } from '../theme/SplashGate';
 import { GroupedSection } from './GroupedSection';
 import { PreviewGlassLinkButton } from './PreviewGlassLinkButton';
 import { StandByWidgetPair } from './StandByWidgetPair';
@@ -21,7 +22,12 @@ type HomeWidgetPlaceholderProps = {
 };
 
 export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderProps) {
+  const splashVisible = useSplashVisible();
   const [containerWidth, setContainerWidth] = useState(0);
+
+  if (splashVisible) {
+    return null;
+  }
 
   const onLayout = (event: LayoutChangeEvent) => {
     setContainerWidth(event.nativeEvent.layout.width);

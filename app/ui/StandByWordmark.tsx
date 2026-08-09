@@ -1,4 +1,4 @@
-import { Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Text, View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
 
 import { groupedWordmarkSize } from '../theme/groupedLayout';
 import { standbyDesignSystem } from '../design-system';
@@ -12,6 +12,7 @@ type StandByWordmarkProps = {
   align?: StandByWordmarkAlign;
   style?: StyleProp<ViewStyle>;
   primaryColor?: string;
+  onLayout?: (event: LayoutChangeEvent) => void;
 };
 
 export function standByWordmarkMetrics(size: number) {
@@ -32,13 +33,19 @@ export function StandByWordmark({
   align = 'end',
   style,
   primaryColor,
+  onLayout,
 }: StandByWordmarkProps) {
   const chrome = useAppChrome();
   const metrics = standByWordmarkMetrics(size);
   const standByColor = primaryColor ?? chrome.colors.primary;
 
   return (
-    <View accessibilityLabel="StandBy+" className={alignClass[align]} style={style}>
+    <View
+      accessibilityLabel="StandBy+"
+      className={alignClass[align]}
+      style={style}
+      onLayout={onLayout}
+    >
       <Text className="font-extralight tracking-tight" style={metrics}>
         <Text
           style={{

@@ -1,19 +1,22 @@
 import '../global.css';
 
-import { DarkTheme, DefaultTheme, ThemeProvider, usePathname } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider, usePathname, useRouter } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
-import { AppState, DynamicColorIOS, useColorScheme } from 'react-native';
+import { AppState, DynamicColorIOS, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { SplashBrandScreen } from '../ui/SplashBrandScreen';
 import { nightMode } from '../ui/ultra/nightColors';
+import { standbyConfig } from '../config';
 import { disableDevToolsButton } from '../lib/disableDevToolsButton';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
+import { SplashGateProvider } from '../theme/SplashGate';
 import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+disableDevToolsButton();
 
 const tabTint = DynamicColorIOS({
   dark: '#FFFFFF',
@@ -57,12 +60,16 @@ function TabNavigation() {
 }
 
 export default function RootLayout() {
+  const router = useRouter();
   const [splashVisible, setSplashVisible] = useState(true);
 
-  const onRootLayout = useCallback(() => {
-    SplashScreen.hideAsync().catch(() => {});
+  const onSplashFinish = useCallback(() => {
     setSplashVisible(false);
   }, []);
+
+  useEffect(() => {
+    router.replace(standbyConfig.launch.initialRoute);
+  }, [router]);
 
   useEffect(() => {
     disableDevToolsButton();
@@ -71,6 +78,7 @@ export default function RootLayout() {
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') {
         refreshStandbyWidgets();
+        disableDevToolsButton();
       }
     });
 
@@ -78,11 +86,15 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <SafeAreaProvider onLayout={onRootLayout}>
+    <SafeAreaProvider>
       <StandbyThemeProvider>
-        <TabNavigation />
+        <SplashGateProvider splashVisible={splashVisible}>
+          <View style={{ flex: 1 }}>
+            <TabNavigation />
+            {splashVisible ? <SplashBrandScreen onFinish={onSplashFinish} /> : null}
+          </View>
+        </SplashGateProvider>
       </StandbyThemeProvider>
-      {splashVisible ? <SplashBrandScreen /> : null}
     </SafeAreaProvider>
   );
 }

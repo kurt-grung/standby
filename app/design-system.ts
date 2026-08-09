@@ -1,15 +1,16 @@
+import { standbyConfig } from './config';
+
 export type PreviewBackShape = 'pill' | 'round';
 export type PreviewBackOutlineShape = 'auto' | 'none' | 'pill' | 'round';
 
 export const standbyDesignSystem = {
   brand: {
-    plusColor: '#FF453A',
+    plusColor: standbyConfig.brand.plusColor,
     wordmark: {
       size: 42,
-      splashDisplaySize: 58,
       letterSpacing: -0.3,
-      weight: 200,
-      plusWeight: 300,
+      weight: standbyConfig.brand.wordmark.letterWeight,
+      plusWeight: standbyConfig.brand.wordmark.plusWeight,
     },
   },
   typography: {
