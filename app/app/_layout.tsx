@@ -1,28 +1,59 @@
 import '../global.css';
 
-import { Stack } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, DynamicColorIOS, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { nightMode } from '../components/ultra/nightColors';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
-import { ThemeProvider } from '../theme/ThemeContext';
-import { useAppChrome } from '../theme/useAppChrome';
+import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
 
-function RootNavigation() {
-  const chrome = useAppChrome();
+const tabTint = DynamicColorIOS({
+  dark: '#FFFFFF',
+  light: '#000000',
+});
+
+function TabNavigation() {
+  const colorScheme = useColorScheme();
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: 'fade',
-        contentStyle: { backgroundColor: chrome.colors.bg },
-      }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="home" />
-      <Stack.Screen name="ui" />
-    </Stack>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NativeTabs minimizeBehavior="onScrollDown" tintColor={tabTint}>
+        <NativeTabs.Trigger
+          name="index"
+          accessibilityLabel="Home"
+          disableTransparentOnScrollEdge>
+          <NativeTabs.Trigger.Icon
+            sf={{ default: 'house', selected: 'house.fill' }}
+            md="home"
+          />
+          <NativeTabs.Trigger.Label hidden />
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger
+          name="preview"
+          accessibilityLabel="Preview"
+          contentStyle={{ backgroundColor: nightMode.bg }}
+          disableTransparentOnScrollEdge>
+          <NativeTabs.Trigger.Icon
+            sf={{ default: 'play.rectangle', selected: 'play.rectangle.fill' }}
+            md="live_tv"
+          />
+          <NativeTabs.Trigger.Label hidden />
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger
+          name="ui"
+          accessibilityLabel="UI"
+          disableTransparentOnScrollEdge>
+          <NativeTabs.Trigger.Icon
+            sf={{ default: 'square.grid.2x2', selected: 'square.grid.2x2.fill' }}
+            md="grid_view"
+          />
+          <NativeTabs.Trigger.Label hidden />
+        </NativeTabs.Trigger>
+      </NativeTabs>
+    </ThemeProvider>
   );
 }
 
@@ -41,9 +72,9 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <RootNavigation />
-      </ThemeProvider>
+      <StandbyThemeProvider>
+        <TabNavigation />
+      </StandbyThemeProvider>
     </SafeAreaProvider>
   );
 }

@@ -4,7 +4,7 @@ import { Pressable, Text } from 'react-native';
 import { useAppChrome } from '../theme/useAppChrome';
 
 type NavLinkProps = {
-  href: '/' | '/home' | '/ui';
+  href: '/' | '/preview' | '/ui';
   label: string;
 };
 

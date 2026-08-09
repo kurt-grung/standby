@@ -2,8 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
-import { NavIconLink } from '../components/NavIconLink';
-import { NavRail } from '../components/NavRail';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
@@ -267,14 +265,8 @@ export default function UiScreen() {
   return (
     <>
       <StatusBar style={chrome.statusBar} />
-      <ScreenShell
-        contentClassName="px-6 pb-10 pt-2 pr-24"
-        overlay={
-          <NavRail>
-            <NavIconLink href="/home" icon="home" accessibilityLabel="Home" />
-          </NavRail>
-        }>
-        <View className="mb-8 pr-2">
+      <ScreenShell contentClassName="px-6 pb-10 pt-2">
+        <View className="mb-8">
           <Text
             className="text-[11px] font-semibold uppercase tracking-widest"
             style={{ color: chrome.colors.secondary }}>

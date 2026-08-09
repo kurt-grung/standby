@@ -8,14 +8,12 @@ type ScreenShellProps = {
   children: ReactNode;
   scroll?: boolean;
   contentClassName?: string;
-  overlay?: ReactNode;
 } & Pick<ScrollViewProps, 'showsVerticalScrollIndicator'>;
 
 export function ScreenShell({
   children,
   scroll = true,
   contentClassName = 'px-6 pb-10 pt-2',
-  overlay,
   showsVerticalScrollIndicator = false,
 }: ScreenShellProps) {
   const chrome = useAppChrome();
@@ -25,8 +23,7 @@ export function ScreenShell({
       <SafeAreaView
         className="flex-1"
         style={{ backgroundColor: chrome.colors.bg }}
-        edges={['top', 'left', 'right', 'bottom']}>
-        {overlay}
+        edges={['top', 'left', 'right']}>
         <View className={`flex-1 ${contentClassName}`}>{children}</View>
       </SafeAreaView>
     );
@@ -36,8 +33,7 @@ export function ScreenShell({
     <SafeAreaView
       className="flex-1"
       style={{ backgroundColor: chrome.colors.bg }}
-      edges={['top', 'left', 'right', 'bottom']}>
-      {overlay}
+      edges={['top', 'left', 'right']}>
       <ScrollView
         className="flex-1"
         contentContainerClassName={contentClassName}

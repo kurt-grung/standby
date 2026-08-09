@@ -11,9 +11,6 @@ export type AppChrome = {
     accent: string;
     accentSoft: string;
     track: string;
-    navButtonBg: string;
-    navButtonIcon: string;
-    navButtonBorder: string;
   };
 };
 
@@ -30,9 +27,6 @@ export const appChromeDark: AppChrome = {
     accent: '#FFFFFF',
     accentSoft: 'rgba(255, 255, 255, 0.12)',
     track: '#3A3A3C',
-    navButtonBg: '#FFFFFF',
-    navButtonIcon: '#000000',
-    navButtonBorder: 'rgba(0, 0, 0, 0.08)',
   },
 };
 
@@ -49,9 +43,6 @@ export const appChromeLight: AppChrome = {
     accent: '#000000',
     accentSoft: 'rgba(0, 0, 0, 0.08)',
     track: '#E5E5EA',
-    navButtonBg: '#FFFFFF',
-    navButtonIcon: '#000000',
-    navButtonBorder: 'rgba(0, 0, 0, 0.1)',
   },
 };
 

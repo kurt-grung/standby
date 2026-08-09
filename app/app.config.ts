@@ -84,6 +84,7 @@ const config: ExpoConfig = {
   },
   updates: {
     url: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
+    checkAutomatically: process.env.EAS_BUILD === 'true' ? 'ON_LOAD' : 'NEVER',
   },
 };
 

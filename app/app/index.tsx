@@ -1,45 +1,142 @@
-import * as ScreenOrientation from 'expo-screen-orientation';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { View } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-import { LandscapePreviewFrame } from '../components/LandscapePreviewFrame';
-import { NavIconLink } from '../components/NavIconLink';
-import { StandByPreview } from '../components/StandByPreview';
+import { GaugeValueControls } from '../components/GaugeValueControls';
+import { useLiveClock } from '../hooks/useLiveClock';
+import { ProgressBar } from '../components/ProgressBar';
+import { ScreenShell } from '../components/ScreenShell';
+import { SectionCard } from '../components/SectionCard';
+import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
+import { ThemeBadge } from '../components/ThemeBadge';
+import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { useAppChrome } from '../theme/useAppChrome';
+import { dayProgress, formatNightTime } from '../theme/ultra';
+import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 
-export default function PreviewScreen() {
-  const insets = useSafeAreaInsets();
+const GAUGE_STEP = 0.05;
+
+const standBySteps = [
+  'Run make standby on your Mac (best) or make device, then open StandBy+ once on the phone',
+  'Wait for the home screen to load (registers widget layouts)',
+  'Plug in your iPhone and rotate to landscape',
+  'Long-press StandBy, then tap Edit',
+  'Tap the left column and add Ultra Clock (Small)',
+  'Tap the right column and add Ultra Gauge (Small)',
+  'Open StandBy settings and choose Night or Mono',
+] as const;
+
+const gaugePresets = [
+  { label: 'DAY', icon: 'sun.max.fill' },
+  { label: 'ENERGY', icon: 'bolt.fill' },
+  { label: 'FOCUS', icon: 'scope' },
+] as const satisfies readonly Pick<UltraGaugeWidgetProps, 'label' | 'icon'>[];
+
+export default function HomeScreen() {
   const chrome = useAppChrome();
+  const [gaugeValue, setGaugeValue] = useState(0);
+  const [presetIndex, setPresetIndex] = useState(0);
+  const now = useLiveClock();
 
   useEffect(() => {
-    void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
-    return () => {
-      void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-    };
-  }, []);
+    const preset = gaugePresets[presetIndex] ?? gaugePresets[0];
+    refreshStandbyWidgets(gaugeValue, preset);
+  }, [gaugeValue, presetIndex]);
+
+  const activePreset = gaugePresets[presetIndex] ?? gaugePresets[0];
+  const displayValue = gaugeValue > 0 ? gaugeValue : dayProgress(now);
+  const percent = Math.round(displayValue * 100);
 
   return (
     <>
-      <StatusBar style={chrome.statusBar} hidden />
-      <SafeAreaView className="flex-1" style={{ backgroundColor: chrome.colors.bg }} edges={[]}>
-        <View className="flex-1" style={{ backgroundColor: chrome.colors.bg }}>
-          <LandscapePreviewFrame inset={12}>
-            <StandByPreview />
-          </LandscapePreviewFrame>
-          <View
-            pointerEvents="box-none"
-            style={{
-              position: 'absolute',
-              right: 18,
-              top: insets.top + 26,
-              zIndex: 10,
-            }}>
-            <NavIconLink href="/home" icon="home" accessibilityLabel="Home" />
-          </View>
+      <StatusBar style={chrome.statusBar} />
+      <ScreenShell contentClassName="px-6 pb-10 pt-2">
+        <View className="mb-6">
+          <ThemeBadge />
+          <Text className="text-[42px] font-extralight tracking-tight" style={{ color: chrome.colors.primary }}>
+            StandBy+
+          </Text>
+          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
+            Ultra Night widgets for iPhone StandBy
+          </Text>
+          <Text className="mt-4 text-3xl font-extralight" style={{ color: chrome.colors.primary }}>
+            {formatNightTime(now)}
+          </Text>
         </View>
-      </SafeAreaView>
+
+        <SectionCard label="Gauge">
+          <View className="mt-2 flex-row items-end justify-between">
+            <View className="flex-1">
+              <Text className="text-6xl font-extralight" style={{ color: chrome.colors.primary }}>
+                {percent}%
+              </Text>
+            </View>
+            <View
+              className="h-16 w-16 items-center justify-center rounded-full border-2"
+              style={{ borderColor: chrome.colors.border }}>
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
+                {activePreset.label}
+              </Text>
+            </View>
+          </View>
+
+          <ProgressBar value={displayValue} />
+
+          <Text className="mt-4 text-sm leading-5" style={{ color: chrome.colors.muted }}>
+            Leave at 0% to mirror day progress automatically in the widget.
+          </Text>
+
+          <View className="mt-5 flex-row">
+            {gaugePresets.map((preset, index) => {
+              const active = presetIndex === index;
+              return (
+                <Pressable
+                  key={preset.label}
+                  className={`mr-2 flex-1 items-center rounded-full border py-2.5 ${index === gaugePresets.length - 1 ? 'mr-0' : ''}`}
+                  style={{
+                    borderColor: active ? chrome.colors.primary : chrome.colors.border,
+                    backgroundColor: active ? chrome.colors.accentSoft : chrome.colors.surface,
+                  }}
+                  onPress={() => setPresetIndex(index)}>
+                  <Text
+                    className="text-[11px] font-semibold uppercase tracking-wide"
+                    style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}>
+                    {preset.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+
+          <View className="mt-4">
+            <GaugeValueControls
+              accent={chrome.colors.primary}
+              border={chrome.colors.border}
+              surface={chrome.colors.surface}
+              text={chrome.colors.primary}
+              onDecrease={() => setGaugeValue((value) => Math.max(0, value - GAUGE_STEP))}
+              onAuto={() => setGaugeValue(0)}
+              onIncrease={() => setGaugeValue((value) => Math.min(1, value + GAUGE_STEP))}
+            />
+          </View>
+        </SectionCard>
+
+        <SectionCard label="StandBy" title="Left and right widgets" className="mb-0">
+          <StandByLayoutGuide />
+          <View className="mt-5">
+            {standBySteps.map((step, index) => (
+              <View key={step} className={`flex-row ${index > 0 ? 'mt-3' : ''}`}>
+                <Text className="mr-3 w-5 text-sm font-semibold" style={{ color: chrome.colors.primary }}>
+                  {index + 1}.
+                </Text>
+                <Text className="flex-1 text-sm leading-5" style={{ color: chrome.colors.secondary }}>
+                  {step}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </SectionCard>
+      </ScreenShell>
     </>
   );
 }

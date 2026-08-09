@@ -1,20 +1,25 @@
 import type { ReactNode } from 'react';
 import { View, useWindowDimensions } from 'react-native';
 
-import { useAppChrome } from '../theme/useAppChrome';
+import { nightMode } from './ultra/nightColors';
 
 type LandscapePreviewFrameProps = {
   children: ReactNode;
   inset?: number;
 };
 
+const previewBg = nightMode.bg;
+
 export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreviewFrameProps) {
   const { width, height } = useWindowDimensions();
-  const chrome = useAppChrome();
   const isPortrait = height >= width;
 
   if (!isPortrait) {
-    return <View className="flex-1" style={{ backgroundColor: chrome.colors.bg }}>{children}</View>;
+    return (
+      <View className="flex-1" style={{ backgroundColor: previewBg }}>
+        {children}
+      </View>
+    );
   }
 
   const landscapeWidth = height;
@@ -26,9 +31,7 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
   const frameHeight = height * scale;
 
   return (
-    <View
-      className="flex-1 items-center justify-center"
-      style={{ backgroundColor: chrome.colors.bg }}>
+    <View className="flex-1 items-center justify-center" style={{ backgroundColor: previewBg }}>
       <View
         style={{
           width: frameWidth,

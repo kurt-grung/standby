@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s ios device standby android web kill clean prebuild rebuild tsc typecheck \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -30,9 +30,9 @@ i: install ## Shorthand for install
 
 app: ios ## Build native app and run on iOS simulator
 
-run: ## Start Expo dev server (Metro)
+run: ## Start Expo dev server (Metro) for the dev client
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --port $(EXPO_PORT)
+	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT)
 
 start s: run ## Alias for run
 
@@ -40,6 +40,11 @@ ios: ## Build native app and run on iOS simulator (widgets need this, not Expo G
 	$(call require_app)
 	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npm run ios
+
+dev: ## Live dev: Metro + open simulator app (run ios once first)
+	$(call require_app)
+	@echo "Starting Metro on :$(EXPO_PORT). Press i to open iOS simulator, or reload with r."
+	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT)
 
 device: ## Dev build on iPhone — embeds JS; open app once so widgets register
 	$(call require_app)
