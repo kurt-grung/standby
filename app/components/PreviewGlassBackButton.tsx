@@ -1,11 +1,20 @@
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import { GlassView } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
 import { SymbolView } from 'expo-symbols';
 import type { ComponentType } from 'react';
-import { DynamicColorIOS, Pressable, StyleSheet } from 'react-native';
+import { DynamicColorIOS, Pressable, StyleSheet, View } from 'react-native';
 
-import { nativeTabBarHeight, nativeTabBarIconSize } from '../theme/nativeTabBarMetrics';
+import {
+  nativeTabBarIconSize,
+  previewBackGlassColorScheme,
+  previewBackGlassTintColor,
+  previewBackNightCircleSize,
+  previewBackPillHeight,
+  previewBackPillRadius,
+  previewBackPillWidth,
+} from '../theme/nativeTabBarMetrics';
+import { nightMode } from './ultra/nightColors';
 
 type NativeGlassViewProps = GlassViewProps & {
   borderRadius?: number;
@@ -19,38 +28,50 @@ const iconTint = DynamicColorIOS({
 });
 
 export function PreviewGlassBackButton() {
-  const router = useRouter();
-  const radius = nativeTabBarHeight / 2;
-
   return (
-    <NativeGlassView
-      isInteractive
-      glassEffectStyle="clear"
-      colorScheme="dark"
-      borderRadius={radius}
-      style={styles.glass}
-    >
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Home"
-        onPress={() => router.push('/')}
-        style={styles.pressable}
+    <View style={styles.wrap}>
+      <View style={styles.nightCircle} />
+      <NativeGlassView
+        isInteractive
+        glassEffectStyle="clear"
+        colorScheme={previewBackGlassColorScheme}
+        tintColor={previewBackGlassTintColor}
+        borderRadius={previewBackPillRadius}
+        style={styles.glass}
       >
-        <SymbolView
-          name="chevron.left"
-          size={nativeTabBarIconSize}
-          tintColor={iconTint}
-          weight="semibold"
-        />
-      </Pressable>
-    </NativeGlassView>
+        <Link href="/" asChild>
+          <Pressable accessibilityRole="button" accessibilityLabel="Home" style={styles.pressable}>
+            <SymbolView
+              name="chevron.left"
+              size={nativeTabBarIconSize}
+              tintColor={iconTint}
+              weight="semibold"
+            />
+          </Pressable>
+        </Link>
+      </NativeGlassView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrap: {
+    width: previewBackPillWidth,
+    height: previewBackPillHeight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'visible',
+  },
+  nightCircle: {
+    position: 'absolute',
+    width: previewBackNightCircleSize,
+    height: previewBackNightCircleSize,
+    borderRadius: previewBackNightCircleSize / 2,
+    backgroundColor: nightMode.primary,
+  },
   glass: {
-    width: nativeTabBarHeight,
-    height: nativeTabBarHeight,
+    width: previewBackPillWidth,
+    height: previewBackPillHeight,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'visible',

@@ -6,7 +6,9 @@ import {
   previewBackOverlayPressPaddingRight,
   previewBackOverlayPressPaddingTop,
   previewBackOverlayRight,
+  previewBackOverlayRightTune,
   previewBackOverlayTop,
+  previewBackOverlayTopTune,
 } from '../theme/nativeTabBarMetrics';
 import { nightMode } from './ultra/nightColors';
 
@@ -50,8 +52,8 @@ function LandscapeTopRightOverlay({ children }: { children: ReactNode }) {
       pointerEvents="box-none"
       style={{
         position: 'absolute',
-        right: previewBackOverlayRight - 35,
-        top: previewBackOverlayTop - 10,
+        right: previewBackOverlayRight + previewBackOverlayRightTune,
+        top: previewBackOverlayTop + previewBackOverlayTopTune,
         zIndex: 10,
         alignItems: 'flex-end',
         overflow: 'visible',

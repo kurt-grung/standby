@@ -8,3 +8,14 @@ export const previewBackOverlayTop = nativeTabBarEdgePadding - glassPressOverflo
 export const previewBackOverlayRight = nativeTabBarEdgePadding - glassPressOverflow;
 export const previewBackOverlayPressPaddingTop = glassPressOverflow;
 export const previewBackOverlayPressPaddingRight = glassPressOverflow;
+
+export const previewBackOverlayRightTune = -50;
+export const previewBackOverlayTopTune = -10;
+
+export const previewBackGlassTintColor = 'transparent';
+export const previewBackGlassColorScheme = 'dark';
+
+export const previewBackPillHeight = nativeTabBarHeight;
+export const previewBackPillWidth = 72;
+export const previewBackPillRadius = previewBackPillHeight / 2;
+export const previewBackNightCircleSize = 4;

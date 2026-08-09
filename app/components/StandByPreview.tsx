@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { View, type LayoutChangeEvent } from 'react-native';
 
 import { useLiveClock } from '../hooks/useLiveClock';
+import {
+  standByOuterPad,
+  standByWidgetGap,
+  standByWidgetSize,
+} from '../theme/standByPreviewLayout';
 import { ModularUltraFace } from './ultra/ModularUltraFace';
 import { StatusGaugeFace } from './ultra/StatusGaugeFace';
 import { nightMode } from './ultra/nightColors';
@@ -11,14 +16,11 @@ type StandByPreviewProps = {
   gaugeLabel?: string;
 };
 
-const WIDGET_GAP = 12;
-const OUTER_PAD = 20;
+const WIDGET_GAP = standByWidgetGap;
+const OUTER_PAD = standByOuterPad;
 
 function widgetSize(width: number, height: number) {
-  if (width <= 0 || height <= 0) return 0;
-  const maxByHeight = height - OUTER_PAD * 2;
-  const maxByWidth = (width - OUTER_PAD * 2 - WIDGET_GAP) / 2;
-  return Math.floor(Math.min(maxByHeight, maxByWidth));
+  return standByWidgetSize(width, height);
 }
 
 export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
