@@ -1,11 +1,6 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 
-import {
-  defaultThemeId,
-  type StandbyTheme,
-  type ThemeId,
-  themes,
-} from './themes';
+import { defaultThemeId, type StandbyTheme, type ThemeId, themes } from './themes';
 
 type ThemeContextValue = {
   theme: StandbyTheme;

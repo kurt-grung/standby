@@ -12,13 +12,7 @@ function polar(cx: number, cy: number, radius: number, angleDeg: number) {
   };
 }
 
-function describeArc(
-  cx: number,
-  cy: number,
-  radius: number,
-  startAngle: number,
-  endAngle: number,
-) {
+function describeArc(cx: number, cy: number, radius: number, startAngle: number, endAngle: number) {
   const start = polar(cx, cy, radius, endAngle);
   const end = polar(cx, cy, radius, startAngle);
   const largeArc = endAngle - startAngle <= 180 ? 0 : 1;
@@ -134,20 +128,23 @@ export function TempComplication({ size, value, low, high }: TempComplicationPro
             fontSize: size * 0.34,
             fontWeight: '600',
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           {value}
         </Text>
       </ArcGauge>
       <View
         className="w-full flex-row justify-between"
-        style={{ height: 14, paddingHorizontal: 2, marginTop: 2 }}>
+        style={{ height: 14, paddingHorizontal: 2, marginTop: 2 }}
+      >
         <Text
           style={{
             color: nightMode.secondary,
             fontSize: 9,
             fontWeight: '700',
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           {low}
         </Text>
         <Text
@@ -156,7 +153,8 @@ export function TempComplication({ size, value, low, high }: TempComplicationPro
             fontSize: 9,
             fontWeight: '700',
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           {high}
         </Text>
       </View>
@@ -181,7 +179,8 @@ export function UvComplication({ size, value }: UvComplicationProps) {
               fontWeight: '600',
               fontVariant: ['tabular-nums'],
               marginTop: -2,
-            }}>
+            }}
+          >
             {value}
           </Text>
           <View

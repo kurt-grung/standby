@@ -20,7 +20,8 @@ export function DateComplication({ size = 44, now }: { size?: number; now: Date 
               fontSize: 9,
               fontWeight: '800',
               letterSpacing: 0.6,
-            }}>
+            }}
+          >
             {weekday}
           </Text>
           <Text
@@ -30,7 +31,8 @@ export function DateComplication({ size = 44, now }: { size?: number; now: Date 
               fontWeight: '600',
               fontVariant: ['tabular-nums'],
               marginTop: -1,
-            }}>
+            }}
+          >
             {day}
           </Text>
         </View>
@@ -40,7 +42,13 @@ export function DateComplication({ size = 44, now }: { size?: number; now: Date 
   );
 }
 
-export function BatteryComplication({ size = 44, percent = 86 }: { size?: number; percent?: number }) {
+export function BatteryComplication({
+  size = 44,
+  percent = 86,
+}: {
+  size?: number;
+  percent?: number;
+}) {
   const bodyW = size * 0.44;
   const bodyH = size * 0.28;
   const tipW = size * 0.08;
@@ -59,7 +67,8 @@ export function BatteryComplication({ size = 44, percent = 86 }: { size?: number
               borderColor: nightMode.primary,
               justifyContent: 'center',
               paddingHorizontal: 2.5,
-            }}>
+            }}
+          >
             <View
               style={{
                 width: fillW,
@@ -129,7 +138,8 @@ export function SunsetComplication({ size = 44, label }: { size?: number; label:
             fontWeight: '800',
             fontVariant: ['tabular-nums'],
             letterSpacing: 0.2,
-          }}>
+          }}
+        >
           {label}
         </Text>
       </View>
@@ -143,8 +153,22 @@ export function NoiseComplication({ size = 44, db = 42 }: { size?: number; db?: 
       <FullRing size={size} progress={Math.min(1, db / 100)} stroke={size * 0.14}>
         <View className="items-center">
           <Svg width={size * 0.42} height={size * 0.3}>
-            <Rect x={0} y={size * 0.1} width={4} height={size * 0.14} fill={nightMode.primary} rx={1.5} />
-            <Rect x={7} y={size * 0.04} width={4} height={size * 0.22} fill={nightMode.primary} rx={1.5} />
+            <Rect
+              x={0}
+              y={size * 0.1}
+              width={4}
+              height={size * 0.14}
+              fill={nightMode.primary}
+              rx={1.5}
+            />
+            <Rect
+              x={7}
+              y={size * 0.04}
+              width={4}
+              height={size * 0.22}
+              fill={nightMode.primary}
+              rx={1.5}
+            />
             <Rect x={14} y={0} width={4} height={size * 0.3} fill={nightMode.secondary} rx={1.5} />
           </Svg>
           <Text
@@ -154,7 +178,8 @@ export function NoiseComplication({ size = 44, db = 42 }: { size?: number; db?: 
               fontWeight: '700',
               fontVariant: ['tabular-nums'],
               marginTop: 1,
-            }}>
+            }}
+          >
             {db}
           </Text>
         </View>

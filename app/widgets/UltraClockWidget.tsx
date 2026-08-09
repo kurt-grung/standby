@@ -43,17 +43,13 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
   if (isSmall) {
     return (
       <ZStack
-        modifiers={[
-          containerBackground(background, 'widget'),
-          clipShape('containerRelativeShape'),
-        ]}>
+        modifiers={[containerBackground(background, 'widget'), clipShape('containerRelativeShape')]}
+      >
         <VStack
           alignment="center"
           spacing={5}
-          modifiers={[
-            padding({ all: 10 }),
-            frame({ maxWidth: Infinity, maxHeight: Infinity }),
-          ]}>
+          modifiers={[padding({ all: 10 }), frame({ maxWidth: Infinity, maxHeight: Infinity })]}
+        >
           <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
             <Gauge
               value={(temp - 52) / 37}
@@ -68,7 +64,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
               modifiers={[
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 foregroundStyle(secondary),
-              ]}>
+              ]}
+            >
               {dateLabel}
             </Text>
             <Spacer />
@@ -87,7 +84,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
               font({ design: 'rounded', weight: 'semibold', size: timeSize }),
               monospacedDigit(),
               foregroundStyle(primary),
-            ]}>
+            ]}
+          >
             {timeLabel}
           </Text>
 
@@ -105,14 +103,16 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
                 font({ design: 'rounded', weight: 'semibold', size: 11 }),
                 monospacedDigit(),
                 foregroundStyle(primary),
-              ]}>
+              ]}
+            >
               DAY {dayPercent}%
             </Text>
             <Text
               modifiers={[
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 foregroundStyle(muted),
-              ]}>
+              ]}
+            >
               UV {uv}
             </Text>
           </HStack>
@@ -123,17 +123,16 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
 
   return (
     <ZStack
-      modifiers={[
-        containerBackground(background, 'widget'),
-        clipShape('containerRelativeShape'),
-      ]}>
+      modifiers={[containerBackground(background, 'widget'), clipShape('containerRelativeShape')]}
+    >
       <VStack
         alignment="leading"
         spacing={8}
         modifiers={[
           padding({ all: isLarge ? 18 : 14 }),
           frame({ maxWidth: Infinity, maxHeight: Infinity, alignment: 'leading' }),
-        ]}>
+        ]}
+      >
         <HStack spacing={10} modifiers={[frame({ maxWidth: Infinity })]}>
           <Gauge
             value={(temp - 52) / 37}
@@ -148,14 +147,16 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
               modifiers={[
                 font({ design: 'rounded', weight: 'semibold', size: 12 }),
                 foregroundStyle(secondary),
-              ]}>
+              ]}
+            >
               {temp}°
             </Text>
             <Text
               modifiers={[
                 font({ design: 'rounded', weight: 'medium', size: 10 }),
                 foregroundStyle(muted),
-              ]}>
+              ]}
+            >
               52 / 89
             </Text>
           </VStack>
@@ -164,7 +165,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 13 }),
               foregroundStyle(primary),
-            ]}>
+            ]}
+          >
             {dateLabel}
           </Text>
         </HStack>
@@ -176,7 +178,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             font({ design: 'rounded', weight: 'semibold', size: timeSize }),
             monospacedDigit(),
             foregroundStyle(primary),
-          ]}>
+          ]}
+        >
           {isLarge ? timeWithSeconds : timeLabel}
         </Text>
 
@@ -186,7 +189,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
               monospacedDigit(),
               foregroundStyle(primary),
-            ]}>
+            ]}
+          >
             DAY {dayPercent}%
           </Text>
           <Spacer />
@@ -202,7 +206,8 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 11 }),
               foregroundStyle(secondary),
-            ]}>
+            ]}
+          >
             UV {uv}
           </Text>
         </HStack>

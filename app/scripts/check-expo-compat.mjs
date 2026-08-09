@@ -53,13 +53,9 @@ function findReactNavigationImports() {
 
 function findReactNavigationDependencies() {
   const pkg = JSON.parse(readFileSync(join(appRoot, 'package.json'), 'utf8'));
-  const names = [
-    ...Object.keys(pkg.dependencies ?? {}),
-    ...Object.keys(pkg.devDependencies ?? {}),
-  ];
+  const names = [...Object.keys(pkg.dependencies ?? {}), ...Object.keys(pkg.devDependencies ?? {})];
 
-  return [...new Set(names.filter((name) => name.startsWith('@react-navigation/')))]
-    .sort();
+  return [...new Set(names.filter((name) => name.startsWith('@react-navigation/')))].sort();
 }
 
 const importHits = findReactNavigationImports();

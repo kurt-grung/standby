@@ -37,7 +37,8 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
           width: frameWidth,
           height: frameHeight,
           overflow: 'hidden',
-        }}>
+        }}
+      >
         <View
           style={{
             position: 'absolute',
@@ -46,7 +47,8 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
             left: frameWidth / 2 - landscapeWidth / 2,
             top: frameHeight / 2 - landscapeHeight / 2,
             transform: [{ rotate: '90deg' }, { scale }],
-          }}>
+          }}
+        >
           {children}
         </View>
       </View>

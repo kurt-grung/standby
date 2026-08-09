@@ -21,31 +21,23 @@ function TabNavigation() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NativeTabs minimizeBehavior="onScrollDown" tintColor={tabTint}>
-        <NativeTabs.Trigger
-          name="index"
-          accessibilityLabel="Home"
-          disableTransparentOnScrollEdge>
-          <NativeTabs.Trigger.Icon
-            sf={{ default: 'house', selected: 'house.fill' }}
-            md="home"
-          />
+        <NativeTabs.Trigger name="index" accessibilityLabel="Home" disableTransparentOnScrollEdge>
+          <NativeTabs.Trigger.Icon sf={{ default: 'house', selected: 'house.fill' }} md="home" />
           <NativeTabs.Trigger.Label hidden />
         </NativeTabs.Trigger>
         <NativeTabs.Trigger
           name="preview"
           accessibilityLabel="Preview"
           contentStyle={{ backgroundColor: nightMode.bg }}
-          disableTransparentOnScrollEdge>
+          disableTransparentOnScrollEdge
+        >
           <NativeTabs.Trigger.Icon
             sf={{ default: 'play.rectangle', selected: 'play.rectangle.fill' }}
             md="live_tv"
           />
           <NativeTabs.Trigger.Label hidden />
         </NativeTabs.Trigger>
-        <NativeTabs.Trigger
-          name="ui"
-          accessibilityLabel="UI"
-          disableTransparentOnScrollEdge>
+        <NativeTabs.Trigger name="ui" accessibilityLabel="UI" disableTransparentOnScrollEdge>
           <NativeTabs.Trigger.Icon
             sf={{ default: 'square.grid.2x2', selected: 'square.grid.2x2.fill' }}
             md="grid_view"

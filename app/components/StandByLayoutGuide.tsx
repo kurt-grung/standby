@@ -15,7 +15,8 @@ function StandBySlot({ side, widget }: StandBySlotProps) {
     <View className="flex-1">
       <Text
         className="mb-2 text-[10px] font-semibold uppercase tracking-widest"
-        style={{ color: chrome.colors.muted }}>
+        style={{ color: chrome.colors.muted }}
+      >
         {side}
       </Text>
       <View
@@ -23,8 +24,12 @@ function StandBySlot({ side, widget }: StandBySlotProps) {
         style={{
           borderColor: chrome.colors.border,
           backgroundColor: '#000000',
-        }}>
-        <View className="mb-3 h-10 w-10 rounded-full border-2" style={{ borderColor: nightMode.primary }} />
+        }}
+      >
+        <View
+          className="mb-3 h-10 w-10 rounded-full border-2"
+          style={{ borderColor: nightMode.primary }}
+        />
         <Text className="text-center text-sm font-medium" style={{ color: '#FFFFFF' }}>
           {widget}
         </Text>
@@ -43,21 +48,29 @@ export function StandByLayoutGuide() {
     <View className="mt-4">
       <View
         className="rounded-3xl border p-4"
-        style={{ borderColor: chrome.colors.border, backgroundColor: '#000000' }}>
+        style={{ borderColor: chrome.colors.border, backgroundColor: '#000000' }}
+      >
         <View className="mb-3 flex-row items-center justify-between px-1">
           <StandBySlot side="Left" widget="Ultra Clock" />
-          <View className="mx-2 w-px self-stretch" style={{ backgroundColor: chrome.colors.border }} />
+          <View
+            className="mx-2 w-px self-stretch"
+            style={{ backgroundColor: chrome.colors.border }}
+          />
           <View className="items-center justify-center px-1" style={{ width: 72 }}>
             <Text
               className="text-[10px] font-semibold uppercase tracking-widest"
-              style={{ color: chrome.colors.muted }}>
+              style={{ color: chrome.colors.muted }}
+            >
               Center
             </Text>
             <Text className="mt-3 text-2xl font-extralight" style={{ color: '#FFFFFF' }}>
               9:41
             </Text>
           </View>
-          <View className="mx-2 w-px self-stretch" style={{ backgroundColor: chrome.colors.border }} />
+          <View
+            className="mx-2 w-px self-stretch"
+            style={{ backgroundColor: chrome.colors.border }}
+          />
           <StandBySlot side="Right" widget="Ultra Gauge" />
         </View>
       </View>

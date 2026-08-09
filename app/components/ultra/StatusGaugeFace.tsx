@@ -39,7 +39,8 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
             fontSize: 10,
             fontWeight: '800',
             letterSpacing: 1.2,
-          }}>
+          }}
+        >
           {label}
         </Text>
         <Text
@@ -48,13 +49,15 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
             fontSize: 13,
             fontWeight: '700',
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           {value}
         </Text>
       </View>
       <View
         className="overflow-hidden rounded-full"
-        style={{ height: 8, backgroundColor: nightMode.track }}>
+        style={{ height: 8, backgroundColor: nightMode.track }}
+      >
         <View
           className="h-full rounded-full"
           style={{ width: `${percent}%`, backgroundColor: nightMode.primary }}
@@ -95,20 +98,17 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
         borderWidth: 1.5,
         borderColor: nightMode.border,
       }}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       <View
         className="flex-1"
         style={{
           paddingHorizontal: panelLayout.padX,
           paddingVertical: panelLayout.padY,
-        }}>
+        }}
+      >
         <View className="flex-row items-start justify-between">
-          <TempComplication
-            size={ringSize}
-            value={temperature}
-            low={tempLow}
-            high={tempHigh}
-          />
+          <TempComplication size={ringSize} value={temperature} low={tempLow} high={tempHigh} />
           <NoiseComplication size={ringSize} db={noiseDb} />
           <BatteryComplication size={ringSize} percent={batteryPercent} />
         </View>
@@ -118,7 +118,8 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
           style={{
             marginTop: panelLayout.sectionGap,
             marginBottom: panelLayout.sectionGap,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: nightMode.secondary,
@@ -126,7 +127,8 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
               fontWeight: '800',
               letterSpacing: 2,
               marginBottom: 6,
-            }}>
+            }}
+          >
             STATUS
           </Text>
           <ArcGauge size={heroSize} progress={progress} stroke={heroSize * 0.11}>
@@ -138,7 +140,8 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
                   fontWeight: '600',
                   fontVariant: ['tabular-nums'],
                   lineHeight: heroSize * 0.3,
-                }}>
+                }}
+              >
                 {dayPercent}
               </Text>
               <Text
@@ -148,7 +151,8 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
                   fontWeight: '800',
                   letterSpacing: 2,
                   marginTop: 2,
-                }}>
+                }}
+              >
                 DAY %
               </Text>
             </View>
@@ -156,22 +160,9 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
         </View>
 
         <View style={{ marginBottom: panelLayout.sectionGap }}>
-          <MetricRow
-            label="FOCUS"
-            value={`${Math.round(focus * 100)}%`}
-            progress={focus}
-          />
-          <MetricRow
-            label="BATTERY"
-            value={`${batteryPercent}%`}
-            progress={batteryPercent / 100}
-          />
-          <MetricRow
-            label="NOISE"
-            value={`${noiseDb} dB`}
-            progress={noiseDb / 100}
-            last
-          />
+          <MetricRow label="FOCUS" value={`${Math.round(focus * 100)}%`} progress={focus} />
+          <MetricRow label="BATTERY" value={`${batteryPercent}%`} progress={batteryPercent / 100} />
+          <MetricRow label="NOISE" value={`${noiseDb} dB`} progress={noiseDb / 100} last />
         </View>
 
         <View className="flex-row items-start justify-between">

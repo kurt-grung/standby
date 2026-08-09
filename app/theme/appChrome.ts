@@ -46,6 +46,8 @@ export const appChromeLight: AppChrome = {
   },
 };
 
-export function getAppChrome(colorScheme: 'light' | 'dark' | null | undefined | 'unspecified'): AppChrome {
+export function getAppChrome(
+  colorScheme: 'light' | 'dark' | null | undefined | 'unspecified',
+): AppChrome {
   return colorScheme === 'light' ? appChromeLight : appChromeDark;
 }

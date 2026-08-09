@@ -23,7 +23,8 @@ export function ScreenShell({
       <SafeAreaView
         className="flex-1"
         style={{ backgroundColor: chrome.colors.bg }}
-        edges={['top', 'left', 'right']}>
+        edges={['top', 'left', 'right']}
+      >
         <View className={`flex-1 ${contentClassName}`}>{children}</View>
       </SafeAreaView>
     );
@@ -33,12 +34,14 @@ export function ScreenShell({
     <SafeAreaView
       className="flex-1"
       style={{ backgroundColor: chrome.colors.bg }}
-      edges={['top', 'left', 'right']}>
+      edges={['top', 'left', 'right']}
+    >
       <ScrollView
         className="flex-1"
         contentContainerClassName={contentClassName}
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={showsVerticalScrollIndicator}>
+        showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      >
         {children}
       </ScrollView>
     </SafeAreaView>

@@ -36,7 +36,8 @@ export function GaugeValueControls({
           accessibilityLabel="Decrease gauge value"
           className="mr-2 min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
           style={{ borderColor: border, backgroundColor: surface }}
-          onPress={onDecrease}>
+          onPress={onDecrease}
+        >
           <Text className="text-2xl font-semibold" style={{ color: text }}>
             −
           </Text>
@@ -45,7 +46,8 @@ export function GaugeValueControls({
           accessibilityLabel="Use automatic day progress"
           className="mr-2 min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
           style={{ borderColor: `${accent}80`, backgroundColor: `${accent}26` }}
-          onPress={onAuto}>
+          onPress={onAuto}
+        >
           <Text className="text-sm font-semibold uppercase tracking-wide" style={{ color: accent }}>
             Auto
           </Text>
@@ -54,7 +56,8 @@ export function GaugeValueControls({
           accessibilityLabel="Increase gauge value"
           className="min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
           style={{ borderColor: border, backgroundColor: surface }}
-          onPress={onIncrease}>
+          onPress={onIncrease}
+        >
           <Text className="text-2xl font-semibold" style={{ color: text }}>
             +
           </Text>
@@ -84,7 +87,8 @@ export function GaugeValueControls({
         colorScheme="dark"
         matchContents={{ horizontal: true, vertical: true }}
         seedColor={accent}
-        style={{ flex: 1, width: '100%' }}>
+        style={{ flex: 1, width: '100%' }}
+      >
         <HStack spacing={8}>
           <Button
             label="Decrease"

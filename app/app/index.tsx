@@ -53,7 +53,10 @@ export default function HomeScreen() {
       <ScreenShell contentClassName="px-6 pb-10 pt-2">
         <View className="mb-6">
           <ThemeBadge />
-          <Text className="text-[42px] font-extralight tracking-tight" style={{ color: chrome.colors.primary }}>
+          <Text
+            className="text-[42px] font-extralight tracking-tight"
+            style={{ color: chrome.colors.primary }}
+          >
             StandBy+
           </Text>
           <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
@@ -73,7 +76,8 @@ export default function HomeScreen() {
             </View>
             <View
               className="h-16 w-16 items-center justify-center rounded-full border-2"
-              style={{ borderColor: chrome.colors.border }}>
+              style={{ borderColor: chrome.colors.border }}
+            >
               <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
                 {activePreset.label}
               </Text>
@@ -97,10 +101,12 @@ export default function HomeScreen() {
                     borderColor: active ? chrome.colors.primary : chrome.colors.border,
                     backgroundColor: active ? chrome.colors.accentSoft : chrome.colors.surface,
                   }}
-                  onPress={() => setPresetIndex(index)}>
+                  onPress={() => setPresetIndex(index)}
+                >
                   <Text
                     className="text-[11px] font-semibold uppercase tracking-wide"
-                    style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}>
+                    style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}
+                  >
                     {preset.label}
                   </Text>
                 </Pressable>
@@ -126,10 +132,16 @@ export default function HomeScreen() {
           <View className="mt-5">
             {standBySteps.map((step, index) => (
               <View key={step} className={`flex-row ${index > 0 ? 'mt-3' : ''}`}>
-                <Text className="mr-3 w-5 text-sm font-semibold" style={{ color: chrome.colors.primary }}>
+                <Text
+                  className="mr-3 w-5 text-sm font-semibold"
+                  style={{ color: chrome.colors.primary }}
+                >
                   {index + 1}.
                 </Text>
-                <Text className="flex-1 text-sm leading-5" style={{ color: chrome.colors.secondary }}>
+                <Text
+                  className="flex-1 text-sm leading-5"
+                  style={{ color: chrome.colors.secondary }}
+                >
                   {step}
                 </Text>
               </View>

@@ -8,7 +8,10 @@ export function ProgressBar({ value }: { value: number }) {
 
   return (
     <View className="mt-4">
-      <View className="h-1.5 overflow-hidden rounded-full" style={{ backgroundColor: chrome.colors.track }}>
+      <View
+        className="h-1.5 overflow-hidden rounded-full"
+        style={{ backgroundColor: chrome.colors.track }}
+      >
         <View
           className="h-full rounded-full"
           style={{ width: `${percent}%`, backgroundColor: chrome.colors.primary }}

@@ -28,7 +28,20 @@ function formatTime(date: Date): string {
   return `${hour12}:${minuteLabel}:${secondLabel}`;
 }
 
-const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'] as const;
+const MONTHS = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+] as const;
 const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] as const;
 
 export const ModularUltraFace = memo(function ModularUltraFace({
@@ -59,7 +72,8 @@ export const ModularUltraFace = memo(function ModularUltraFace({
         borderWidth: 1.5,
         borderColor: nightMode.border,
       }}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       <SecondsBezel width={size.width} height={size.height} inset={1.5} cornerRadius={32} />
 
       <View
@@ -67,14 +81,10 @@ export const ModularUltraFace = memo(function ModularUltraFace({
         style={{
           paddingHorizontal: panelLayout.padX,
           paddingVertical: panelLayout.padY,
-        }}>
+        }}
+      >
         <View className="flex-row items-start justify-between">
-          <TempComplication
-            size={ringSize}
-            value={temperature}
-            low={tempLow}
-            high={tempHigh}
-          />
+          <TempComplication size={ringSize} value={temperature} low={tempLow} high={tempHigh} />
           <DateComplication size={ringSize} now={now} />
           <BatteryComplication size={ringSize} percent={batteryPercent} />
         </View>
@@ -84,7 +94,8 @@ export const ModularUltraFace = memo(function ModularUltraFace({
           style={{
             marginTop: panelLayout.sectionGap,
             marginBottom: panelLayout.sectionGap,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: nightMode.secondary,
@@ -92,7 +103,8 @@ export const ModularUltraFace = memo(function ModularUltraFace({
               fontWeight: '800',
               letterSpacing: 2,
               marginBottom: 4,
-            }}>
+            }}
+          >
             CLOCK
           </Text>
           <Text
@@ -106,7 +118,8 @@ export const ModularUltraFace = memo(function ModularUltraFace({
               textShadowColor: nightMode.glow,
               textShadowRadius: 12,
               textShadowOffset: { width: 0, height: 0 },
-            }}>
+            }}
+          >
             {timeLabel}
           </Text>
           <Text
@@ -116,7 +129,8 @@ export const ModularUltraFace = memo(function ModularUltraFace({
               fontSize: 12,
               fontWeight: '800',
               letterSpacing: 1.4,
-            }}>
+            }}
+          >
             {dateLabel}
           </Text>
         </View>

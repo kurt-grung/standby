@@ -36,7 +36,8 @@ export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
     <View
       className="flex-1 items-center justify-center"
       style={{ backgroundColor: nightMode.bg }}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       {size > 0 ? (
         <View className="flex-row items-center">
           <View style={{ width: size, height: size }}>

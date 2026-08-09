@@ -32,8 +32,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   const clamped = Math.min(1, Math.max(0, props.value));
   const percent = Math.round(clamped * 100);
   const date = environment.date;
-  const dayProgress =
-    (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
+  const dayProgress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
   const temp = 68;
   const uv = 4;
   const battery = 74;
@@ -43,24 +42,21 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   if (isSmall) {
     return (
       <ZStack
-        modifiers={[
-          containerBackground(background, 'widget'),
-          clipShape('containerRelativeShape'),
-        ]}>
+        modifiers={[containerBackground(background, 'widget'), clipShape('containerRelativeShape')]}
+      >
         <VStack
           alignment="center"
           spacing={4}
-          modifiers={[
-            padding({ all: 10 }),
-            frame({ maxWidth: Infinity, maxHeight: Infinity }),
-          ]}>
+          modifiers={[padding({ all: 10 }), frame({ maxWidth: Infinity, maxHeight: Infinity })]}
+        >
           <HStack spacing={6} modifiers={[frame({ maxWidth: Infinity })]}>
             <Text
               modifiers={[
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 monospacedDigit(),
                 foregroundStyle(secondary),
-              ]}>
+              ]}
+            >
               {temp}°
             </Text>
             <Spacer />
@@ -69,7 +65,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 monospacedDigit(),
                 foregroundStyle(primary),
-              ]}>
+              ]}
+            >
               {battery}%
             </Text>
             <Spacer />
@@ -77,7 +74,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               modifiers={[
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 foregroundStyle(secondary),
-              ]}>
+              ]}
+            >
               UV {uv}
             </Text>
           </HStack>
@@ -96,7 +94,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 font({ design: 'rounded', weight: 'semibold', size: valueSize }),
                 monospacedDigit(),
                 foregroundStyle(primary),
-              ]}>
+              ]}
+            >
               {percent}
             </Text>
           </ZStack>
@@ -106,7 +105,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               modifiers={[
                 font({ design: 'rounded', weight: 'bold', size: 10 }),
                 foregroundStyle(secondary),
-              ]}>
+              ]}
+            >
               {props.label}
             </Text>
             <Text
@@ -114,7 +114,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 font({ design: 'rounded', weight: 'semibold', size: 10 }),
                 monospacedDigit(),
                 foregroundStyle(primary),
-              ]}>
+              ]}
+            >
               DAY {Math.round(dayProgress * 100)}%
             </Text>
           </HStack>
@@ -125,24 +126,24 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
 
   return (
     <ZStack
-      modifiers={[
-        containerBackground(background, 'widget'),
-        clipShape('containerRelativeShape'),
-      ]}>
+      modifiers={[containerBackground(background, 'widget'), clipShape('containerRelativeShape')]}
+    >
       <VStack
         alignment="center"
         spacing={10}
         modifiers={[
           padding({ all: isLarge ? 18 : 14 }),
           frame({ maxWidth: Infinity, maxHeight: Infinity }),
-        ]}>
+        ]}
+      >
         <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
           <Image systemName={props.icon} size={14} color={accent} />
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 12 }),
               foregroundStyle(secondary),
-            ]}>
+            ]}
+          >
             {props.label}
           </Text>
           <Spacer />
@@ -151,7 +152,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
               monospacedDigit(),
               foregroundStyle(primary),
-            ]}>
+            ]}
+          >
             {battery}%
           </Text>
         </HStack>
@@ -181,7 +183,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 font({ design: 'rounded', weight: 'semibold', size: valueSize }),
                 monospacedDigit(),
                 foregroundStyle(primary),
-              ]}>
+              ]}
+            >
               {percent}
             </Text>
           </ZStack>
@@ -201,14 +204,16 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               font({ design: 'rounded', weight: 'semibold', size: 12 }),
               monospacedDigit(),
               foregroundStyle(primary),
-            ]}>
+            ]}
+          >
             DAY {Math.round(dayProgress * 100)}%
           </Text>
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: 11 }),
               foregroundStyle(muted),
-            ]}>
+            ]}
+          >
             STANDBY
           </Text>
         </HStack>

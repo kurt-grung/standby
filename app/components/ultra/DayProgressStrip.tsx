@@ -30,7 +30,8 @@ export function DayProgressStrip({ now, batteryPercent = 86 }: DayProgressStripP
             fontWeight: '700',
             letterSpacing: 0.3,
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           DAY {percent}%
         </Text>
         <Text
@@ -39,15 +40,20 @@ export function DayProgressStrip({ now, batteryPercent = 86 }: DayProgressStripP
             fontSize: 12,
             fontWeight: '700',
             fontVariant: ['tabular-nums'],
-          }}>
+          }}
+        >
           {batteryPercent}%
         </Text>
       </View>
 
       <View
         className="overflow-hidden rounded-lg px-2 py-2.5"
-        style={{ backgroundColor: '#080202', borderWidth: 1.5, borderColor: nightMode.border }}>
-        <View className="mb-2 h-2.5 overflow-hidden rounded-full" style={{ backgroundColor: nightMode.track }}>
+        style={{ backgroundColor: '#080202', borderWidth: 1.5, borderColor: nightMode.border }}
+      >
+        <View
+          className="mb-2 h-2.5 overflow-hidden rounded-full"
+          style={{ backgroundColor: nightMode.track }}
+        >
           <View
             className="h-full rounded-full"
             style={{ width: `${percent}%`, backgroundColor: nightMode.primary }}
@@ -63,7 +69,8 @@ export function DayProgressStrip({ now, batteryPercent = 86 }: DayProgressStripP
                 fontSize: 10,
                 fontWeight: '800',
                 fontVariant: ['tabular-nums'],
-              }}>
+              }}
+            >
               {formatHourLabel(hour === 24 ? 0 : hour)}
             </Text>
           ))}

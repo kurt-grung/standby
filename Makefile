@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify audit fix hooks \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify audit fix format f hooks \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -105,6 +105,12 @@ audit: ## Full static audit before push or dependency updates
 fix: ## Auto-fix Expo deps, router imports, and patches
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run fix
+
+format: ## Format app source with Prettier
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run format
+
+f: format ## Shorthand for format
 
 hooks: ## Install local git pre-commit hook for app verification
 	@mkdir -p "$(ROOT)/.git/hooks"

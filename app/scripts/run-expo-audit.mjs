@@ -32,7 +32,9 @@ function runExpoDoctor() {
 
     if (onlyPrebuildWarning) {
       process.stdout.write(output);
-      console.warn('Expo doctor: expected prebuild/CNG warning for committed ios/ — continuing audit.');
+      console.warn(
+        'Expo doctor: expected prebuild/CNG warning for committed ios/ — continuing audit.',
+      );
       return;
     }
 

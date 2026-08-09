@@ -19,18 +19,21 @@ export function SectionCard({ label, title, children, className = 'mb-8' }: Sect
       style={{
         backgroundColor: chrome.colors.card,
         borderColor: chrome.colors.border,
-      }}>
+      }}
+    >
       {label ? (
         <Text
           className="text-[11px] font-semibold uppercase tracking-widest"
-          style={{ color: chrome.colors.secondary }}>
+          style={{ color: chrome.colors.secondary }}
+        >
           {label}
         </Text>
       ) : null}
       {title ? (
         <Text
           className={`${label ? 'mt-2' : ''} text-lg font-medium`}
-          style={{ color: chrome.colors.primary }}>
+          style={{ color: chrome.colors.primary }}
+        >
           {title}
         </Text>
       ) : null}

@@ -41,17 +41,7 @@ function pointOnRoundedRect(
   const straightH = Math.max(0, bottom - top - 2 * radius);
   const arc = (Math.PI * radius) / 2;
   const topLen = straightW / 2;
-  const segments = [
-    topLen,
-    arc,
-    straightH,
-    arc,
-    straightW,
-    arc,
-    straightH,
-    arc,
-    topLen,
-  ] as const;
+  const segments = [topLen, arc, straightH, arc, straightW, arc, straightH, arc, topLen] as const;
 
   let remaining = ((distance % perimeter) + perimeter) % perimeter;
   let segmentIndex = 0;
@@ -151,12 +141,7 @@ function tickStroke(kind: Tick['kind']) {
   return 1.7;
 }
 
-function buildGeometry(
-  width: number,
-  height: number,
-  inset: number,
-  cornerRadius: number,
-) {
+function buildGeometry(width: number, height: number, inset: number, cornerRadius: number) {
   const left = inset;
   const top = inset;
   const right = width - inset;
@@ -198,12 +183,7 @@ function readSubSecondClock() {
   return now.getSeconds() + now.getMilliseconds() / 1000;
 }
 
-export function SecondsBezel({
-  width,
-  height,
-  inset = 1.5,
-  cornerRadius = 34,
-}: SecondsBezelProps) {
+export function SecondsBezel({ width, height, inset = 1.5, cornerRadius = 34 }: SecondsBezelProps) {
   const [seconds, setSeconds] = useState(readSubSecondClock);
 
   useEffect(() => {
@@ -274,10 +254,8 @@ export function SecondsBezel({
           const lit = index <= activeTick;
           const age = lit ? activeTick - index : 0;
           const trail = lit ? Math.max(0.28, 1 - age / 15) : 0;
-          const pending =
-            tick.kind === 'major' ? 0.62 : tick.kind === 'second' ? 0.48 : 0.34;
-          const litBase =
-            tick.kind === 'major' ? 1 : tick.kind === 'second' ? 0.92 : 0.8;
+          const pending = tick.kind === 'major' ? 0.62 : tick.kind === 'second' ? 0.48 : 0.34;
+          const litBase = tick.kind === 'major' ? 1 : tick.kind === 'second' ? 0.92 : 0.8;
           const opacity = lit ? litBase * trail : pending;
 
           return (

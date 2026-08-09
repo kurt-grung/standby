@@ -13,11 +13,16 @@ export function ThemeBadge() {
       style={{
         borderColor: chrome.colors.border,
         backgroundColor: chrome.colors.surface,
-      }}>
-      <View className="mr-2 h-2 w-2 rounded-full" style={{ backgroundColor: theme.colors.accent }} />
+      }}
+    >
+      <View
+        className="mr-2 h-2 w-2 rounded-full"
+        style={{ backgroundColor: theme.colors.accent }}
+      />
       <Text
         className="text-[11px] font-semibold uppercase tracking-widest"
-        style={{ color: chrome.colors.secondary }}>
+        style={{ color: chrome.colors.secondary }}
+      >
         {theme.badge} widgets
       </Text>
     </View>

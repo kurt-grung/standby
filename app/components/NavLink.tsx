@@ -18,10 +18,12 @@ export function NavLink({ href, label }: NavLinkProps) {
         style={{
           borderColor: chrome.colors.border,
           backgroundColor: chrome.colors.surface,
-        }}>
+        }}
+      >
         <Text
           className="text-xs font-semibold uppercase tracking-wide"
-          style={{ color: chrome.colors.secondary }}>
+          style={{ color: chrome.colors.secondary }}
+        >
           {label}
         </Text>
       </Pressable>

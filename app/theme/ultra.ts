@@ -22,8 +22,7 @@ export const nightColors = {
 } as const;
 
 export function dayProgress(date: Date): number {
-  const seconds =
-    date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+  const seconds = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
   return seconds / 86400;
 }
 
