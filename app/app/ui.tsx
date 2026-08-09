@@ -274,7 +274,7 @@ export default function UiScreen() {
   return (
     <>
       <StatusBar style={chrome.statusBar} />
-      <ScreenShell contentClassName="px-6 pb-10 pt-2">
+      <ScreenShell contentClassName="px-6 pb-10">
         <View className="mb-8">
           <Text
             className="text-[11px] font-semibold uppercase tracking-widest"

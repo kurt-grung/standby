@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 
+import { groupedWordmarkBottomSpacing, groupedWordmarkTopSpacing } from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { nightMode } from './ultra/nightColors';
 
@@ -9,7 +10,10 @@ export function AppWordmarkHeader() {
   const chrome = useAppChrome();
 
   return (
-    <View className="mb-4 items-end">
+    <View
+      className="items-end"
+      style={{ marginTop: groupedWordmarkTopSpacing, marginBottom: groupedWordmarkBottomSpacing }}
+    >
       <Text
         accessibilityLabel="StandBy+"
         className="font-extralight tracking-tight"
