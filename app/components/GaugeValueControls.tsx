@@ -1,110 +1,92 @@
-import { Button, Host, HStack } from '@expo/ui/swift-ui';
-import {
-  buttonBorderShape,
-  buttonStyle,
-  controlSize,
-  frame,
-  labelStyle,
-} from '@expo/ui/swift-ui/modifiers';
-import { Platform, Pressable, Text, View } from 'react-native';
+import type { ReactNode } from 'react';
+import { SymbolView } from 'expo-symbols';
+import { Pressable, Text, View } from 'react-native';
 
 type GaugeValueControlsProps = {
   accent: string;
+  accentSoft: string;
+  increaseAccent: string;
   border: string;
-  surface: string;
   text: string;
   onDecrease: () => void;
   onAuto: () => void;
   onIncrease: () => void;
 };
 
-const controlHeight = 52;
+const controlHeight = 44;
+
+type ControlCellProps = {
+  border: string;
+  showDivider?: boolean;
+  children: ReactNode;
+  onPress: () => void;
+  accessibilityLabel: string;
+  backgroundColor?: string;
+};
+
+function ControlCell({
+  border,
+  showDivider = true,
+  children,
+  onPress,
+  accessibilityLabel,
+  backgroundColor = 'transparent',
+}: ControlCellProps) {
+  return (
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      className="flex-1 items-center justify-center active:opacity-70"
+      style={{
+        height: controlHeight,
+        backgroundColor,
+        borderRightWidth: showDivider ? 1 : 0,
+        borderRightColor: border,
+      }}
+      onPress={onPress}
+    >
+      {children}
+    </Pressable>
+  );
+}
 
 export function GaugeValueControls({
   accent,
+  accentSoft,
+  increaseAccent,
   border,
-  surface,
   text,
   onDecrease,
   onAuto,
   onIncrease,
 }: GaugeValueControlsProps) {
-  if (Platform.OS !== 'ios') {
-    return (
-      <View className="flex-row">
-        <Pressable
-          accessibilityLabel="Decrease gauge value"
-          className="mr-2 min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
-          style={{ borderColor: border, backgroundColor: surface }}
-          onPress={onDecrease}
-        >
-          <Text className="text-2xl font-semibold" style={{ color: text }}>
-            −
-          </Text>
-        </Pressable>
-        <Pressable
-          accessibilityLabel="Use automatic day progress"
-          className="mr-2 min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
-          style={{ borderColor: `${accent}80`, backgroundColor: `${accent}26` }}
-          onPress={onAuto}
-        >
-          <Text className="text-sm font-semibold uppercase tracking-wide" style={{ color: accent }}>
-            Auto
-          </Text>
-        </Pressable>
-        <Pressable
-          accessibilityLabel="Increase gauge value"
-          className="min-h-[52px] flex-1 items-center justify-center rounded-2xl border active:opacity-70"
-          style={{ borderColor: border, backgroundColor: surface }}
-          onPress={onIncrease}
-        >
-          <Text className="text-2xl font-semibold" style={{ color: text }}>
-            +
-          </Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  const sharedFrame = frame({ maxWidth: Infinity, minHeight: controlHeight });
-  const iconButtonModifiers = [
-    sharedFrame,
-    controlSize('large'),
-    buttonStyle('bordered'),
-    buttonBorderShape('roundedRectangle', 16),
-    labelStyle('iconOnly'),
-  ];
-  const autoButtonModifiers = [
-    sharedFrame,
-    controlSize('large'),
-    buttonStyle('borderedProminent'),
-    buttonBorderShape('roundedRectangle', 16),
-  ];
-
   return (
-    <View style={{ width: '100%', height: controlHeight }}>
-      <Host
-        colorScheme="dark"
-        matchContents={{ horizontal: true, vertical: true }}
-        seedColor={accent}
-        style={{ flex: 1, width: '100%' }}
+    <View className="flex-row">
+      <ControlCell accessibilityLabel="Decrease gauge value" border={border} onPress={onDecrease}>
+        <SymbolView name="minus" size={16} tintColor={text} weight="semibold" />
+      </ControlCell>
+      <ControlCell
+        accessibilityLabel="Use automatic day progress"
+        backgroundColor={accentSoft}
+        border={border}
+        onPress={onAuto}
       >
-        <HStack spacing={8}>
-          <Button
-            label="Decrease"
-            systemImage="minus"
-            onPress={onDecrease}
-            modifiers={iconButtonModifiers}
-          />
-          <Button label="Auto" onPress={onAuto} modifiers={autoButtonModifiers} />
-          <Button
-            label="Increase"
-            systemImage="plus"
-            onPress={onIncrease}
-            modifiers={iconButtonModifiers}
-          />
-        </HStack>
-      </Host>
+        <Text
+          className="text-[13px] font-semibold uppercase tracking-wide"
+          style={{ color: accent }}
+        >
+          Auto
+        </Text>
+      </ControlCell>
+      <ControlCell
+        accessibilityLabel="Increase gauge value"
+        backgroundColor={increaseAccent}
+        border={border}
+        showDivider={false}
+        onPress={onIncrease}
+      >
+        <SymbolView name="plus" size={16} tintColor="#FFFFFF" weight="semibold" />
+      </ControlCell>
     </View>
   );
 }

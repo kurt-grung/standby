@@ -1,29 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
+import { SymbolView } from 'expo-symbols';
 import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import {
+  GroupedDivider,
+  GroupedInset,
+  GroupedSection,
+  GroupedStepRows,
+} from '../components/GroupedSection';
 import { useLiveClock } from '../hooks/useLiveClock';
-import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
-import { SectionCard } from '../components/SectionCard';
-import { StandByLayoutGuide } from '../components/StandByLayoutGuide';
-import { ThemeBadge } from '../components/ThemeBadge';
+import { HomeWidgetPlaceholder } from '../components/HomeWidgetPlaceholder';
+import { ArcGauge } from '../components/ultra/ArcGauge';
+import { nightMode } from '../components/ultra/nightColors';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
+import {
+  groupedHeroInset,
+  groupedGaugeTopPadding,
+  groupedGaugeBottomClearance,
+  groupedPresetRowInset,
+  groupedScreenPadding,
+} from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
-import { dayProgress, formatNightTime } from '../theme/ultra';
+import { dayProgress } from '../theme/ultra';
 import { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
 
 const GAUGE_STEP = 0.05;
+const GAUGE_RING_SIZE = 144;
 
 const standBySteps = [
-  'Run make standby on your Mac (best) or make device, then open StandBy+ once on the phone',
-  'Wait for the home screen to load (registers widget layouts)',
-  'Plug in your iPhone and rotate to landscape',
-  'Long-press StandBy, then tap Edit',
-  'Tap the left column and add Ultra Clock (Small)',
-  'Tap the right column and add Ultra Gauge (Small)',
-  'Open StandBy settings and choose Night or Mono',
+  'Deploy widgets with make standby or make device, then open StandBy+ on your iPhone',
+  'Plug in, rotate to landscape, and long-press StandBy',
+  'Tap Edit, then add Ultra Clock (left) and Ultra Gauge (right)',
+  'Choose Night or Mono in StandBy settings',
 ] as const;
 
 const gaugePresets = [
@@ -43,68 +54,79 @@ export default function HomeScreen() {
     refreshStandbyWidgets(gaugeValue, preset);
   }, [gaugeValue, presetIndex]);
 
-  const activePreset = gaugePresets[presetIndex] ?? gaugePresets[0];
-  const displayValue = gaugeValue > 0 ? gaugeValue : dayProgress(now);
+  const isAuto = gaugeValue === 0;
+  const displayValue = isAuto ? dayProgress(now) : gaugeValue;
   const percent = Math.round(displayValue * 100);
 
   return (
     <>
       <StatusBar style={chrome.statusBar} />
-      <ScreenShell contentClassName="px-6 pb-10 pt-2">
-        <View className="mb-6">
-          <ThemeBadge />
-          <Text
-            className="text-[42px] font-extralight tracking-tight"
-            style={{ color: chrome.colors.primary }}
-          >
-            StandBy+
-          </Text>
-          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
-            Ultra Night widgets for iPhone StandBy
-          </Text>
-          <Text className="mt-4 text-3xl font-extralight" style={{ color: chrome.colors.primary }}>
-            {formatNightTime(now)}
-          </Text>
-        </View>
+      <ScreenShell contentClassName={groupedScreenPadding}>
+        <HomeWidgetPlaceholder gaugeValue={displayValue} />
 
-        <SectionCard label="Gauge">
-          <View className="mt-2 flex-row items-end justify-between">
-            <View className="flex-1">
-              <Text className="text-6xl font-extralight" style={{ color: chrome.colors.primary }}>
-                {percent}%
-              </Text>
-            </View>
-            <View
-              className="h-16 w-16 items-center justify-center rounded-full border-2"
-              style={{ borderColor: chrome.colors.border }}
+        <GroupedSection title="Gauge" footer="Auto mirrors day progress in the Ultra Gauge widget.">
+          <GroupedInset className={groupedHeroInset} style={{ paddingTop: groupedGaugeTopPadding }}>
+            <ArcGauge
+              size={GAUGE_RING_SIZE}
+              progress={displayValue}
+              stroke={8}
+              bottomClearance={groupedGaugeBottomClearance}
+              trackColor={chrome.colors.track}
+              progressColor={chrome.colors.primary}
             >
-              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
-                {activePreset.label}
-              </Text>
-            </View>
-          </View>
+              <View className="items-center">
+                <View className="flex-row items-baseline">
+                  <Text
+                    className="text-[38px] font-light leading-none"
+                    style={{ color: chrome.colors.primary, fontVariant: ['tabular-nums'] }}
+                  >
+                    {percent}
+                  </Text>
+                  <Text
+                    className="ml-0.5 text-[18px] font-light leading-none"
+                    style={{ color: chrome.colors.secondary }}
+                  >
+                    %
+                  </Text>
+                </View>
+                {isAuto ? (
+                  <Text
+                    className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.16em]"
+                    style={{ color: chrome.colors.secondary }}
+                  >
+                    Auto
+                  </Text>
+                ) : null}
+              </View>
+            </ArcGauge>
+          </GroupedInset>
 
-          <ProgressBar value={displayValue} />
+          <GroupedDivider />
 
-          <Text className="mt-4 text-sm leading-5" style={{ color: chrome.colors.muted }}>
-            Leave at 0% to mirror day progress automatically in the widget.
-          </Text>
-
-          <View className="mt-5 flex-row">
+          <View className="flex-row">
             {gaugePresets.map((preset, index) => {
               const active = presetIndex === index;
               return (
                 <Pressable
                   key={preset.label}
-                  className={`mr-2 flex-1 items-center rounded-full border py-2.5 ${index === gaugePresets.length - 1 ? 'mr-0' : ''}`}
-                  style={{
-                    borderColor: active ? chrome.colors.primary : chrome.colors.border,
-                    backgroundColor: active ? chrome.colors.accentSoft : chrome.colors.surface,
-                  }}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                  className={`flex-1 items-center justify-center active:opacity-70 ${groupedPresetRowInset} ${index < gaugePresets.length - 1 ? 'border-r' : ''}`}
+                  style={
+                    index < gaugePresets.length - 1
+                      ? { borderRightColor: chrome.colors.border }
+                      : undefined
+                  }
                   onPress={() => setPresetIndex(index)}
                 >
+                  <SymbolView
+                    name={preset.icon}
+                    size={20}
+                    tintColor={active ? chrome.colors.primary : chrome.colors.muted}
+                    weight={active ? 'semibold' : 'regular'}
+                  />
                   <Text
-                    className="text-[11px] font-semibold uppercase tracking-wide"
+                    className="mt-1 text-[10px] font-semibold uppercase tracking-wide"
                     style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}
                   >
                     {preset.label}
@@ -114,40 +136,27 @@ export default function HomeScreen() {
             })}
           </View>
 
-          <View className="mt-4">
-            <GaugeValueControls
-              accent={chrome.colors.primary}
-              border={chrome.colors.border}
-              surface={chrome.colors.surface}
-              text={chrome.colors.primary}
-              onDecrease={() => setGaugeValue((value) => Math.max(0, value - GAUGE_STEP))}
-              onAuto={() => setGaugeValue(0)}
-              onIncrease={() => setGaugeValue((value) => Math.min(1, value + GAUGE_STEP))}
-            />
-          </View>
-        </SectionCard>
+          <GroupedDivider />
 
-        <SectionCard label="StandBy" title="Left and right widgets" className="mb-0">
-          <StandByLayoutGuide />
-          <View className="mt-5">
-            {standBySteps.map((step, index) => (
-              <View key={step} className={`flex-row ${index > 0 ? 'mt-3' : ''}`}>
-                <Text
-                  className="mr-3 w-5 text-sm font-semibold"
-                  style={{ color: chrome.colors.primary }}
-                >
-                  {index + 1}.
-                </Text>
-                <Text
-                  className="flex-1 text-sm leading-5"
-                  style={{ color: chrome.colors.secondary }}
-                >
-                  {step}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </SectionCard>
+          <GaugeValueControls
+            accent={chrome.colors.primary}
+            accentSoft={chrome.colors.accentSoft}
+            increaseAccent={nightMode.primary}
+            border={chrome.colors.border}
+            text={chrome.colors.primary}
+            onDecrease={() => setGaugeValue((value) => Math.max(0, value - GAUGE_STEP))}
+            onAuto={() => setGaugeValue(0)}
+            onIncrease={() => setGaugeValue((value) => Math.min(1, value + GAUGE_STEP))}
+          />
+        </GroupedSection>
+
+        <GroupedSection
+          title="StandBy"
+          footer="Add both widgets at the small size — one in each side column."
+          className="mb-0"
+        >
+          <GroupedStepRows steps={standBySteps} />
+        </GroupedSection>
       </ScreenShell>
     </>
   );

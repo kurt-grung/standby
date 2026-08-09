@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -97,6 +97,10 @@ doc: ## Run expo-doctor project health checks
 verify: ## Fast app checks before commit (typecheck + Expo compat)
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run verify
+
+reload: ## Reload connected Expo dev client (Metro must be running: make dev)
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run reload
 
 check: ## Read-only checks (verify + Prettier)
 	$(call require_app)

@@ -7,7 +7,7 @@ alwaysApply: true
 
 When editing files under `app/`, run checks before marking work complete:
 
-1. **Verify**: `make verify` — typecheck + Expo SDK 57 compat (`tsc` + `compat`).
+1. **Verify**: `make verify` — typecheck + Expo compat + **auto-reload** simulator when Metro is running.
 2. **Lints**: `read_lints` on every file touched.
 3. **Expo MCP** (when changing config, native, widgets, or routing): authenticate if needed, then use `read_documentation` for Expo v57 APIs before guessing.
 4. **Doctor** (when changing `package.json`, `package-lock.json`, or `app.config.ts`): `make doc`, or `make audit` before push.

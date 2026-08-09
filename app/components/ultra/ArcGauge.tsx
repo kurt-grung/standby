@@ -25,6 +25,9 @@ type ArcGaugeProps = {
   stroke?: number;
   startAngle?: number;
   sweepAngle?: number;
+  trackColor?: string;
+  progressColor?: string;
+  bottomClearance?: number;
   children?: ReactNode;
 };
 
@@ -34,6 +37,9 @@ export function ArcGauge({
   stroke = 5.5,
   startAngle = -210,
   sweepAngle = 240,
+  trackColor = nightMode.track,
+  progressColor = nightMode.primary,
+  bottomClearance = 0,
   children,
 }: ArcGaugeProps) {
   const clamped = Math.min(1, Math.max(0, progress));
@@ -43,26 +49,28 @@ export function ArcGauge({
   const endAngle = startAngle + sweepAngle * clamped;
 
   return (
-    <View className="items-center justify-center" style={{ width: size, height: size }}>
-      <Svg width={size} height={size} style={{ position: 'absolute' }}>
-        <Path
-          d={describeArc(cx, cy, radius, startAngle, startAngle + sweepAngle)}
-          stroke={nightMode.track}
-          strokeWidth={stroke}
-          fill="none"
-          strokeLinecap="round"
-        />
-        {clamped > 0.01 ? (
+    <View className="items-center" style={{ width: size, height: size + bottomClearance }}>
+      <View className="items-center justify-center" style={{ width: size, height: size }}>
+        <Svg width={size} height={size} style={{ position: 'absolute' }}>
           <Path
-            d={describeArc(cx, cy, radius, startAngle, endAngle)}
-            stroke={nightMode.primary}
+            d={describeArc(cx, cy, radius, startAngle, startAngle + sweepAngle)}
+            stroke={trackColor}
             strokeWidth={stroke}
             fill="none"
             strokeLinecap="round"
           />
-        ) : null}
-      </Svg>
-      {children}
+          {clamped > 0.01 ? (
+            <Path
+              d={describeArc(cx, cy, radius, startAngle, endAngle)}
+              stroke={progressColor}
+              strokeWidth={stroke}
+              fill="none"
+              strokeLinecap="round"
+            />
+          ) : null}
+        </Svg>
+        {children}
+      </View>
     </View>
   );
 }

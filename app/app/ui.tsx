@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import { nightMode } from '../components/ultra/nightColors';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
@@ -618,8 +619,9 @@ export default function UiScreen() {
           <View className="mt-4">
             <GaugeValueControls
               accent={chrome.colors.accent}
+              accentSoft={chrome.colors.accentSoft}
+              increaseAccent={nightMode.primary}
               border={chrome.colors.border}
-              surface={chrome.colors.surface}
               text={chrome.colors.primary}
               onDecrease={() => undefined}
               onAuto={() => undefined}
