@@ -9,22 +9,17 @@ import { LandscapePreviewFrame } from '../components/LandscapePreviewFrame';
 import { PreviewGlassBackButton } from '../components/PreviewGlassBackButton';
 import { StandByPreview } from '../components/StandByPreview';
 import { nightMode } from '../components/ultra/nightColors';
-import { useTabBar } from '../theme/TabBarContext';
 
 const previewBg = nightMode.bg;
 
 export default function PreviewScreen() {
-  const { setHidden } = useTabBar();
-
   useFocusEffect(
     useCallback(() => {
-      setHidden(true);
       void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       return () => {
-        setHidden(false);
         void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       };
-    }, [setHidden]),
+    }, []),
   );
 
   return (

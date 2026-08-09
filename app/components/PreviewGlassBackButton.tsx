@@ -1,31 +1,63 @@
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { GlassView } from 'expo-glass-effect';
+import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
 import { SymbolView } from 'expo-symbols';
-import { Pressable } from 'react-native';
+import type { ComponentType } from 'react';
+import { DynamicColorIOS, Pressable, StyleSheet } from 'react-native';
 
-const iconTint = '#FFFFFF';
-const buttonSize = 56;
-const iconSize = 26;
+import { nativeTabBarHeight, nativeTabBarIconSize } from '../theme/nativeTabBarMetrics';
+
+type NativeGlassViewProps = GlassViewProps & {
+  borderRadius?: number;
+};
+
+const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
+
+const iconTint = DynamicColorIOS({
+  dark: '#FFFFFF',
+  light: '#000000',
+});
 
 export function PreviewGlassBackButton() {
+  const router = useRouter();
+  const radius = nativeTabBarHeight / 2;
+
   return (
-    <Link href="/" asChild>
-      <Pressable accessibilityRole="button" accessibilityLabel="Home">
-        <GlassView
-          glassEffectStyle="regular"
-          isInteractive
-          colorScheme="dark"
-          style={{
-            width: buttonSize,
-            height: buttonSize,
-            borderRadius: buttonSize / 2,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <SymbolView name="chevron.left" size={iconSize} tintColor={iconTint} weight="semibold" />
-        </GlassView>
+    <NativeGlassView
+      glassEffectStyle="clear"
+      colorScheme="dark"
+      borderRadius={radius}
+      style={styles.glass}
+    >
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Home"
+        onPress={() => router.push('/')}
+        style={styles.pressable}
+      >
+        <SymbolView
+          name="chevron.left"
+          size={nativeTabBarIconSize}
+          tintColor={iconTint}
+          weight="semibold"
+        />
       </Pressable>
-    </Link>
+    </NativeGlassView>
   );
 }
+
+const styles = StyleSheet.create({
+  glass: {
+    width: nativeTabBarHeight,
+    height: nativeTabBarHeight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'visible',
+  },
+  pressable: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

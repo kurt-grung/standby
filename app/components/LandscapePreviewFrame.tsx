@@ -1,6 +1,13 @@
 import type { ReactNode } from 'react';
 import { View, useWindowDimensions } from 'react-native';
 
+import {
+  glassPressOverflow,
+  previewBackOverlayPressPaddingRight,
+  previewBackOverlayPressPaddingTop,
+  previewBackOverlayRight,
+  previewBackOverlayTop,
+} from '../theme/nativeTabBarMetrics';
 import { nightMode } from './ultra/nightColors';
 
 type LandscapePreviewFrameProps = {
@@ -10,8 +17,32 @@ type LandscapePreviewFrameProps = {
 };
 
 const previewBg = nightMode.bg;
-const OVERLAY_INSET = 0;
-const OVERLAY_TOP = 23;
+
+type RotatedLayerProps = {
+  landscapeWidth: number;
+  landscapeHeight: number;
+  frameWidth: number;
+  frameHeight: number;
+  scale: number;
+  children: ReactNode;
+};
+
+function rotatedLayerStyle({
+  landscapeWidth,
+  landscapeHeight,
+  frameWidth,
+  frameHeight,
+  scale,
+}: Omit<RotatedLayerProps, 'children'>) {
+  return {
+    position: 'absolute' as const,
+    width: landscapeWidth,
+    height: landscapeHeight,
+    left: frameWidth / 2 - landscapeWidth / 2,
+    top: frameHeight / 2 - landscapeHeight / 2,
+    transform: [{ rotate: '90deg' as const }, { scale }],
+  };
+}
 
 function LandscapeTopRightOverlay({ children }: { children: ReactNode }) {
   return (
@@ -19,10 +50,13 @@ function LandscapeTopRightOverlay({ children }: { children: ReactNode }) {
       pointerEvents="box-none"
       style={{
         position: 'absolute',
-        right: OVERLAY_INSET,
-        top: OVERLAY_TOP,
+        right: previewBackOverlayRight - 35,
+        top: previewBackOverlayTop - 10,
         zIndex: 10,
         alignItems: 'flex-end',
+        overflow: 'visible',
+        paddingRight: previewBackOverlayPressPaddingRight,
+        paddingTop: previewBackOverlayPressPaddingTop,
       }}
     >
       {children}
@@ -40,7 +74,7 @@ export function LandscapePreviewFrame({
 
   if (!isPortrait) {
     return (
-      <View className="flex-1" style={{ backgroundColor: previewBg }}>
+      <View className="flex-1 overflow-visible" style={{ backgroundColor: previewBg }}>
         {children}
         {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
       </View>
@@ -54,28 +88,35 @@ export function LandscapePreviewFrame({
   const scale = Math.min(availableWidth / width, availableHeight / height);
   const frameWidth = width * scale;
   const frameHeight = height * scale;
+  const layer = { landscapeWidth, landscapeHeight, frameWidth, frameHeight, scale };
 
   return (
-    <View className="flex-1 items-center justify-center" style={{ backgroundColor: previewBg }}>
-      <View
-        style={{
-          width: frameWidth,
-          height: frameHeight,
-          overflow: 'hidden',
-        }}
-      >
+    <View
+      className="flex-1 items-center justify-center overflow-visible"
+      style={{ backgroundColor: previewBg }}
+    >
+      <View style={{ width: frameWidth, height: frameHeight, overflow: 'visible' }}>
+        <View style={{ width: frameWidth, height: frameHeight, overflow: 'hidden' }}>
+          <View style={rotatedLayerStyle(layer)}>{children}</View>
+        </View>
         <View
+          pointerEvents="box-none"
           style={{
             position: 'absolute',
-            width: landscapeWidth,
-            height: landscapeHeight,
-            left: frameWidth / 2 - landscapeWidth / 2,
-            top: frameHeight / 2 - landscapeHeight / 2,
-            transform: [{ rotate: '90deg' }, { scale }],
+            left: -glassPressOverflow,
+            top: -glassPressOverflow,
+            right: -glassPressOverflow,
+            bottom: -glassPressOverflow,
+            overflow: 'visible',
+            zIndex: 10,
           }}
         >
-          {children}
-          {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
+          <View
+            pointerEvents="box-none"
+            style={{ ...rotatedLayerStyle(layer), overflow: 'visible' }}
+          >
+            {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
+          </View>
         </View>
       </View>
     </View>
