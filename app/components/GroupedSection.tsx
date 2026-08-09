@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
-import { Text, View, type ViewStyle } from 'react-native';
+import { Link } from 'expo-router';
+import { SymbolView } from 'expo-symbols';
+import { Pressable, Text, View, type ViewStyle } from 'react-native';
 
 import {
   groupedSectionSpacing,
@@ -118,4 +120,39 @@ export function GroupedStepRows({ steps }: GroupedStepRowsProps) {
       </View>
     </View>
   ));
+}
+
+type GroupedLinkRowProps = {
+  href: string;
+  label: string;
+  accessibilityLabel?: string;
+};
+
+export function GroupedLinkRow({ href, label, accessibilityLabel }: GroupedLinkRowProps) {
+  const chrome = useAppChrome();
+
+  return (
+    <Link href={href} asChild>
+      <Pressable
+        accessibilityLabel={accessibilityLabel ?? label}
+        accessibilityRole="button"
+        className="flex-row items-center justify-between active:opacity-70"
+        style={{
+          minHeight: 44,
+          paddingHorizontal: groupedStepHorizontalPad,
+          paddingVertical: 12,
+        }}
+      >
+        <Text className="text-[17px]" style={{ color: chrome.colors.primary }}>
+          {label}
+        </Text>
+        <SymbolView
+          name="chevron.right"
+          size={13}
+          tintColor={chrome.colors.muted}
+          weight="semibold"
+        />
+      </Pressable>
+    </Link>
+  );
 }

@@ -9,7 +9,7 @@ import {
   homeWidgetStripHeight,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
-import { GroupedSection } from './GroupedSection';
+import { GroupedLinkRow, GroupedSection } from './GroupedSection';
 import { StandByWidgetPair } from './StandByWidgetPair';
 import { nightMode } from './ultra/nightColors';
 
@@ -33,44 +33,49 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
   const stripHeight = homeWidgetStripHeight(containerWidth);
 
   return (
-    <GroupedSection
-      title="Widgets"
-      footer="Ultra Clock (left) and Ultra Gauge (right) in StandBy."
-      className="mb-5"
-    >
-      <View
-        style={{
-          height: stripHeight,
-          backgroundColor: nightMode.bg,
-          padding: homeWidgetStripPadding,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        onLayout={onLayout}
-      >
-        {displaySize > 0 ? (
-          <View
-            style={{
-              width: scaledPairWidth,
-              height: scaledPairHeight,
-              overflow: 'hidden',
-            }}
-          >
+    <View className="mb-5">
+      <GroupedSection title="Widgets" className="mb-2">
+        <View
+          style={{
+            height: stripHeight,
+            backgroundColor: nightMode.bg,
+            padding: homeWidgetStripPadding,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onLayout={onLayout}
+        >
+          {displaySize > 0 ? (
             <View
               style={{
-                position: 'absolute',
-                left: (scaledPairWidth - referencePairWidth) / 2,
-                top: (scaledPairHeight - referenceSize) / 2,
-                width: referencePairWidth,
-                height: referenceSize,
-                transform: [{ scale }],
+                width: scaledPairWidth,
+                height: scaledPairHeight,
+                overflow: 'hidden',
               }}
             >
-              <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
+              <View
+                style={{
+                  position: 'absolute',
+                  left: (scaledPairWidth - referencePairWidth) / 2,
+                  top: (scaledPairHeight - referenceSize) / 2,
+                  width: referencePairWidth,
+                  height: referenceSize,
+                  transform: [{ scale }],
+                }}
+              >
+                <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
+              </View>
             </View>
-          </View>
-        ) : null}
-      </View>
-    </GroupedSection>
+          ) : null}
+        </View>
+      </GroupedSection>
+      <GroupedSection className="mb-0">
+        <GroupedLinkRow
+          href="/preview"
+          label="Preview"
+          accessibilityLabel="Preview StandBy widgets"
+        />
+      </GroupedSection>
+    </View>
   );
 }

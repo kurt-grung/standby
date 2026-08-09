@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import { AppWordmarkHeader } from '../components/AppWordmarkHeader';
 import {
   GroupedDivider,
   GroupedInset,
@@ -62,6 +63,7 @@ export default function HomeScreen() {
     <>
       <StatusBar style={chrome.statusBar} />
       <ScreenShell contentClassName={groupedScreenPadding}>
+        <AppWordmarkHeader />
         <HomeWidgetPlaceholder gaugeValue={displayValue} />
 
         <GroupedSection title="Gauge" footer="Auto mirrors day progress in the Ultra Gauge widget.">
