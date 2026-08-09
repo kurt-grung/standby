@@ -10,7 +10,7 @@ type LandscapePreviewFrameProps = {
 };
 
 const previewBg = nightMode.bg;
-const OVERLAY_INSET = 13;
+const OVERLAY_INSET = 0;
 const OVERLAY_TOP = 23;
 
 function LandscapeTopRightOverlay({ children }: { children: ReactNode }) {

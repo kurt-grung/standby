@@ -4,6 +4,8 @@ import { SymbolView } from 'expo-symbols';
 import { Pressable } from 'react-native';
 
 const iconTint = '#FFFFFF';
+const buttonSize = 56;
+const iconSize = 26;
 
 export function PreviewGlassBackButton() {
   return (
@@ -14,14 +16,14 @@ export function PreviewGlassBackButton() {
           isInteractive
           colorScheme="dark"
           style={{
-            width: 44,
-            height: 44,
-            borderRadius: 22,
+            width: buttonSize,
+            height: buttonSize,
+            borderRadius: buttonSize / 2,
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <SymbolView name="chevron.left" size={20} tintColor={iconTint} weight="semibold" />
+          <SymbolView name="chevron.left" size={iconSize} tintColor={iconTint} weight="semibold" />
         </GlassView>
       </Pressable>
     </Link>
