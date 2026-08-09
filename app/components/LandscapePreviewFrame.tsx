@@ -6,11 +6,35 @@ import { nightMode } from './ultra/nightColors';
 type LandscapePreviewFrameProps = {
   children: ReactNode;
   inset?: number;
+  overlay?: ReactNode;
 };
 
 const previewBg = nightMode.bg;
+const OVERLAY_INSET = 13;
+const OVERLAY_TOP = 23;
 
-export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreviewFrameProps) {
+function LandscapeTopRightOverlay({ children }: { children: ReactNode }) {
+  return (
+    <View
+      pointerEvents="box-none"
+      style={{
+        position: 'absolute',
+        right: OVERLAY_INSET,
+        top: OVERLAY_TOP,
+        zIndex: 10,
+        alignItems: 'flex-end',
+      }}
+    >
+      {children}
+    </View>
+  );
+}
+
+export function LandscapePreviewFrame({
+  children,
+  inset = 16,
+  overlay,
+}: LandscapePreviewFrameProps) {
   const { width, height } = useWindowDimensions();
   const isPortrait = height >= width;
 
@@ -18,6 +42,7 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
     return (
       <View className="flex-1" style={{ backgroundColor: previewBg }}>
         {children}
+        {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
       </View>
     );
   }
@@ -50,6 +75,7 @@ export function LandscapePreviewFrame({ children, inset = 16 }: LandscapePreview
           }}
         >
           {children}
+          {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
         </View>
       </View>
     </View>
