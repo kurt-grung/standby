@@ -12,7 +12,7 @@ import { useTheme } from '../theme/ThemeContext';
 import {
   groupedScreenPadding,
   groupedWordmarkSize,
-  groupedWordmarkTopSpacing,
+  groupedUiWordmarkTopSpacing,
 } from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { themeList, type ThemeId } from '../theme/themes';
@@ -97,7 +97,7 @@ export default function UiScreen() {
     <>
       <StatusBar style={chrome.statusBar} />
       <ScreenShell contentClassName={groupedScreenPadding}>
-        <View className="mb-8" style={{ marginTop: groupedWordmarkTopSpacing }}>
+        <View className="mb-8" style={{ marginTop: groupedUiWordmarkTopSpacing }}>
           <View className="flex-row items-start justify-between">
             <View className="flex-1 pr-3">
               <Text

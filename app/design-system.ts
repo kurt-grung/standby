@@ -27,9 +27,9 @@ export const standbyDesignSystem = {
     screenHorizontal: 16,
     screenBottom: 24,
     section: 20,
-    wordmarkTop: 55,
-    wordmarkBottom: 30,
-    wordmarkStickFade: 10,
+    wordmarkTop: standbyConfig.layout.pageTop.home,
+    wordmarkBottom: standbyConfig.layout.pageTop.wordmarkBottom,
+    wordmarkStickFade: standbyConfig.layout.pageTop.wordmarkStickFade,
     stepHorizontal: 16,
     stepVertical: 14,
     stepGap: 16,
@@ -49,7 +49,7 @@ export const standbyDesignSystem = {
         size: 48,
         glassSize: 62,
         outlineInset: 10,
-        topInset: 8,
+        topInset: standbyConfig.layout.pageTop.stickyPlus,
         hitSlop: 12,
       },
     },
@@ -321,6 +321,8 @@ const ds = standbyDesignSystem;
 export const groupedScreenHorizontalPad = ds.spacing.screenHorizontal;
 export const groupedScreenBottomInset = ds.spacing.screenBottom;
 export const groupedWordmarkTopSpacing = ds.spacing.wordmarkTop;
+export const groupedHomeWordmarkTopSpacing = standbyConfig.layout.pageTop.home;
+export const groupedUiWordmarkTopSpacing = standbyConfig.layout.pageTop.ui;
 export const groupedWordmarkBottomSpacing = ds.spacing.wordmarkBottom;
 export const groupedWordmarkSize = ds.brand.wordmark.size;
 export const groupedWordmarkStickStart = ds.spacing.wordmarkTop;

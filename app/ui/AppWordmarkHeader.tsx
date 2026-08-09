@@ -14,11 +14,11 @@ import Animated, {
 
 import {
   groupedStickyPlusTopInset,
+  groupedHomeWordmarkTopSpacing,
   groupedWordmarkBottomSpacing,
   groupedWordmarkSize,
   groupedWordmarkStickFadeLength,
   groupedWordmarkStickStart,
-  groupedWordmarkTopSpacing,
   groupedScreenHorizontalPad,
 } from '../theme/groupedLayout';
 import { standByWordmarkMetrics } from './StandByWordmark';
@@ -69,7 +69,7 @@ export function AppWordmarkHeader({ scrollY, scrollRef }: WordmarkScrollProps) {
       accessibilityLabel="StandBy+"
       className="flex-row items-baseline justify-end"
       style={{
-        marginTop: groupedWordmarkTopSpacing,
+        marginTop: groupedHomeWordmarkTopSpacing,
         marginBottom: groupedWordmarkBottomSpacing,
       }}
     >

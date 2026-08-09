@@ -77,19 +77,18 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
               </View>
             ) : null}
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              paddingTop: homePreviewGlassRowGap,
-              paddingRight: homePreviewGlassInset,
-              paddingBottom: homePreviewGlassInset,
-            }}
-          >
-            <PreviewGlassLinkButton />
-          </View>
         </View>
       </GroupedSection>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          paddingTop: homePreviewGlassRowGap,
+          paddingRight: homePreviewGlassInset,
+        }}
+      >
+        <PreviewGlassLinkButton />
+      </View>
     </View>
   );
 }

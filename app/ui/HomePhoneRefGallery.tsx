@@ -30,7 +30,8 @@ export function HomePhoneRefGallery() {
         >
           <Image
             source={phoneRefSources[id]}
-            className="h-40 w-full"
+            className="w-full"
+            style={{ height: standbyConfig.layout.homeSceneHeight }}
             resizeMode="cover"
             accessibilityLabel={sceneAccessibilityLabel(id)}
           />

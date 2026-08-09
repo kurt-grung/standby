@@ -3,9 +3,8 @@ import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
 import { SymbolView } from 'expo-symbols';
 import type { ComponentType, ReactNode } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
-import { standbyConfig } from '../config';
 import {
   homePreviewGlassGap,
   homePreviewGlassHeight,
@@ -13,6 +12,7 @@ import {
   homePreviewGlassPaddingH,
   homePreviewGlassWidth,
 } from '../theme/standByPreviewLayout';
+import { useAppChrome } from '../theme/useAppChrome';
 import { PillOutline, derivePillOutlineSize } from './OutlineShape';
 
 type NativeGlassViewProps = GlassViewProps & {
@@ -27,7 +27,6 @@ const outline = derivePillOutlineSize(
   homePreviewGlassHeight,
   homePreviewGlassOutlineInset,
 );
-const previewGlassForeground = standbyConfig.brand.textColor;
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
 type PreviewGlassLinkButtonProps = {
@@ -35,13 +34,19 @@ type PreviewGlassLinkButtonProps = {
   href?: '/preview';
 };
 
-function GlassPillSurface({ children }: { children: ReactNode }) {
+type GlassPillSurfaceProps = {
+  colorScheme: 'light' | 'dark';
+  fallbackStyle: { backgroundColor: string; borderColor: string };
+  children: ReactNode;
+};
+
+function GlassPillSurface({ colorScheme, fallbackStyle, children }: GlassPillSurfaceProps) {
   if (liquidGlass) {
     return (
       <NativeGlassView
         isInteractive
         glassEffectStyle="regular"
-        colorScheme="dark"
+        colorScheme={colorScheme}
         borderRadius={borderRadius}
         style={styles.glass}
       >
@@ -50,13 +55,32 @@ function GlassPillSurface({ children }: { children: ReactNode }) {
     );
   }
 
-  return <View style={[styles.glass, styles.fallbackGlass, { borderRadius }]}>{children}</View>;
+  return (
+    <View
+      style={[
+        styles.glass,
+        styles.fallbackGlass,
+        {
+          borderRadius,
+          backgroundColor: fallbackStyle.backgroundColor,
+          borderColor: fallbackStyle.borderColor,
+        },
+      ]}
+    >
+      {children}
+    </View>
+  );
 }
 
 export function PreviewGlassLinkButton({
   label = 'Preview',
   href = '/preview',
 }: PreviewGlassLinkButtonProps) {
+  const chrome = useAppChrome();
+  const colorScheme = useColorScheme() === 'light' ? 'light' : 'dark';
+  const outlineBorderColor =
+    colorScheme === 'light' ? 'rgba(0, 0, 0, 0.16)' : 'rgba(255, 255, 255, 0.28)';
+
   return (
     <View style={styles.wrap}>
       <PillOutline
@@ -64,20 +88,26 @@ export function PreviewGlassLinkButton({
         height={outline.height}
         borderRadius={outline.borderRadius}
         borderWidth={1.5}
-        borderColor="rgba(255,255,255,0.28)"
+        borderColor={outlineBorderColor}
       />
-      <GlassPillSurface>
+      <GlassPillSurface
+        colorScheme={colorScheme}
+        fallbackStyle={{
+          backgroundColor: chrome.colors.accentSoft,
+          borderColor: chrome.colors.border,
+        }}
+      >
         <Link href={href} asChild>
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Preview StandBy widgets"
             style={styles.pressable}
           >
-            <Text style={styles.label}>{label}</Text>
+            <Text style={[styles.label, { color: chrome.colors.primary }]}>{label}</Text>
             <SymbolView
               name="chevron.right"
               size={12}
-              tintColor={previewGlassForeground}
+              tintColor={chrome.colors.primary}
               weight="semibold"
             />
           </Pressable>
@@ -102,9 +132,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   fallbackGlass: {
-    backgroundColor: 'rgba(255,255,255,0.14)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.22)',
   },
   pressable: {
     width: '100%',
@@ -116,7 +144,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: homePreviewGlassPaddingH,
   },
   label: {
-    color: previewGlassForeground,
     fontSize: 15,
     fontWeight: '600',
     letterSpacing: -0.2,

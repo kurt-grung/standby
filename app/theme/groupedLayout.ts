@@ -21,4 +21,6 @@ export {
   groupedWordmarkStickFadeLength,
   groupedWordmarkStickStart,
   groupedWordmarkTopSpacing,
+  groupedHomeWordmarkTopSpacing,
+  groupedUiWordmarkTopSpacing,
 } from '../design-system';

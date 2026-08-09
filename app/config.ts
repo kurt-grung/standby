@@ -30,6 +30,16 @@ export const standbyConfig = {
     bundleIdentifier: 'com.kurtgrung.standby.widgets',
     groupIdentifier: 'group.com.kurtgrung.standby',
   },
+  layout: {
+    pageTop: {
+      home: 80,
+      ui: 55,
+      wordmarkBottom: 30,
+      wordmarkStickFade: 10,
+      stickyPlus: 8,
+    },
+    homeSceneHeight: 240,
+  },
   brand: {
     backgroundColor: '#000000',
     textColor: '#FFFFFF',
@@ -54,12 +64,12 @@ export const standbyConfig = {
       iconLogoMaxScale: 0.62,
     },
     homeScenes: [
-      'phone-ref-c-nightstand-cable',
+      'phone-ref-o-brutalist',
       'phone-ref-n-japanese-minimal',
       'phone-ref-a-medium-concrete',
-      'phone-ref-o-brutalist',
       'phone-ref-k-red-glow',
       'phone-ref-m-tech-noir',
+      'phone-ref-c-nightstand-cable',
     ] as const,
   },
 } as const;
