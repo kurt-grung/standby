@@ -16,6 +16,7 @@
     "compat": "node scripts/check-expo-compat.mjs",
     "doc": "npx expo-doctor",
     "verify": "npm run typecheck && npm run compat",
+    "check": "npm run verify && npm run format:check",
     "audit": "node scripts/run-expo-audit.mjs",
     "fix": "node scripts/run-expo-fix.mjs",
     "format": "prettier --write .",

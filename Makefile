@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify audit fix format f hooks \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -98,6 +98,12 @@ verify: ## Fast app checks before commit (typecheck + Expo compat)
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run verify
 
+check: ## Read-only checks (verify + Prettier)
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run check
+
+c: check ## Shorthand for check
+
 audit: ## Full static audit before push or dependency updates
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run audit
@@ -116,7 +122,7 @@ hooks: ## Install local git pre-commit hook for app verification
 	@mkdir -p "$(ROOT)/.git/hooks"
 	@ln -sf "$(ROOT)/.githooks/pre-commit" "$(ROOT)/.git/hooks/pre-commit"
 	@chmod +x "$(ROOT)/.githooks/pre-commit"
-	@echo "Installed pre-commit hook → runs 'make verify' when app/ changes are staged."
+	@echo "Installed pre-commit hook → runs 'make check' when app/ changes are staged."
 
 clean: ## Remove Expo / Metro caches (keeps node_modules and ios/)
 	@rm -rf "$(ROOT)/$(APP_DIR)/.expo" \

@@ -8,4 +8,4 @@ if ! git diff --cached --name-only | grep -q '^app/'; then
   exit 0
 fi
 
-make verify
+make check
