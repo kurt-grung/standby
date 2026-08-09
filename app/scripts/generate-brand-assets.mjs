@@ -46,6 +46,9 @@ const iconPlusOffsetY = brandAssets.iconPlusOffsetY;
 const splashPointSize = brandAssets.splashPointSize;
 const splashKerning = brandAssets.splashKerning;
 const splashLogoMaxWidth = brandAssets.splashLogoMaxWidth;
+const splashLetterErode = brandAssets.splashLetterErode;
+const splashLetterWeight = brandAssets.splashLetterWeight;
+const splashPlusWeight = brandAssets.splashPlusWeight;
 const iosSplashImageWidth = brand.splashImageWidth;
 const iconLogoMaxScale = brandAssets.iconLogoMaxScale;
 
@@ -103,6 +106,9 @@ function renderAppendedLogo({
   plusPointSize = pointSize,
   kerning = 0,
   thinLetter = false,
+  letterErode = iconLetterErode,
+  letterWeight = 200,
+  plusWeight = 300,
 }) {
   const letterRawPath = join(tmpDir, `${prefix}-letter-raw.png`);
   const letterPath = join(tmpDir, `${prefix}-letter.png`);
@@ -111,7 +117,7 @@ function renderAppendedLogo({
 
   const letterCommand = [
     `magick -background none -fill '${textColor}'`,
-    `-font "${font}" -weight 200 -pointsize ${pointSize}`,
+    `-font "${font}" -weight ${letterWeight} -pointsize ${pointSize}`,
     kerning ? `-kerning ${kerning}` : '',
     `caption:'${letter}' "${letterRawPath}"`,
   ]
@@ -121,7 +127,7 @@ function renderAppendedLogo({
   run(letterCommand);
 
   if (thinLetter) {
-    thinGlyph(letterRawPath, letterPath, iconLetterErode);
+    thinGlyph(letterRawPath, letterPath, letterErode);
   } else {
     copyFileSync(letterRawPath, letterPath);
   }
@@ -129,7 +135,7 @@ function renderAppendedLogo({
   run(
     [
       `magick -background none -fill '${plusColor}'`,
-      `-font "${font}" -weight 300 -pointsize ${plusPointSize}`,
+      `-font "${font}" -weight ${plusWeight} -pointsize ${plusPointSize}`,
       `caption:'+' "${plusPath}"`,
     ].join(' '),
   );
@@ -222,6 +228,10 @@ function generateSplash() {
     letter: 'StandBy',
     pointSize: splashPointSize,
     kerning: splashKerning,
+    thinLetter: true,
+    letterErode: splashLetterErode,
+    letterWeight: splashLetterWeight,
+    plusWeight: splashPlusWeight,
   });
 
   compositeLogo({

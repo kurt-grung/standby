@@ -3,6 +3,7 @@ import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
   homePreviewGlassInset,
+  homePreviewGlassRowGap,
   homeWidgetDisplaySize,
   homeWidgetPairWidth,
   homeWidgetPreviewScale,
@@ -37,43 +38,46 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
   return (
     <View className="mb-5">
       <GroupedSection title="Widgets" className="mb-2">
-        <View
-          style={{
-            height: stripHeight,
-            backgroundColor: nightMode.bg,
-            padding: homeWidgetStripPadding,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onLayout={onLayout}
-        >
-          {displaySize > 0 ? (
-            <View
-              style={{
-                width: scaledPairWidth,
-                height: scaledPairHeight,
-                overflow: 'hidden',
-              }}
-            >
-              <View
-                style={{
-                  position: 'absolute',
-                  left: (scaledPairWidth - referencePairWidth) / 2,
-                  top: (scaledPairHeight - referenceSize) / 2,
-                  width: referencePairWidth,
-                  height: referenceSize,
-                  transform: [{ scale }],
-                }}
-              >
-                <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
-              </View>
-            </View>
-          ) : null}
+        <View style={{ backgroundColor: nightMode.bg }}>
           <View
             style={{
-              position: 'absolute',
-              right: homePreviewGlassInset,
-              bottom: homePreviewGlassInset,
+              height: stripHeight,
+              padding: homeWidgetStripPadding,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onLayout={onLayout}
+          >
+            {displaySize > 0 ? (
+              <View
+                style={{
+                  width: scaledPairWidth,
+                  height: scaledPairHeight,
+                  overflow: 'hidden',
+                }}
+              >
+                <View
+                  style={{
+                    position: 'absolute',
+                    left: (scaledPairWidth - referencePairWidth) / 2,
+                    top: (scaledPairHeight - referenceSize) / 2,
+                    width: referencePairWidth,
+                    height: referenceSize,
+                    transform: [{ scale }],
+                  }}
+                >
+                  <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
+                </View>
+              </View>
+            ) : null}
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingTop: homePreviewGlassRowGap,
+              paddingRight: homePreviewGlassInset,
+              paddingBottom: homePreviewGlassInset,
             }}
           >
             <PreviewGlassLinkButton />

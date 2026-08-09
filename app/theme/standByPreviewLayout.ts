@@ -4,6 +4,7 @@ export {
   homePreviewGlassInset,
   homePreviewGlassOutlineInset,
   homePreviewGlassPaddingH,
+  homePreviewGlassRowGap,
   homePreviewGlassWidth,
   homeWidgetDisplaySize,
   homeWidgetPairWidth,
