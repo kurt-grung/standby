@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { SplashBrandScreen } from '../ui/SplashBrandScreen';
 import { nightMode } from '../ui/ultra/nightColors';
+import { disableDevToolsButton } from '../lib/disableDevToolsButton';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
 import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
 
@@ -64,6 +65,7 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
+    disableDevToolsButton();
     refreshStandbyWidgets();
 
     const subscription = AppState.addEventListener('change', (state) => {

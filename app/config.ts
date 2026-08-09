@@ -10,6 +10,13 @@ export const standbyConfig = {
     projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',
     updatesUrl: 'https://u.expo.dev/c112d885-1090-4f24-81fc-74ec7a64ad98',
   },
+  devClient: {
+    launchMode: 'most-recent' as const,
+    defaultLaunchURL: 'http://localhost:8081',
+    skipOnboarding: true,
+    showMenuAtLaunch: false,
+    toolsButton: false,
+  },
   ios: {
     bundleIdentifier: 'com.kurtgrung.standby',
     appleTeamId: '85FP2SN2JN',

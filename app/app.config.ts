@@ -40,12 +40,13 @@ const config: ExpoConfig = {
     [
       'expo-dev-client',
       {
-        launchMode: 'most-recent',
-        defaultLaunchURL: 'http://localhost:8081',
-        skipOnboarding: true,
-        showMenuAtLaunch: false,
+        launchMode: standbyConfig.devClient.launchMode,
+        defaultLaunchURL: standbyConfig.devClient.defaultLaunchURL,
+        skipOnboarding: standbyConfig.devClient.skipOnboarding,
+        showMenuAtLaunch: standbyConfig.devClient.showMenuAtLaunch,
+        toolsButton: standbyConfig.devClient.toolsButton,
         ios: {
-          defaultLaunchURL: 'http://localhost:8081',
+          defaultLaunchURL: standbyConfig.devClient.defaultLaunchURL,
         },
       },
     ],
