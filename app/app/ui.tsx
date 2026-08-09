@@ -2,13 +2,18 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import { PreviewGlassBackButton } from '../components/PreviewGlassBackButton';
 import { StandByWordmark } from '../components/StandByWordmark';
 import { nightMode } from '../components/ultra/nightColors';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
 import { useTheme } from '../theme/ThemeContext';
-import { groupedWordmarkSize } from '../theme/groupedLayout';
+import {
+  groupedScreenPadding,
+  groupedWordmarkSize,
+  groupedWordmarkTopSpacing,
+} from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { themeList, type ThemeId } from '../theme/themes';
 
@@ -276,23 +281,28 @@ export default function UiScreen() {
   return (
     <>
       <StatusBar style={chrome.statusBar} />
-      <ScreenShell contentClassName="px-6 pb-10">
-        <View className="mb-8">
-          <Text
-            className="text-[11px] font-semibold uppercase tracking-widest"
-            style={{ color: chrome.colors.secondary }}
-          >
-            Design System
-          </Text>
-          <Text
-            className="mt-2 text-[34px] font-extralight"
-            style={{ color: chrome.colors.primary }}
-          >
-            UI
-          </Text>
-          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
-            Icon, typography, branding, and themes
-          </Text>
+      <ScreenShell contentClassName={groupedScreenPadding}>
+        <View className="mb-8" style={{ marginTop: groupedWordmarkTopSpacing }}>
+          <View className="flex-row items-start justify-between">
+            <View className="flex-1 pr-3">
+              <Text
+                className="text-[34px] font-extralight"
+                style={{ color: chrome.colors.primary }}
+              >
+                UI
+              </Text>
+              <Text
+                className="mt-2 text-[11px] font-semibold uppercase tracking-widest"
+                style={{ color: chrome.colors.secondary }}
+              >
+                Design System
+              </Text>
+              <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
+                Icon, typography, branding, and themes
+              </Text>
+            </View>
+            <PreviewGlassBackButton />
+          </View>
         </View>
 
         <SectionCard label="Themes" title="Appearance">

@@ -10,10 +10,7 @@ import {
   groupedStickyPlusOutlineInset,
   groupedStickyPlusSize,
 } from '../theme/groupedLayout';
-import {
-  previewBackGlassColorScheme,
-  previewBackGlassTintColor,
-} from '../theme/nativeTabBarMetrics';
+import { previewBackGlassColorScheme } from '../theme/nativeTabBarMetrics';
 import { CircleOutline, deriveCircleOutlineSize } from './OutlineShape';
 import { nightMode } from './ultra/nightColors';
 
@@ -38,7 +35,6 @@ function RoundGlassSurface({ children }: { children: ReactNode }) {
         isInteractive
         glassEffectStyle="regular"
         colorScheme={previewBackGlassColorScheme}
-        tintColor={previewBackGlassTintColor}
         borderRadius={radius}
         style={[
           styles.glass,

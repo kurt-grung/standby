@@ -12,8 +12,7 @@ export const previewBackOverlayPressPaddingRight = glassPressOverflow;
 export const previewBackOverlayRightTune = -40;
 export const previewBackOverlayTopTune = -10;
 
-export const previewBackGlassTintColor = 'transparent';
-export const previewBackGlassColorScheme = 'dark';
+export const previewBackGlassColorScheme = 'auto';
 
 export type PreviewBackShape = 'pill' | 'round';
 export const previewBackShape: PreviewBackShape = 'round';

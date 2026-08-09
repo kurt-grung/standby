@@ -41,6 +41,7 @@ export function ScreenShell({
         ref={scrollRef}
         className="flex-1"
         contentContainerClassName={contentClassName}
+        contentInsetAdjustmentBehavior="never"
         keyboardShouldPersistTaps="handled"
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={showsVerticalScrollIndicator}

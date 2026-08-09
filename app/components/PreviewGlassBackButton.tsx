@@ -8,7 +8,6 @@ import { DynamicColorIOS, Pressable, StyleSheet, View } from 'react-native';
 import {
   nativeTabBarIconSize,
   previewBackGlassColorScheme,
-  previewBackGlassTintColor,
   previewBackNightOutlineBorderWidth,
   previewBackNightOutlineInset,
   previewBackNightOutlineOpacity,
@@ -103,7 +102,6 @@ function GlassBackButtonShell({ width, height, borderRadius, outline }: GlassBac
         isInteractive
         glassEffectStyle="clear"
         colorScheme={previewBackGlassColorScheme}
-        tintColor={previewBackGlassTintColor}
         borderRadius={borderRadius}
         style={[styles.glass, { width, height }]}
       >
