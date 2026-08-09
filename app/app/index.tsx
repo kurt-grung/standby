@@ -2,9 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { SymbolView } from 'expo-symbols';
 import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import Animated, {
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
-import { AppWordmarkHeader } from '../components/AppWordmarkHeader';
+import { AppWordmarkHeader, StickyWordmarkPlus } from '../components/AppWordmarkHeader';
 import {
   GroupedDivider,
   GroupedInset,
@@ -58,12 +63,24 @@ export default function HomeScreen() {
   const isAuto = gaugeValue === 0;
   const displayValue = isAuto ? dayProgress(now) : gaugeValue;
   const percent = Math.round(displayValue * 100);
+  const scrollY = useSharedValue(0);
+  const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   return (
     <>
       <StatusBar style={chrome.statusBar} />
-      <ScreenShell contentClassName={groupedScreenPadding}>
-        <AppWordmarkHeader />
+      <ScreenShell
+        scrollRef={scrollRef}
+        contentClassName={groupedScreenPadding}
+        overlay={<StickyWordmarkPlus scrollRef={scrollRef} scrollY={scrollY} />}
+        onScroll={onScroll}
+      >
+        <AppWordmarkHeader scrollRef={scrollRef} scrollY={scrollY} />
         <HomeWidgetPlaceholder gaugeValue={displayValue} />
 
         <GroupedSection title="Gauge" footer="Auto mirrors day progress in the Ultra Gauge widget.">

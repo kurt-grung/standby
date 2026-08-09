@@ -2,11 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../components/GaugeValueControls';
+import { StandByWordmark } from '../components/StandByWordmark';
 import { nightMode } from '../components/ultra/nightColors';
 import { ProgressBar } from '../components/ProgressBar';
 import { ScreenShell } from '../components/ScreenShell';
 import { SectionCard } from '../components/SectionCard';
 import { useTheme } from '../theme/ThemeContext';
+import { groupedWordmarkSize } from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { themeList, type ThemeId } from '../theme/themes';
 
@@ -616,6 +618,21 @@ export default function UiScreen() {
         </SectionCard>
 
         <SectionCard label="Components" title="UI kit" className="mb-0">
+          <View
+            className="mt-4 rounded-2xl border p-5"
+            style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.surface }}
+          >
+            <Text
+              className="mb-3 text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: chrome.colors.muted }}
+            >
+              Logo
+            </Text>
+            <StandByWordmark align="center" />
+            <Text className="mt-3 text-center text-xs" style={{ color: chrome.colors.muted }}>
+              StandByWordmark · {groupedWordmarkSize}px Display
+            </Text>
+          </View>
           <View className="mt-4">
             <GaugeValueControls
               accent={chrome.colors.accent}

@@ -1,27 +1,127 @@
-import { Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { View } from 'react-native';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  runOnJS,
+  runOnUI,
+  scrollTo,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  type AnimatedRef,
+  type SharedValue,
+} from 'react-native-reanimated';
 
-import { groupedWordmarkBottomSpacing, groupedWordmarkTopSpacing } from '../theme/groupedLayout';
+import {
+  groupedStickyPlusTopInset,
+  groupedWordmarkBottomSpacing,
+  groupedWordmarkSize,
+  groupedWordmarkStickFadeLength,
+  groupedWordmarkStickStart,
+  groupedWordmarkTopSpacing,
+  groupedScreenHorizontalPad,
+} from '../theme/groupedLayout';
+import { standByWordmarkMetrics } from './StandByWordmark';
+import { StickyPlusGlassButton } from './StickyPlusGlassButton';
+import { WordmarkPlusButton } from './WordmarkPlusButton';
 import { useAppChrome } from '../theme/useAppChrome';
-import { nightMode } from './ultra/nightColors';
 
-const wordmarkSize = 28;
+type WordmarkScrollProps = {
+  scrollY: SharedValue<number>;
+  scrollRef: AnimatedRef<Animated.ScrollView>;
+};
 
-export function AppWordmarkHeader() {
+const stickEnd = groupedWordmarkStickStart + groupedWordmarkStickFadeLength;
+const wordmarkMetrics = standByWordmarkMetrics(groupedWordmarkSize);
+
+function useScrollToTop(scrollRef: AnimatedRef<Animated.ScrollView>) {
+  return useCallback(() => {
+    runOnUI(() => {
+      scrollTo(scrollRef, 0, 0, true);
+    })();
+  }, [scrollRef]);
+}
+
+export function AppWordmarkHeader({ scrollY, scrollRef }: WordmarkScrollProps) {
   const chrome = useAppChrome();
+  const scrollToTop = useScrollToTop(scrollRef);
+
+  const standByStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [groupedWordmarkStickStart, stickEnd],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const plusFlowStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [groupedWordmarkStickStart, groupedWordmarkStickStart + 1],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
 
   return (
     <View
-      className="items-end"
-      style={{ marginTop: groupedWordmarkTopSpacing, marginBottom: groupedWordmarkBottomSpacing }}
+      accessibilityLabel="StandBy+"
+      className="flex-row items-baseline justify-end"
+      style={{
+        marginTop: groupedWordmarkTopSpacing,
+        marginBottom: groupedWordmarkBottomSpacing,
+      }}
     >
-      <Text
-        accessibilityLabel="StandBy+"
+      <Animated.Text
         className="font-extralight tracking-tight"
-        style={{ fontSize: wordmarkSize, lineHeight: wordmarkSize + 2 }}
+        style={[
+          {
+            color: chrome.colors.primary,
+            letterSpacing: -0.3,
+            fontWeight: '200',
+            ...wordmarkMetrics,
+          },
+          standByStyle,
+        ]}
       >
-        <Text style={{ color: chrome.colors.primary }}>StandBy</Text>
-        <Text style={{ color: nightMode.primary }}>+</Text>
-      </Text>
+        StandBy
+      </Animated.Text>
+      <Animated.View style={plusFlowStyle}>
+        <WordmarkPlusButton onPress={scrollToTop} />
+      </Animated.View>
+    </View>
+  );
+}
+
+export function StickyWordmarkPlus({ scrollY, scrollRef }: WordmarkScrollProps) {
+  const [visible, setVisible] = useState(false);
+  const scrollToTop = useScrollToTop(scrollRef);
+
+  useAnimatedReaction(
+    () => scrollY.value >= groupedWordmarkStickStart,
+    (active, previous) => {
+      if (active !== previous) {
+        runOnJS(setVisible)(active);
+      }
+    },
+  );
+
+  if (!visible) {
+    return null;
+  }
+
+  return (
+    <View
+      pointerEvents="box-none"
+      style={{
+        position: 'absolute',
+        top: groupedStickyPlusTopInset,
+        right: groupedScreenHorizontalPad,
+        zIndex: 10,
+      }}
+    >
+      <StickyPlusGlassButton onPress={scrollToTop} />
     </View>
   );
 }

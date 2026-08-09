@@ -1,6 +1,15 @@
 export const groupedScreenPadding = 'px-4 pb-10';
+export const groupedScreenHorizontalPad = 16;
 export const groupedWordmarkTopSpacing = 55;
 export const groupedWordmarkBottomSpacing = 30;
+export const groupedWordmarkSize = 42;
+export const groupedWordmarkStickStart = groupedWordmarkTopSpacing;
+export const groupedWordmarkStickFadeLength = 10;
+export const groupedStickyPlusSize = 48;
+export const groupedStickyPlusGlassSize = 62;
+export const groupedStickyPlusOutlineInset = 10;
+export const groupedStickyPlusTopInset = 8;
+export const groupedStickyPlusHitSlop = 12;
 export const groupedSectionSpacing = 'mb-5';
 export const groupedHeroInset = 'items-center px-4 pb-0';
 export const groupedGaugeTopPadding = 20;
