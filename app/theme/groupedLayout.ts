@@ -1,5 +1,6 @@
-export const groupedScreenPadding = 'px-4 pb-10';
+export const groupedScreenPadding = 'px-4';
 export const groupedScreenHorizontalPad = 16;
+export const groupedScreenBottomInset = 24;
 export const groupedWordmarkTopSpacing = 55;
 export const groupedWordmarkBottomSpacing = 30;
 export const groupedWordmarkSize = 42;

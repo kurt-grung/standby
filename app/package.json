@@ -22,6 +22,7 @@
     "fix": "node scripts/run-expo-fix.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "assets:generate": "node scripts/generate-brand-assets.mjs",
     "eas:init": "eas init",
     "eas:build:dev": "eas build --profile development --platform ios",
     "eas:build:dev-device": "eas build --profile development-device --platform ios",

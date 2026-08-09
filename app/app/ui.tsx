@@ -18,7 +18,11 @@ import { useAppChrome } from '../theme/useAppChrome';
 import { themeList, type ThemeId } from '../theme/themes';
 
 const typographyScale = [
-  { name: 'Display', sample: 'StandBy+', className: 'text-[42px] font-extralight tracking-tight' },
+  {
+    name: 'Display',
+    sample: 'Ultra Night',
+    className: 'text-[42px] font-extralight tracking-tight',
+  },
   { name: 'Title', sample: 'Ultra Night', className: 'text-2xl font-light' },
   { name: 'Headline', sample: 'Add to StandBy', className: 'text-lg font-medium' },
   { name: 'Body', sample: 'Widgets for iPhone StandBy mode.', className: 'text-base font-normal' },
@@ -292,7 +296,7 @@ export default function UiScreen() {
                 UI
               </Text>
               <Text
-                className="mt-2 text-[11px] font-semibold uppercase tracking-widest"
+                className="mt-2 text-[28px] font-extralight tracking-tight"
                 style={{ color: chrome.colors.secondary }}
               >
                 Design System
@@ -305,76 +309,53 @@ export default function UiScreen() {
           </View>
         </View>
 
-        <SectionCard label="Themes" title="Appearance">
-          <View className="mt-4 flex-row flex-wrap">
+        <SectionCard label="Themes">
+          <View className="mt-3 flex-row flex-wrap">
             {themeList.map((item) => {
               const active = themeId === item.id;
               return (
                 <Pressable
                   key={item.id}
-                  className="mb-2 mr-2 rounded-2xl border px-4 py-3 active:opacity-70"
+                  className="mb-1.5 mr-1.5 flex-row items-center rounded-full border px-3 py-1.5 active:opacity-70"
                   style={{
                     borderColor: active ? item.colors.accent : chrome.colors.border,
                     backgroundColor: active ? item.colors.accentSoft : chrome.colors.surface,
                   }}
                   onPress={() => setThemeId(item.id as ThemeId)}
                 >
-                  <View className="mb-2 flex-row items-center">
-                    <View
-                      className="mr-2 h-3 w-3 rounded-full"
-                      style={{ backgroundColor: item.colors.accent }}
-                    />
-                    <Text
-                      className="text-sm font-semibold"
-                      style={{ color: active ? item.colors.accent : chrome.colors.primary }}
-                    >
-                      {item.name}
-                    </Text>
-                  </View>
-                  <Text className="text-xs leading-4" style={{ color: chrome.colors.muted }}>
-                    {item.description}
+                  <View
+                    className="mr-1.5 h-2 w-2 rounded-full"
+                    style={{ backgroundColor: item.colors.accent }}
+                  />
+                  <Text
+                    className="text-xs font-semibold"
+                    style={{ color: active ? item.colors.accent : chrome.colors.primary }}
+                  >
+                    {item.name}
                   </Text>
                 </Pressable>
               );
             })}
           </View>
-          <View className="mt-4">
+          <Text className="mt-2 text-xs leading-4" style={{ color: chrome.colors.muted }}>
+            {theme.description}
+          </Text>
+          <View className="mt-3">
             <ProgressBar value={0.42} />
           </View>
         </SectionCard>
 
-        <SectionCard label="Icon" title="App mark">
-          <View className="mt-4 items-center">
-            <Image
-              source={require('../assets/icon.png')}
-              className="h-28 w-28 rounded-[22px]"
-              resizeMode="cover"
-            />
-            <Text
-              className="mt-4 text-center text-sm leading-5"
-              style={{ color: chrome.colors.secondary }}
-            >
-              Minimal ring, red night dot, landscape shelf. Dieter Rams clarity with Apple flat
-              precision.
-            </Text>
-          </View>
-          <View className="mt-5 flex-row flex-wrap justify-center">
-            {iconVariants.map((item) => (
-              <View key={item.label} className="mx-1 mb-2 items-center">
-                <Image source={item.source} className="h-14 w-14 rounded-2xl" resizeMode="cover" />
-                <Text
-                  className="mt-1 text-[10px] font-semibold uppercase"
-                  style={{ color: chrome.colors.muted }}
-                >
-                  {item.label}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </SectionCard>
-
         <SectionCard label="Typography" title="Type scale">
-          <View className="mt-4">
+          <View className="mt-4 border-b pb-5" style={{ borderColor: chrome.colors.border }}>
+            <Text
+              className="mb-1 text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: chrome.colors.muted }}
+            >
+              Logo
+            </Text>
+            <StandByWordmark align="start" size={groupedWordmarkSize} />
+          </View>
+          <View className="mt-5">
             {typographyScale.map((item, index) => (
               <View
                 key={item.name}
@@ -393,6 +374,131 @@ export default function UiScreen() {
               </View>
             ))}
           </View>
+        </SectionCard>
+
+        <SectionCard label="Icon" title="App mark">
+          <View className="mt-4 items-center">
+            <Image
+              source={require('../assets/icon.png')}
+              className="h-28 w-28 rounded-[22px]"
+              resizeMode="cover"
+            />
+            <Text
+              className="mt-4 text-center text-sm leading-5"
+              style={{ color: chrome.colors.secondary }}
+            >
+              S+ monogram. White S, night red plus on pure black.
+            </Text>
+          </View>
+          <View className="mt-5 flex-row flex-wrap justify-center">
+            {iconVariants.map((item) => (
+              <View key={item.label} className="mx-1 mb-2 items-center">
+                <Image source={item.source} className="h-14 w-14 rounded-2xl" resizeMode="cover" />
+                <Text
+                  className="mt-1 text-[10px] font-semibold uppercase"
+                  style={{ color: chrome.colors.muted }}
+                >
+                  {item.label}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </SectionCard>
+
+        <SectionCard label="Branding" title="StandBy+ identity">
+          <Image
+            source={require('../assets/branding/wordmark.png')}
+            className="mt-2 h-16 w-full"
+            resizeMode="contain"
+          />
+          <Image
+            source={require('../assets/splash.png')}
+            className="mt-5 h-32 w-full rounded-2xl"
+            resizeMode="contain"
+          />
+          <Text className="mt-2 text-base" style={{ color: chrome.colors.secondary }}>
+            StandBy, refined. Widgets for iPhone StandBy at a glance.
+          </Text>
+          <View className="mt-5 flex-row flex-wrap">
+            {Object.entries(theme.colors).map(([key, value]) => (
+              <View key={key} className="mb-3 mr-3 w-[46%] flex-row items-center">
+                <View
+                  className="mr-2 h-8 w-8 rounded-lg border"
+                  style={{ backgroundColor: value, borderColor: chrome.colors.border }}
+                />
+                <View>
+                  <Text
+                    className="text-xs font-semibold capitalize"
+                    style={{ color: chrome.colors.primary }}
+                  >
+                    {key}
+                  </Text>
+                  <Text className="text-[10px]" style={{ color: chrome.colors.muted }}>
+                    {value}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
+          <View className="mt-2">
+            {brandPrinciples.map((line, index) => (
+              <Text
+                key={line}
+                className={`text-sm leading-5 ${index > 0 ? 'mt-2' : ''}`}
+                style={{ color: chrome.colors.secondary }}
+              >
+                · {line}
+              </Text>
+            ))}
+          </View>
+        </SectionCard>
+
+        <SectionCard label="Components" title="UI kit">
+          <View className="mt-4">
+            <GaugeValueControls
+              accent={chrome.colors.accent}
+              accentSoft={chrome.colors.accentSoft}
+              increaseAccent={nightMode.primary}
+              border={chrome.colors.border}
+              text={chrome.colors.primary}
+              onDecrease={() => undefined}
+              onAuto={() => undefined}
+              onIncrease={() => undefined}
+            />
+          </View>
+          <View className="mt-4 flex-row flex-wrap">
+            <View
+              className="mb-2 mr-2 rounded-full border px-4 py-2"
+              style={{
+                borderColor: chrome.colors.accent,
+                backgroundColor: chrome.colors.accentSoft,
+              }}
+            >
+              <Text
+                className="text-xs font-semibold uppercase"
+                style={{ color: chrome.colors.accent }}
+              >
+                Badge
+              </Text>
+            </View>
+            <View
+              className="mb-2 mr-2 rounded-xl border px-4 py-2"
+              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.bg }}
+            >
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.primary }}>
+                Button
+              </Text>
+            </View>
+            <View
+              className="mb-2 rounded-xl border px-4 py-2"
+              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.surface }}
+            >
+              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
+                Surface
+              </Text>
+            </View>
+          </View>
+          <ProgressBar value={0.68} />
         </SectionCard>
 
         <SectionCard label="Review" title="Dark app · Light marketing">
@@ -471,11 +577,11 @@ export default function UiScreen() {
             </View>
           </View>
           <Text className="mt-4 text-sm leading-5" style={{ color: chrome.colors.secondary }}>
-            Same ring · dot · shelf mark. Night red on device; Stone palette for App Store and web.
+            Same S+ mark on device; Stone palette for App Store and web.
           </Text>
         </SectionCard>
 
-        <SectionCard label="Boards" title="Brand sheets">
+        <SectionCard label="Boards" title="Brand sheets" className="mb-0">
           <Text
             className="mt-1 text-xs font-semibold uppercase tracking-widest"
             style={{ color: chrome.colors.muted }}
@@ -577,117 +683,6 @@ export default function UiScreen() {
               <Image source={item.source} className="h-36 w-full rounded-2xl" resizeMode="cover" />
             </View>
           ))}
-        </SectionCard>
-
-        <SectionCard label="Branding" title="StandBy+ identity">
-          <Image
-            source={require('../assets/branding/wordmark.png')}
-            className="mt-2 h-16 w-full"
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../assets/splash.png')}
-            className="mt-5 h-32 w-full rounded-2xl"
-            resizeMode="contain"
-          />
-          <Text className="mt-2 text-base" style={{ color: chrome.colors.secondary }}>
-            StandBy, refined. Widgets for iPhone StandBy at a glance.
-          </Text>
-          <View className="mt-5 flex-row flex-wrap">
-            {Object.entries(theme.colors).map(([key, value]) => (
-              <View key={key} className="mb-3 mr-3 w-[46%] flex-row items-center">
-                <View
-                  className="mr-2 h-8 w-8 rounded-lg border"
-                  style={{ backgroundColor: value, borderColor: chrome.colors.border }}
-                />
-                <View>
-                  <Text
-                    className="text-xs font-semibold capitalize"
-                    style={{ color: chrome.colors.primary }}
-                  >
-                    {key}
-                  </Text>
-                  <Text className="text-[10px]" style={{ color: chrome.colors.muted }}>
-                    {value}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-          <View className="mt-2">
-            {brandPrinciples.map((line, index) => (
-              <Text
-                key={line}
-                className={`text-sm leading-5 ${index > 0 ? 'mt-2' : ''}`}
-                style={{ color: chrome.colors.secondary }}
-              >
-                · {line}
-              </Text>
-            ))}
-          </View>
-        </SectionCard>
-
-        <SectionCard label="Components" title="UI kit" className="mb-0">
-          <View
-            className="mt-4 rounded-2xl border p-5"
-            style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.surface }}
-          >
-            <Text
-              className="mb-3 text-[11px] font-semibold uppercase tracking-widest"
-              style={{ color: chrome.colors.muted }}
-            >
-              Logo
-            </Text>
-            <StandByWordmark align="center" />
-            <Text className="mt-3 text-center text-xs" style={{ color: chrome.colors.muted }}>
-              StandByWordmark · {groupedWordmarkSize}px Display
-            </Text>
-          </View>
-          <View className="mt-4">
-            <GaugeValueControls
-              accent={chrome.colors.accent}
-              accentSoft={chrome.colors.accentSoft}
-              increaseAccent={nightMode.primary}
-              border={chrome.colors.border}
-              text={chrome.colors.primary}
-              onDecrease={() => undefined}
-              onAuto={() => undefined}
-              onIncrease={() => undefined}
-            />
-          </View>
-          <View className="mt-4 flex-row flex-wrap">
-            <View
-              className="mb-2 mr-2 rounded-full border px-4 py-2"
-              style={{
-                borderColor: chrome.colors.accent,
-                backgroundColor: chrome.colors.accentSoft,
-              }}
-            >
-              <Text
-                className="text-xs font-semibold uppercase"
-                style={{ color: chrome.colors.accent }}
-              >
-                Badge
-              </Text>
-            </View>
-            <View
-              className="mb-2 mr-2 rounded-xl border px-4 py-2"
-              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.bg }}
-            >
-              <Text className="text-xs font-semibold" style={{ color: chrome.colors.primary }}>
-                Button
-              </Text>
-            </View>
-            <View
-              className="mb-2 rounded-xl border px-4 py-2"
-              style={{ borderColor: chrome.colors.border, backgroundColor: chrome.colors.surface }}
-            >
-              <Text className="text-xs font-semibold" style={{ color: chrome.colors.secondary }}>
-                Surface
-              </Text>
-            </View>
-          </View>
-          <ProgressBar value={0.68} />
         </SectionCard>
       </ScreenShell>
     </>

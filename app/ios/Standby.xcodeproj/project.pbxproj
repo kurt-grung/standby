@@ -8,38 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2A30FB587C81470B9A0ECAEE /* UltraClockWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950D62F171004F9EBE80E92B /* UltraClockWidget.swift */; };
-		2F910501F7CB687D597B1CA2 /* libPods-StandBy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FBFA2ED0AFEDB7E3140A782 /* libPods-StandBy.a */; };
+		14DB09D5731998E8864CBF34 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3B65A5EE0DD383A6F2DE1D32 /* PrivacyInfo.xcprivacy */; };
+		20AD1BE0862B4CE1B100753B /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC9008962274752928861B2 /* index.swift */; };
+		2D78B9803276C08E900D38DF /* libPods-ExpoWidgetsTarget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B49F1E3DAA26D03B725664BE /* libPods-ExpoWidgetsTarget.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		52A1E672173A4BE3B3C8A202 /* index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CC6E6BE4124CC48355B519 /* index.swift */; };
-		637FE6A7C206424A444B8A2C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CF17FD3E8E7601C9FD777D18 /* PrivacyInfo.xcprivacy */; };
-		960C3B1D77AC4128B39FCB82 /* ExpoWidgetsTarget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E0A62DFA4EB45B6AFBF1790 /* ExpoWidgetsTarget.appex */; };
-		9D1B7DE251BCE32C666E6C04 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2271356446B9E697DEE418E /* ExpoModulesProvider.swift */; };
-		B1F144A516559FA107775A07 /* libPods-ExpoWidgetsTarget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF6DCD07058BF4F6105E175 /* libPods-ExpoWidgetsTarget.a */; };
+		4D4C882D239B49B98E04F592 /* UltraGaugeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24656665C75646A2A9800AE8 /* UltraGaugeWidget.swift */; };
+		7FCB06C758014477BF6C3B7B /* ExpoWidgetsTarget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 18D4772842C44373A8C3065D /* ExpoWidgetsTarget.appex */; };
+		92A663D444DA73A4B91DF1E9 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94813E2A8AAF4AA5972EED1 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		E538E1EA659F438A8A60775C /* UltraGaugeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD5FFAD76FB468788F698C8 /* UltraGaugeWidget.swift */; };
+		BD5FB4F221414320BC7C23FC /* UltraClockWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA10E3F068047F2B476FC98 /* UltraClockWidget.swift */; };
+		E2AE140559D8A527461D7321 /* libPods-StandBy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFF9E7E2C8D5BDE06270205 /* libPods-StandBy.a */; };
+		ECC387D769EFFDDFE219A9E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6471060B64814586DCB3A1 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
-		F50B715E37D0D0226E98089F /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB03691230242E04CE98CA8B /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		70DA70BA9CAE46B5839C7ED8 /* PBXContainerItemProxy */ = {
+		8735B3DF1D3C44C88E69D698 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 126042A8496843839415DAEE;
+			remoteGlobalIDString = 6C8A3254BE634EF28A716EFE;
 			remoteInfo = ExpoWidgetsTarget;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EF310F4ABC0640EB80B9F30D /* Embed Foundation Extensions */ = {
+		22FE62A2D43B40C19D8A53F0 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				960C3B1D77AC4128B39FCB82 /* ExpoWidgetsTarget.appex in Embed Foundation Extensions */,
+				7FCB06C758014477BF6C3B7B /* ExpoWidgetsTarget.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,26 +47,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00989F0AD47F9C6917688DE7 /* Pods-ExpoWidgetsTarget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpoWidgetsTarget.release.xcconfig"; path = "Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget.release.xcconfig"; sourceTree = "<group>"; };
-		11CC6E6BE4124CC48355B519 /* index.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = index.swift; path = index.swift; sourceTree = "<group>"; };
+		0C6471060B64814586DCB3A1 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ExpoWidgetsTarget/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* StandBy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StandBy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = StandBy/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = StandBy/Info.plist; sourceTree = "<group>"; };
-		1FBFA2ED0AFEDB7E3140A782 /* libPods-StandBy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StandBy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A670F18A8231FA62D3B9A6F /* Pods-ExpoWidgetsTarget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpoWidgetsTarget.debug.xcconfig"; path = "Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget.debug.xcconfig"; sourceTree = "<group>"; };
-		3EEE040062DA469286DFEFA7 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = Info.plist; path = Info.plist; sourceTree = "<group>"; };
-		5E1985FA40A03B4B00B83E0F /* Pods-StandBy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandBy.release.xcconfig"; path = "Target Support Files/Pods-StandBy/Pods-StandBy.release.xcconfig"; sourceTree = "<group>"; };
-		8E0A62DFA4EB45B6AFBF1790 /* ExpoWidgetsTarget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = undefined; name = ExpoWidgetsTarget.appex; path = ExpoWidgetsTarget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		950D62F171004F9EBE80E92B /* UltraClockWidget.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UltraClockWidget.swift; path = UltraClockWidget.swift; sourceTree = "<group>"; };
-		9CF6DCD07058BF4F6105E175 /* libPods-ExpoWidgetsTarget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExpoWidgetsTarget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18D4772842C44373A8C3065D /* ExpoWidgetsTarget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = undefined; name = ExpoWidgetsTarget.appex; path = ExpoWidgetsTarget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		24656665C75646A2A9800AE8 /* UltraGaugeWidget.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UltraGaugeWidget.swift; path = UltraGaugeWidget.swift; sourceTree = "<group>"; };
+		3A42DE67C8B44E34BD3D5B15 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = Info.plist; path = Info.plist; sourceTree = "<group>"; };
+		3B65A5EE0DD383A6F2DE1D32 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = StandBy/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		7BA10E3F068047F2B476FC98 /* UltraClockWidget.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UltraClockWidget.swift; path = UltraClockWidget.swift; sourceTree = "<group>"; };
+		7E63961D52AA451CB6F93350 /* ExpoWidgetsTarget.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ExpoWidgetsTarget.entitlements; path = ExpoWidgetsTarget.entitlements; sourceTree = "<group>"; };
+		7FC9008962274752928861B2 /* index.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = index.swift; path = index.swift; sourceTree = "<group>"; };
+		8DFF4A85427C1E1A7B8B85DA /* Pods-StandBy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandBy.debug.xcconfig"; path = "Target Support Files/Pods-StandBy/Pods-StandBy.debug.xcconfig"; sourceTree = "<group>"; };
+		8DFF9E7E2C8D5BDE06270205 /* libPods-StandBy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StandBy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = StandBy/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B70B3337777C4F76900D5AA5 /* ExpoWidgetsTarget.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ExpoWidgetsTarget.entitlements; path = ExpoWidgetsTarget.entitlements; sourceTree = "<group>"; };
+		AFE6B8B1012491AB14B8B097 /* Pods-ExpoWidgetsTarget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpoWidgetsTarget.debug.xcconfig"; path = "Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget.debug.xcconfig"; sourceTree = "<group>"; };
+		B04E0653BA6B2BB1CCA56798 /* Pods-StandBy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandBy.release.xcconfig"; path = "Target Support Files/Pods-StandBy/Pods-StandBy.release.xcconfig"; sourceTree = "<group>"; };
+		B49F1E3DAA26D03B725664BE /* libPods-ExpoWidgetsTarget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExpoWidgetsTarget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B94813E2A8AAF4AA5972EED1 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-StandBy/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CAD5FFAD76FB468788F698C8 /* UltraGaugeWidget.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = UltraGaugeWidget.swift; path = UltraGaugeWidget.swift; sourceTree = "<group>"; };
-		CF17FD3E8E7601C9FD777D18 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = StandBy/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		DB03691230242E04CE98CA8B /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-ExpoWidgetsTarget/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		DD4AFF4EE542ED83869211BD /* Pods-StandBy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StandBy.debug.xcconfig"; path = "Target Support Files/Pods-StandBy/Pods-StandBy.debug.xcconfig"; sourceTree = "<group>"; };
-		E2271356446B9E697DEE418E /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-StandBy/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		E1CF193C545E49816CCBFA27 /* Pods-ExpoWidgetsTarget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExpoWidgetsTarget.release.xcconfig"; path = "Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = StandBy/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* StandBy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "StandBy-Bridging-Header.h"; path = "StandBy/StandBy-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -77,21 +77,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F910501F7CB687D597B1CA2 /* libPods-StandBy.a in Frameworks */,
+				E2AE140559D8A527461D7321 /* libPods-StandBy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1D5DD51AFEA34FA8ACAA8B1B /* Frameworks */ = {
+		252F37D5205D49538A02CF5D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1F144A516559FA107775A07 /* libPods-ExpoWidgetsTarget.a in Frameworks */,
+				2D78B9803276C08E900D38DF /* libPods-ExpoWidgetsTarget.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051008FB1D1CF355D37B0179 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				CCCB23DBB6679613C835019E /* ExpoWidgetsTarget */,
+				AEF0D3FBECCD1BCD4E6DD4F9 /* StandBy */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,7 +110,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				CF17FD3E8E7601C9FD777D18 /* PrivacyInfo.xcprivacy */,
+				3B65A5EE0DD383A6F2DE1D32 /* PrivacyInfo.xcprivacy */,
 			);
 			name = StandBy;
 			sourceTree = "<group>";
@@ -110,31 +119,22 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				9CF6DCD07058BF4F6105E175 /* libPods-ExpoWidgetsTarget.a */,
-				1FBFA2ED0AFEDB7E3140A782 /* libPods-StandBy.a */,
+				B49F1E3DAA26D03B725664BE /* libPods-ExpoWidgetsTarget.a */,
+				8DFF9E7E2C8D5BDE06270205 /* libPods-StandBy.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4AA21F1F927B46BF83C18C59 /* ExpoWidgetsTarget */ = {
+		34D2863184F23B4CC92313EC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B70B3337777C4F76900D5AA5 /* ExpoWidgetsTarget.entitlements */,
-				3EEE040062DA469286DFEFA7 /* Info.plist */,
-				11CC6E6BE4124CC48355B519 /* index.swift */,
-				950D62F171004F9EBE80E92B /* UltraClockWidget.swift */,
-				CAD5FFAD76FB468788F698C8 /* UltraGaugeWidget.swift */,
+				AFE6B8B1012491AB14B8B097 /* Pods-ExpoWidgetsTarget.debug.xcconfig */,
+				E1CF193C545E49816CCBFA27 /* Pods-ExpoWidgetsTarget.release.xcconfig */,
+				8DFF4A85427C1E1A7B8B85DA /* Pods-StandBy.debug.xcconfig */,
+				B04E0653BA6B2BB1CCA56798 /* Pods-StandBy.release.xcconfig */,
 			);
-			name = ExpoWidgetsTarget;
-			path = ExpoWidgetsTarget;
-			sourceTree = "<group>";
-		};
-		6213CCB9C8C30F51453C01CF /* ExpoWidgetsTarget */ = {
-			isa = PBXGroup;
-			children = (
-				DB03691230242E04CE98CA8B /* ExpoModulesProvider.swift */,
-			);
-			name = ExpoWidgetsTarget;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -151,9 +151,9 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				4AA21F1F927B46BF83C18C59 /* ExpoWidgetsTarget */,
-				A75E79754FB9B1622D1ECE13 /* Pods */,
-				A6F0D9EC77228F42C053ECC5 /* ExpoModulesProviders */,
+				A64801567F454B1099E1841C /* ExpoWidgetsTarget */,
+				34D2863184F23B4CC92313EC /* Pods */,
+				051008FB1D1CF355D37B0179 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -164,36 +164,28 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* StandBy.app */,
-				8E0A62DFA4EB45B6AFBF1790 /* ExpoWidgetsTarget.appex */,
+				18D4772842C44373A8C3065D /* ExpoWidgetsTarget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A6F0D9EC77228F42C053ECC5 /* ExpoModulesProviders */ = {
+		A64801567F454B1099E1841C /* ExpoWidgetsTarget */ = {
 			isa = PBXGroup;
 			children = (
-				6213CCB9C8C30F51453C01CF /* ExpoWidgetsTarget */,
-				B44730324D5BF93E330244BD /* StandBy */,
+				7E63961D52AA451CB6F93350 /* ExpoWidgetsTarget.entitlements */,
+				3A42DE67C8B44E34BD3D5B15 /* Info.plist */,
+				7FC9008962274752928861B2 /* index.swift */,
+				7BA10E3F068047F2B476FC98 /* UltraClockWidget.swift */,
+				24656665C75646A2A9800AE8 /* UltraGaugeWidget.swift */,
 			);
-			name = ExpoModulesProviders;
+			name = ExpoWidgetsTarget;
+			path = ExpoWidgetsTarget;
 			sourceTree = "<group>";
 		};
-		A75E79754FB9B1622D1ECE13 /* Pods */ = {
+		AEF0D3FBECCD1BCD4E6DD4F9 /* StandBy */ = {
 			isa = PBXGroup;
 			children = (
-				2A670F18A8231FA62D3B9A6F /* Pods-ExpoWidgetsTarget.debug.xcconfig */,
-				00989F0AD47F9C6917688DE7 /* Pods-ExpoWidgetsTarget.release.xcconfig */,
-				DD4AFF4EE542ED83869211BD /* Pods-StandBy.debug.xcconfig */,
-				5E1985FA40A03B4B00B83E0F /* Pods-StandBy.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		B44730324D5BF93E330244BD /* StandBy */ = {
-			isa = PBXGroup;
-			children = (
-				E2271356446B9E697DEE418E /* ExpoModulesProvider.swift */,
+				B94813E2A8AAF4AA5972EED1 /* ExpoModulesProvider.swift */,
 			);
 			name = StandBy;
 			sourceTree = "<group>";
@@ -207,18 +199,51 @@
 			path = StandBy/Supporting;
 			sourceTree = "<group>";
 		};
+		CCCB23DBB6679613C835019E /* ExpoWidgetsTarget */ = {
+			isa = PBXGroup;
+			children = (
+				0C6471060B64814586DCB3A1 /* ExpoModulesProvider.swift */,
+			);
+			name = ExpoWidgetsTarget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		126042A8496843839415DAEE /* ExpoWidgetsTarget */ = {
+		13B07F861A680F5B00A75B9A /* StandBy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04A1EF2356334E678A770FD2 /* Build configuration list for PBXNativeTarget "ExpoWidgetsTarget" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "StandBy" */;
 			buildPhases = (
-				7045E1C857B9D92CD6CE6C68 /* [CP] Check Pods Manifest.lock */,
-				CAC857EF92F086C8F6415D87 /* [Expo] Configure project */,
-				96538CADDEF74253A8071C3D /* Sources */,
-				1D5DD51AFEA34FA8ACAA8B1B /* Frameworks */,
-				163F4A68F2713CBA62CE6DFB /* [CP] Copy Pods Resources */,
+				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+				59A26DECF121040099BC7B2D /* [Expo] Configure project */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				462DA8E2EA4F44C9A582BB80 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
+				22FE62A2D43B40C19D8A53F0 /* Embed Foundation Extensions */,
+				DDD57F48F0561C178ED2040A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2C213A6921184B6CB8B474DC /* PBXTargetDependency */,
+			);
+			name = StandBy;
+			productName = StandBy;
+			productReference = 13B07F961A680F5B00A75B9A /* StandBy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6C8A3254BE634EF28A716EFE /* ExpoWidgetsTarget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA43FA3E322840B8B948416F /* Build configuration list for PBXNativeTarget "ExpoWidgetsTarget" */;
+			buildPhases = (
+				68D083B26B8F1FE01354100C /* [CP] Check Pods Manifest.lock */,
+				BDBCCA279DEDC2387B4FB402 /* [Expo] Configure project */,
+				7AB12295D74A4FBB8B2ED128 /* Sources */,
+				252F37D5205D49538A02CF5D /* Frameworks */,
+				D6B4B793CCFCE4A85EA3754A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -226,33 +251,8 @@
 			);
 			name = ExpoWidgetsTarget;
 			productName = ExpoWidgetsTarget;
-			productReference = 8E0A62DFA4EB45B6AFBF1790 /* ExpoWidgetsTarget.appex */;
+			productReference = 18D4772842C44373A8C3065D /* ExpoWidgetsTarget.appex */;
 			productType = "com.apple.product-type.app-extension";
-		};
-		13B07F861A680F5B00A75B9A /* StandBy */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "StandBy" */;
-			buildPhases = (
-				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				9B178CB967DD570238F6AD56 /* [Expo] Configure project */,
-				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
-				13B07F8E1A680F5B00A75B9A /* Resources */,
-				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				E8A43227507E4F6D835CC8F7 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
-				EF310F4ABC0640EB80B9F30D /* Embed Foundation Extensions */,
-				F244891DCD15B9AD05C260F0 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3D6A11EBCC324AF3A61CB980 /* PBXTargetDependency */,
-			);
-			name = StandBy;
-			productName = StandBy;
-			productReference = 13B07F961A680F5B00A75B9A /* StandBy.app */;
-			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -262,10 +262,10 @@
 			attributes = {
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
-					126042A8496843839415DAEE = {
+					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
 					};
-					13B07F861A680F5B00A75B9A = {
+					6C8A3254BE634EF28A716EFE = {
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -284,7 +284,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* StandBy */,
-				126042A8496843839415DAEE /* ExpoWidgetsTarget */,
+				6C8A3254BE634EF28A716EFE /* ExpoWidgetsTarget */,
 			);
 		};
 /* End PBXProject section */
@@ -297,7 +297,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				637FE6A7C206424A444B8A2C /* PrivacyInfo.xcprivacy in Resources */,
+				14DB09D5731998E8864CBF34 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,31 +343,45 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		163F4A68F2713CBA62CE6DFB /* [CP] Copy Pods Resources */ = {
+		462DA8E2EA4F44C9A582BB80 /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoWidgets/ExpoWidgets.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-timing/React-timing_privacy.bundle",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoWidgets.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-timing_privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
 		};
-		7045E1C857B9D92CD6CE6C68 /* [CP] Check Pods Manifest.lock */ = {
+		59A26DECF121040099BC7B2D /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/StandBy/StandBy.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-StandBy/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-StandBy/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-StandBy/expo-configure-project.sh\"\n";
+		};
+		68D083B26B8F1FE01354100C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -425,31 +439,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StandBy/Pods-StandBy-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B178CB967DD570238F6AD56 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/StandBy/StandBy.entitlements",
-				"$(SRCROOT)/Pods/Target Support Files/Pods-StandBy/expo-configure-project.sh",
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Pods/Target Support Files/Pods-StandBy/ExpoModulesProvider.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-StandBy/expo-configure-project.sh\"\n";
-		};
-		CAC857EF92F086C8F6415D87 /* [Expo] Configure project */ = {
+		BDBCCA279DEDC2387B4FB402 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -473,21 +463,31 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-ExpoWidgetsTarget/expo-configure-project.sh\"\n";
 		};
-		E8A43227507E4F6D835CC8F7 /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
+		D6B4B793CCFCE4A85EA3754A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoWidgets/ExpoWidgets.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-timing/React-timing_privacy.bundle",
 			);
-			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoWidgets.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-timing_privacy.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ExpoWidgetsTarget/Pods-ExpoWidgetsTarget-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		F244891DCD15B9AD05C260F0 /* [CP] Embed Pods Frameworks */ = {
+		DDD57F48F0561C178ED2040A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -527,35 +527,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				9D1B7DE251BCE32C666E6C04 /* ExpoModulesProvider.swift in Sources */,
+				92A663D444DA73A4B91DF1E9 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96538CADDEF74253A8071C3D /* Sources */ = {
+		7AB12295D74A4FBB8B2ED128 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52A1E672173A4BE3B3C8A202 /* index.swift in Sources */,
-				2A30FB587C81470B9A0ECAEE /* UltraClockWidget.swift in Sources */,
-				E538E1EA659F438A8A60775C /* UltraGaugeWidget.swift in Sources */,
-				F50B715E37D0D0226E98089F /* ExpoModulesProvider.swift in Sources */,
+				20AD1BE0862B4CE1B100753B /* index.swift in Sources */,
+				BD5FB4F221414320BC7C23FC /* UltraClockWidget.swift in Sources */,
+				4D4C882D239B49B98E04F592 /* UltraGaugeWidget.swift in Sources */,
+				ECC387D769EFFDDFE219A9E2 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3D6A11EBCC324AF3A61CB980 /* PBXTargetDependency */ = {
+		2C213A6921184B6CB8B474DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 126042A8496843839415DAEE /* ExpoWidgetsTarget */;
-			targetProxy = 70DA70BA9CAE46B5839C7ED8 /* PBXContainerItemProxy */;
+			target = 6C8A3254BE634EF28A716EFE /* ExpoWidgetsTarget */;
+			targetProxy = 8735B3DF1D3C44C88E69D698 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD4AFF4EE542ED83869211BD /* Pods-StandBy.debug.xcconfig */;
+			baseConfigurationReference = 8DFF4A85427C1E1A7B8B85DA /* Pods-StandBy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -593,7 +593,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5E1985FA40A03B4B00B83E0F /* Pods-StandBy.release.xcconfig */;
+			baseConfigurationReference = B04E0653BA6B2BB1CCA56798 /* Pods-StandBy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -623,9 +623,9 @@
 			};
 			name = Release;
 		};
-		2F351FBB391E4A07B213E974 /* Release */ = {
+		4C6CDDE6C83243899E05DB3C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00989F0AD47F9C6917688DE7 /* Pods-ExpoWidgetsTarget.release.xcconfig */;
+			baseConfigurationReference = E1CF193C545E49816CCBFA27 /* Pods-ExpoWidgetsTarget.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements;
@@ -645,29 +645,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
-		};
-		3C3F165116034016B90BC672 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A670F18A8231FA62D3B9A6F /* Pods-ExpoWidgetsTarget.debug.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 85FP2SN2JN;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ExpoWidgetsTarget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = ExpoWidgetsTarget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.0;
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kurtgrung.standby.widgets;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -805,18 +782,32 @@
 			};
 			name = Release;
 		};
+		A75E9DAE0013411E95D8D324 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFE6B8B1012491AB14B8B097 /* Pods-ExpoWidgetsTarget.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = ExpoWidgetsTarget/ExpoWidgetsTarget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85FP2SN2JN;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExpoWidgetsTarget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ExpoWidgetsTarget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kurtgrung.standby.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		04A1EF2356334E678A770FD2 /* Build configuration list for PBXNativeTarget "ExpoWidgetsTarget" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C3F165116034016B90BC672 /* Debug */,
-				2F351FBB391E4A07B213E974 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "StandBy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -831,6 +822,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA43FA3E322840B8B948416F /* Build configuration list for PBXNativeTarget "ExpoWidgetsTarget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A75E9DAE0013411E95D8D324 /* Debug */,
+				4C6CDDE6C83243899E05DB3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,7 +1,10 @@
 import type { ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
 import Animated, { type AnimatedRef, type ScrollHandlerProcessed } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { groupedScreenBottomInset } from '../theme/groupedLayout';
+import { nativeTabBarHeight } from '../theme/nativeTabBarMetrics';
 import { useAppChrome } from '../theme/useAppChrome';
 
 type ScreenShellProps = {
@@ -18,17 +21,24 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 export function ScreenShell({
   children,
   scroll = true,
-  contentClassName = 'px-6 pb-10',
+  contentClassName = 'px-6',
   showsVerticalScrollIndicator = false,
   overlay,
   onScroll,
   scrollRef,
 }: ScreenShellProps) {
   const chrome = useAppChrome();
+  const insets = useSafeAreaInsets();
+  const contentInsetStyle = {
+    paddingBottom: insets.bottom + nativeTabBarHeight + groupedScreenBottomInset,
+  };
 
   if (!scroll) {
     return (
-      <View className={`flex-1 ${contentClassName}`} style={{ backgroundColor: chrome.colors.bg }}>
+      <View
+        className={`flex-1 ${contentClassName}`}
+        style={[{ backgroundColor: chrome.colors.bg }, contentInsetStyle]}
+      >
         {overlay}
         {children}
       </View>
@@ -41,6 +51,7 @@ export function ScreenShell({
         ref={scrollRef}
         className="flex-1"
         contentContainerClassName={contentClassName}
+        contentContainerStyle={contentInsetStyle}
         contentInsetAdjustmentBehavior="never"
         keyboardShouldPersistTaps="handled"
         scrollEventThrottle={16}

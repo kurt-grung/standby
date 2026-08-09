@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload brand-assets \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -119,6 +119,10 @@ fix: ## Auto-fix Expo deps, router imports, and patches
 format: ## Format app source with Prettier
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run format
+
+brand-assets: ## Regenerate icon, adaptive icon, splash, and iOS splash imageset from branding masters
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && npm run assets:generate
 
 f: format ## Shorthand for format
 
