@@ -1,7 +1,7 @@
-import { useColorScheme } from 'react-native';
-
+import { useAppearance } from './AppearanceContext';
 import { getAppChrome, type AppChrome } from './appChrome';
 
 export function useAppChrome(): AppChrome {
-  return getAppChrome(useColorScheme());
+  const { mode } = useAppearance();
+  return getAppChrome(mode);
 }

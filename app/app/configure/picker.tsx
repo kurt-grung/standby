@@ -1,7 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SfSymbolIcon } from '../../ui/SfSymbolIcon';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useResetScrollOnFocus } from '../../hooks/useResetScrollOnFocus';
 import { useStandbySafeAreaInsets } from '../../hooks/useStandbySafeAreaInsets';
 import {
   complicationOptionsForWidget,
@@ -23,6 +24,13 @@ export default function ComplicationPickerScreen() {
     slot?: string;
   }>();
   const { getComplications, setComplication } = useWidgetConfig();
+  const scrollRef = useRef<ScrollView>(null);
+
+  useResetScrollOnFocus(
+    useCallback(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
 
   const widget = parseConfigureWidget(typeof widgetParam === 'string' ? widgetParam : undefined);
   const slot = parseComplicationSlot(typeof slotParam === 'string' ? slotParam : undefined);
@@ -48,6 +56,7 @@ export default function ComplicationPickerScreen() {
 
   return (
     <ScrollView
+      ref={scrollRef}
       style={{ backgroundColor: sheetBg }}
       contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}
       keyboardShouldPersistTaps="handled"

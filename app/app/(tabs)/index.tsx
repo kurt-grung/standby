@@ -35,6 +35,7 @@ export default function HomeScreen() {
       <StatusBar style={chrome.statusBar} />
       <ScreenShell
         scrollRef={scrollRef}
+        scrollOffset={scrollY}
         contentClassName={groupedScreenPadding}
         overlay={<StickyWordmarkPlus scrollRef={scrollRef} scrollY={scrollY} />}
         onScroll={onScroll}

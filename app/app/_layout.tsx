@@ -11,9 +11,8 @@ import { WebPhoneFrame } from '../ui/WebPhoneFrame';
 import { standbyConfig } from '../config';
 import { disableDevToolsButton } from '../lib/disableDevToolsButton';
 import { refreshStandbyWidgets } from '../lib/refreshStandbyWidgets';
-import { useSyncWebColorScheme } from '../lib/syncWebColorScheme';
 import { SplashGateProvider } from '../theme/SplashGate';
-import { ThemeProvider as StandbyThemeProvider } from '../theme/ThemeContext';
+import { AppearanceProvider } from '../theme/AppearanceContext';
 import { WidgetConfigProvider } from '../theme/WidgetConfigContext';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -22,7 +21,6 @@ disableDevToolsButton();
 export default function RootLayout() {
   const router = useRouter();
   const [splashVisible, setSplashVisible] = useState(true);
-  useSyncWebColorScheme();
 
   const onSplashFinish = useCallback(() => {
     setSplashVisible(false);
@@ -47,7 +45,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <StandbyThemeProvider>
+      <AppearanceProvider>
         <WidgetConfigProvider>
           <SplashGateProvider splashVisible={splashVisible}>
             <WebPhoneFrame>
@@ -67,7 +65,7 @@ export default function RootLayout() {
             </WebPhoneFrame>
           </SplashGateProvider>
         </WidgetConfigProvider>
-      </StandbyThemeProvider>
+      </AppearanceProvider>
     </SafeAreaProvider>
   );
 }

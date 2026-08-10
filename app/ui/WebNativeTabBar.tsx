@@ -5,7 +5,7 @@ import type { SFSymbol } from 'sf-symbols-typescript';
 import { SfSymbolIcon } from './SfSymbolIcon';
 
 type WebTab = {
-  href: '/' | '/preview' | '/ui';
+  href: '/' | '/preview' | '/ui' | '/settings';
   accessibilityLabel: string;
   icon: SFSymbol;
   selectedIcon: SFSymbol;
@@ -33,6 +33,13 @@ const webTabs: WebTab[] = [
     icon: 'square.grid.2x2',
     selectedIcon: 'square.grid.2x2.fill',
     isActive: (pathname) => pathname === '/ui',
+  },
+  {
+    href: '/settings',
+    accessibilityLabel: 'Settings',
+    icon: 'gearshape',
+    selectedIcon: 'gearshape.fill',
+    isActive: (pathname) => pathname === '/settings',
   },
 ];
 

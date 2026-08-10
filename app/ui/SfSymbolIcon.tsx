@@ -11,6 +11,7 @@ import Home from 'geist-native-icons/Home';
 import Play from 'geist-native-icons/Play';
 import PlayFill from 'geist-native-icons/PlayFill';
 import Plus from 'geist-native-icons/Plus';
+import Settings from 'geist-native-icons/Settings';
 import Sun from 'geist-native-icons/Sun';
 import Sunset from 'geist-native-icons/Sunset';
 import Thermometer from 'geist-native-icons/Thermometer';
@@ -35,6 +36,8 @@ const webSymbolIcons: Partial<Record<SFSymbol, GeistIcon>> = {
   'play.rectangle.fill': PlayFill,
   'square.grid.2x2': Grid,
   'square.grid.2x2.fill': Grid,
+  gearshape: Settings,
+  'gearshape.fill': Settings,
   'thermometer.medium': Thermometer,
   calendar: Calendar,
   'battery.100': Battery,

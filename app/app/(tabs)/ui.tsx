@@ -8,14 +8,12 @@ import { nightMode } from '../../ui/ultra/nightColors';
 import { ProgressBar } from '../../ui/ProgressBar';
 import { ScreenShell } from '../../ui/ScreenShell';
 import { SectionCard } from '../../ui/SectionCard';
-import { useTheme } from '../../theme/ThemeContext';
 import {
   groupedScreenPadding,
   groupedWordmarkSize,
   groupedUiWordmarkTopSpacing,
 } from '../../theme/groupedLayout';
 import { useAppChrome } from '../../theme/useAppChrome';
-import { themeList, type ThemeId } from '../../theme/themes';
 
 const typographyScale = [
   {
@@ -40,7 +38,7 @@ const typographyScale = [
 
 const brandPrinciples = [
   'Less, but better — Dieter Rams restraint',
-  'Pure black surfaces, one accent per theme',
+  'Pure black surfaces, system light and dark chrome',
   'Rounded geometry, precise spacing, no ornament',
   'StandBy-first: glanceable, night-safe, Ultra-inspired',
 ] as const;
@@ -90,7 +88,6 @@ const advertGenerations = [
 ] as const;
 
 export default function UiScreen() {
-  const { theme, themeId, setThemeId } = useTheme();
   const chrome = useAppChrome();
 
   return (
@@ -108,45 +105,9 @@ export default function UiScreen() {
             Design System
           </Text>
           <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
-            Icon, typography, branding, and themes
+            Icon, typography, branding, and components
           </Text>
         </View>
-
-        <SectionCard label="Themes">
-          <View className="mt-3 flex-row flex-wrap">
-            {themeList.map((item) => {
-              const active = themeId === item.id;
-              return (
-                <Pressable
-                  key={item.id}
-                  className="mb-1.5 mr-1.5 flex-row items-center rounded-full border px-3 py-1.5 active:opacity-70"
-                  style={{
-                    borderColor: active ? item.colors.accent : chrome.colors.border,
-                    backgroundColor: active ? item.colors.accentSoft : chrome.colors.surface,
-                  }}
-                  onPress={() => setThemeId(item.id as ThemeId)}
-                >
-                  <View
-                    className="mr-1.5 h-2 w-2 rounded-full"
-                    style={{ backgroundColor: item.colors.accent }}
-                  />
-                  <Text
-                    className="text-xs font-semibold"
-                    style={{ color: active ? item.colors.accent : chrome.colors.primary }}
-                  >
-                    {item.name}
-                  </Text>
-                </Pressable>
-              );
-            })}
-          </View>
-          <Text className="mt-2 text-xs leading-4" style={{ color: chrome.colors.muted }}>
-            {theme.description}
-          </Text>
-          <View className="mt-3">
-            <ProgressBar value={0.42} />
-          </View>
-        </SectionCard>
 
         <SectionCard label="Typography" title="Type scale">
           <View className="mt-4 border-b pb-5" style={{ borderColor: chrome.colors.border }}>
@@ -223,7 +184,7 @@ export default function UiScreen() {
             StandBy, refined. Widgets for iPhone StandBy at a glance.
           </Text>
           <View className="mt-5 flex-row flex-wrap">
-            {Object.entries(theme.colors).map(([key, value]) => (
+            {Object.entries(chrome.colors).map(([key, value]) => (
               <View key={key} className="mb-3 mr-3 w-[46%] flex-row items-center">
                 <View
                   className="mr-2 h-8 w-8 rounded-lg border"
