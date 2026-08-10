@@ -26,6 +26,34 @@ import { useAppChrome } from '../theme/useAppChrome';
 
 const scenes = standbyConfig.brand.homeScenes;
 
+function loopedGalleryScenes(items: readonly HomeSceneId[]) {
+  if (items.length <= 1) {
+    return items;
+  }
+
+  const last = items[items.length - 1];
+  const first = items[0];
+  return [last, ...items, first] as const;
+}
+
+function galleryLogicalIndex(extendedIndex: number, sceneCount: number) {
+  if (sceneCount <= 1) {
+    return 0;
+  }
+
+  if (extendedIndex === 0) {
+    return sceneCount - 1;
+  }
+
+  if (extendedIndex === sceneCount + 1) {
+    return 0;
+  }
+
+  return extendedIndex - 1;
+}
+
+const loopedScenes = loopedGalleryScenes(scenes);
+
 const phoneRefSources = {
   'phone-ref-c-nightstand-cable': require('../designs/generations/phone-refs/phone-ref-c-nightstand-cable.png'),
   'phone-ref-n-japanese-minimal': require('../designs/generations/phone-refs/phone-ref-n-japanese-minimal.png'),
@@ -150,14 +178,14 @@ export function HomePhoneRefGallery() {
   const [slideWidth, setSlideWidth] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [advanceEpoch, setAdvanceEpoch] = useState(0);
-  const activeIndexRef = useRef(0);
+  const extendedIndexRef = useRef(scenes.length <= 1 ? 0 : 1);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const onLayout = (event: LayoutChangeEvent) => {
     setSlideWidth(event.nativeEvent.layout.width);
   };
 
-  const scrollToIndex = useCallback(
+  const scrollToExtendedIndex = useCallback(
     (index: number, animated: boolean) => {
       if (slideWidth <= 0) {
         return;
@@ -166,6 +194,31 @@ export function HomePhoneRefGallery() {
       listRef.current?.scrollToOffset({ offset: index * slideWidth, animated });
     },
     [slideWidth],
+  );
+
+  const settleExtendedIndex = useCallback(
+    (index: number) => {
+      if (scenes.length <= 1) {
+        extendedIndexRef.current = 0;
+        setActiveIndex(0);
+        return;
+      }
+
+      let settled = index;
+
+      if (settled === 0) {
+        settled = scenes.length;
+        scrollToExtendedIndex(settled, false);
+      } else if (settled === scenes.length + 1) {
+        settled = 1;
+        scrollToExtendedIndex(settled, false);
+      }
+
+      const logical = galleryLogicalIndex(settled, scenes.length);
+      extendedIndexRef.current = settled;
+      setActiveIndex(logical);
+    },
+    [scrollToExtendedIndex],
   );
 
   const restartAutoAdvance = useCallback(() => {
@@ -180,12 +233,19 @@ export function HomePhoneRefGallery() {
     }
 
     timerRef.current = setInterval(() => {
-      const next = (activeIndexRef.current + 1) % scenes.length;
-      activeIndexRef.current = next;
-      setActiveIndex(next);
-      scrollToIndex(next, true);
+      scrollToExtendedIndex(extendedIndexRef.current + 1, true);
     }, homeGalleryAutoAdvanceMs);
-  }, [scrollToIndex]);
+  }, [scrollToExtendedIndex]);
+
+  useEffect(() => {
+    if (slideWidth <= 0 || scenes.length <= 1) {
+      return;
+    }
+
+    scrollToExtendedIndex(1, false);
+    extendedIndexRef.current = 1;
+    setActiveIndex(0);
+  }, [slideWidth, scrollToExtendedIndex]);
 
   useEffect(() => {
     restartAutoAdvance();
@@ -203,9 +263,7 @@ export function HomePhoneRefGallery() {
     }
 
     const index = Math.round(event.nativeEvent.contentOffset.x / slideWidth);
-    const clamped = Math.max(0, Math.min(index, scenes.length - 1));
-    activeIndexRef.current = clamped;
-    setActiveIndex(clamped);
+    settleExtendedIndex(index);
   };
 
   const renderSlide = ({ item: id }: { item: HomeSceneId }) => (
@@ -234,12 +292,12 @@ export function HomePhoneRefGallery() {
         <>
           <FlatList
             ref={listRef}
-            data={scenes}
+            data={loopedScenes}
             horizontal
             pagingEnabled
             decelerationRate="fast"
             showsHorizontalScrollIndicator={false}
-            keyExtractor={(id) => id}
+            keyExtractor={(id, index) => `${id}-${index}`}
             renderItem={renderSlide}
             getItemLayout={(_, index) => ({
               length: slideWidth,
