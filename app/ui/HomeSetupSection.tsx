@@ -13,6 +13,7 @@ import {
   homeSetupTopSpacing,
 } from '../theme/homeSetupLayout';
 import { useAppChrome } from '../theme/useAppChrome';
+import { nightMode } from './ultra/nightColors';
 
 type SetupStepPart = {
   text: string;
@@ -114,7 +115,8 @@ export function HomeSetupSection() {
           marginBottom: homeSetupTitleBottom,
         }}
       >
-        How to use
+        How to use StandBy
+        <Text style={{ color: nightMode.primary }}>+</Text>
       </Text>
       <View style={{ gap: homeSetupRowGap }}>
         {setupSteps.map((step) => (
