@@ -17,6 +17,12 @@ import {
 import { useAppChrome } from '../theme/useAppChrome';
 import { PillOutline, derivePillOutlineSize } from './OutlineShape';
 
+const configureGlassFg = '#FFFFFF';
+const configureGlassFallback = {
+  backgroundColor: 'rgba(255,255,255,0.14)',
+  borderColor: 'rgba(255,255,255,0.22)',
+} as const;
+
 type NativeGlassViewProps = GlassViewProps & {
   borderRadius?: number;
 };
@@ -34,6 +40,8 @@ type PreviewGlassLinkButtonProps = {
   accessibilityLabel?: string;
   width?: number;
   icon?: SFSymbol;
+  colorScheme?: 'light' | 'dark';
+  showChevron?: boolean;
   onPress?: () => void;
 };
 
@@ -83,12 +91,20 @@ export function PreviewGlassLinkButton({
   accessibilityLabel,
   width = homePreviewGlassWidth,
   icon = 'play.rectangle',
+  colorScheme: colorSchemeProp,
+  showChevron = true,
   onPress,
 }: PreviewGlassLinkButtonProps) {
   const chrome = useAppChrome();
-  const colorScheme = useColorScheme() === 'light' ? 'light' : 'dark';
+  const systemScheme = useColorScheme() === 'light' ? 'light' : 'dark';
+  const colorScheme = colorSchemeProp ?? systemScheme;
+  const foreground = colorScheme === 'dark' ? configureGlassFg : chrome.colors.primary;
   const outlineBorderColor =
     colorScheme === 'light' ? 'rgba(0, 0, 0, 0.16)' : 'rgba(255, 255, 255, 0.28)';
+  const fallbackStyle =
+    colorScheme === 'dark'
+      ? configureGlassFallback
+      : { backgroundColor: chrome.colors.accentSoft, borderColor: chrome.colors.border };
   const outline = derivePillOutlineSize(
     width,
     homePreviewGlassHeight,
@@ -100,16 +116,13 @@ export function PreviewGlassLinkButton({
       <SymbolView
         name={icon}
         size={homePreviewGlassIconSize}
-        tintColor={chrome.colors.primary}
+        tintColor={foreground}
         weight="semibold"
       />
-      <Text style={[styles.label, { color: chrome.colors.primary }]}>{label}</Text>
-      <SymbolView
-        name="chevron.right"
-        size={12}
-        tintColor={chrome.colors.primary}
-        weight="semibold"
-      />
+      <Text style={[styles.label, { color: foreground }]}>{label}</Text>
+      {showChevron ? (
+        <SymbolView name="chevron.right" size={12} tintColor={foreground} weight="semibold" />
+      ) : null}
     </>
   );
 
@@ -122,14 +135,7 @@ export function PreviewGlassLinkButton({
         borderWidth={1.5}
         borderColor={outlineBorderColor}
       />
-      <GlassPillSurface
-        colorScheme={colorScheme}
-        width={width}
-        fallbackStyle={{
-          backgroundColor: chrome.colors.accentSoft,
-          borderColor: chrome.colors.border,
-        }}
-      >
+      <GlassPillSurface colorScheme={colorScheme} width={width} fallbackStyle={fallbackStyle}>
         {onPress ? (
           <Pressable
             accessibilityRole="button"

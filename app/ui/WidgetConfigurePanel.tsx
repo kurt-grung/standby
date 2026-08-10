@@ -1,9 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
-  Pressable,
   Text,
   View,
   type LayoutChangeEvent,
@@ -14,12 +12,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { parseConfigureWidget, type ConfigureWidget } from '../lib/gaugePresets';
 import { groupedScreenPadding } from '../theme/groupedLayout';
+import { homePreviewGlassIconSize, homePreviewGlassWidth } from '../theme/standByPreviewLayout';
+import { useWidgetConfig } from '../theme/WidgetConfigContext';
+import { ConfigureWidgetSegment } from './ConfigureWidgetSegment';
+import { GlassIconButton } from './GlassIconButton';
+import { PreviewGlassLinkButton } from './PreviewGlassLinkButton';
 import { WidgetClockConfigureSection } from './WidgetClockConfigureSection';
 import { WidgetGaugeConfigureSection } from './WidgetGaugeConfigureSection';
 
 const configureBg = '#000000';
 const configureFg = '#FFFFFF';
-const configureMuted = 'rgba(255,255,255,0.4)';
 
 const configureWidgets: ConfigureWidget[] = ['clock', 'gauge'];
 
@@ -43,6 +45,7 @@ function ConfigurePage({ widget }: ConfigurePageProps) {
 export function WidgetConfigurePanel() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { setLastConfigureWidget } = useWidgetConfig();
   const { widget: widgetParam } = useLocalSearchParams<{ widget?: string }>();
   const initialWidget = parseConfigureWidget(
     typeof widgetParam === 'string' ? widgetParam : undefined,
@@ -72,7 +75,9 @@ export function WidgetConfigurePanel() {
     }
 
     const index = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
-    setActiveIndex(Math.max(0, Math.min(index, configureWidgets.length - 1)));
+    const nextIndex = Math.max(0, Math.min(index, configureWidgets.length - 1));
+    setActiveIndex(nextIndex);
+    setLastConfigureWidget(configureWidgets[nextIndex] ?? 'clock');
   };
 
   const scrollToWidget = useCallback(
@@ -83,9 +88,17 @@ export function WidgetConfigurePanel() {
 
       listRef.current?.scrollToOffset({ offset: pageWidth * index, animated: true });
       setActiveIndex(index);
+      setLastConfigureWidget(configureWidgets[index] ?? 'clock');
     },
-    [pageWidth],
+    [pageWidth, setLastConfigureWidget],
   );
+
+  const openPreview = useCallback(() => {
+    router.back();
+    queueMicrotask(() => {
+      router.push('/preview');
+    });
+  }, [router]);
 
   return (
     <View
@@ -94,48 +107,42 @@ export function WidgetConfigurePanel() {
       onLayout={onLayout}
     >
       <View
-        className={`flex-row items-center justify-between ${groupedScreenPadding}`}
+        className={`flex-row items-center ${groupedScreenPadding}`}
         style={{ paddingBottom: 16 }}
       >
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Close widget configure"
-          className="active:opacity-60"
-          hitSlop={12}
-          onPress={() => router.back()}
+        <View style={{ width: homePreviewGlassWidth, alignItems: 'flex-start' }}>
+          <GlassIconButton
+            icon="xmark"
+            accessibilityLabel="Close widget configure"
+            iconSize={homePreviewGlassIconSize}
+            colorScheme="dark"
+            onPress={() => router.back()}
+          />
+        </View>
+        <Text
+          className="flex-1 text-center text-[17px] font-semibold"
+          style={{ color: configureFg }}
         >
-          <SymbolView name="xmark" size={16} tintColor={configureFg} weight="semibold" />
-        </Pressable>
-        <Text className="text-[17px] font-semibold" style={{ color: configureFg }}>
           Configure
         </Text>
-        <View style={{ width: 16 }} />
+        <View style={{ width: homePreviewGlassWidth, alignItems: 'flex-end' }}>
+          <PreviewGlassLinkButton
+            accessibilityLabel="Preview StandBy widgets"
+            colorScheme="dark"
+            showChevron={false}
+            width={homePreviewGlassWidth}
+            onPress={openPreview}
+          />
+        </View>
       </View>
 
-      <View
-        className={`flex-row justify-center gap-8 ${groupedScreenPadding}`}
-        style={{ paddingBottom: 20 }}
-      >
-        {configureWidgets.map((widget, index) => {
-          const active = index === activeIndex;
-
-          return (
-            <Pressable
-              key={widget}
-              accessibilityRole="button"
-              accessibilityState={{ selected: active }}
-              className="active:opacity-60"
-              onPress={() => scrollToWidget(index)}
-            >
-              <Text
-                className="text-[13px] font-semibold uppercase tracking-[0.08em]"
-                style={{ color: active ? configureFg : configureMuted }}
-              >
-                {configureLabels[widget]}
-              </Text>
-            </Pressable>
-          );
-        })}
+      <View className={`items-center ${groupedScreenPadding}`} style={{ paddingBottom: 20 }}>
+        <ConfigureWidgetSegment
+          widgets={configureWidgets}
+          labels={configureLabels}
+          activeIndex={activeIndex}
+          onSelect={scrollToWidget}
+        />
       </View>
 
       {pageWidth > 0 ? (
