@@ -31,6 +31,7 @@ const brandMarkScript = join(appRoot, 'scripts', 'render-brand-mark.swift');
 const iconOutput = join(assetsDir, 'icon.png');
 const adaptiveOutput = join(assetsDir, 'adaptive-icon.png');
 const splashOutput = join(assetsDir, 'splash.png');
+const splashDisplayOutput = join(assetsDir, 'splash-display.png');
 
 const splashWidth = brandAssets.canvasSize;
 const splashHeight = brandAssets.canvasSize;
@@ -175,32 +176,51 @@ function generateSplash() {
   console.log(`Wrote ${splashOutput}`);
 }
 
-function syncIosSplashImages() {
-  if (!existsSync(iosSplashDir)) {
-    console.log('Skipping iOS splash imageset (ios/ not generated yet)');
-    return;
-  }
+function writeTrimmedSplashSquare({ sourcePath, size, output }) {
+  run(
+    [
+      `magick "${sourcePath}" -trim +repage`,
+      `-background '${backgroundColor}' -gravity center`,
+      `-filter Lanczos -resize ${size}x`,
+      `-extent ${size}x${size} "${output}"`,
+    ].join(' '),
+  );
+}
 
+function syncIosSplashImages() {
   if (!existsSync(splashOutput)) {
     console.error('splash.png missing — run generateSplash first');
     process.exit(1);
   }
 
+  const displaySize = iosSplashImageWidth * 3;
+
+  if (!existsSync(iosSplashDir)) {
+    writeTrimmedSplashSquare({
+      sourcePath: splashOutput,
+      size: displaySize,
+      output: splashDisplayOutput,
+    });
+    console.log('Skipping iOS splash imageset (ios/ not generated yet)');
+    console.log(`Wrote ${splashDisplayOutput}`);
+    return;
+  }
+
+  let iosSplashAt3xPath = null;
+
   for (const ratio of [1, 2, 3]) {
     const size = iosSplashImageWidth * ratio;
     const suffix = ratio === 1 ? '' : `@${ratio}x`;
     const output = join(iosSplashDir, `image${suffix}.png`);
-    run(
-      [
-        `magick "${splashOutput}" -trim +repage`,
-        `-background '${backgroundColor}' -gravity center`,
-        `-filter Lanczos -resize ${size}x`,
-        `-extent ${size}x${size} "${output}"`,
-      ].join(' '),
-    );
+    writeTrimmedSplashSquare({ sourcePath: splashOutput, size, output });
+    if (ratio === 3) {
+      iosSplashAt3xPath = output;
+    }
   }
 
+  copyFileSync(iosSplashAt3xPath, splashDisplayOutput);
   console.log(`Synced iOS splash imageset from splash.png in ${iosSplashDir}`);
+  console.log(`Wrote ${splashDisplayOutput} (copy of iOS @3x splash)`);
 }
 
 function syncIosAppIcon() {

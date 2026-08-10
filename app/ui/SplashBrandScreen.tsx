@@ -76,7 +76,7 @@ export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
       accessibilityLabel="StandBy+"
     >
       <Image
-        source={require('../assets/splash.png')}
+        source={require('../assets/splash-display.png')}
         style={{ width: splashLogoSize, height: splashLogoSize }}
         resizeMode="contain"
         onLoad={onSplashReady}

@@ -47,6 +47,7 @@ export const standbyConfig = {
     icon: './assets/icon.png',
     adaptiveIcon: './assets/adaptive-icon.png',
     splash: './assets/splash.png',
+    splashDisplay: './assets/splash-display.png',
     splashImageWidth: 280,
     splashResizeMode: 'contain' as const,
     wordmark: {
@@ -58,9 +59,9 @@ export const standbyConfig = {
       iconPointSize: 460,
       iconPlusPointSize: 382,
       iconPlusOffsetY: 40,
-      splashPointSize: 200,
+      splashPointSize: 165,
       splashKerning: -2,
-      splashLogoMaxWidth: 880,
+      splashLogoMaxWidth: 710,
       iconLogoMaxScale: 0.62,
     },
     homeScenes: [

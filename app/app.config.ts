@@ -31,7 +31,7 @@ const config: ExpoConfig = {
     [
       'expo-splash-screen',
       {
-        image: standbyConfig.brand.splash,
+        image: standbyConfig.brand.splashDisplay,
         resizeMode: standbyConfig.brand.splashResizeMode,
         backgroundColor: standbyConfig.brand.backgroundColor,
         imageWidth: standbyConfig.brand.splashImageWidth,

@@ -34,6 +34,28 @@ All paths are under `app/` unless noted.
 - Tune brand/splash in `config.ts`; tune UI spacing, type, and themes in `design-system.ts`.
 - Widget preview surfaces (`StandByPreview`, `nightMode`) stay night-themed; app chrome uses `useAppChrome()` for system light/dark.
 
+## Splash (native + JS loader)
+
+Three surfaces must match at handoff — same trimmed wordmark, same **280pt** width (`brand.splashImageWidth`):
+
+| Surface | Source |
+|---------|--------|
+| Native launch screen | `ios/StandBy/Images.xcassets/SplashScreenLogo.imageset` |
+| Expo splash plugin | `brand.splashDisplay` → `assets/splash-display.png` in `app.config.ts` |
+| JS loader overlay | `ui/SplashBrandScreen.tsx` → `splash-display.png` at `splashImageWidth` |
+
+**Do not** use `splash.png` for launch or the loader. That file is the 1024×1024 master with extra canvas padding; native and JS use the trimmed square instead.
+
+**Tune wordmark size** in `config.ts` → `brand.assets`: `splashPointSize`, `splashLogoMaxWidth`. Display width is `brand.splashImageWidth` (must stay aligned across all three surfaces).
+
+**After any splash change**
+
+1. `make brand-assets` — renders `splash.png`, syncs iOS imageset, copies `@3x` → `splash-display.png` (single pipeline; they cannot drift).
+2. `make verify` — includes `splash:check` (hashes `splash-display.png` vs iOS `@3x`, wiring in `SplashBrandScreen` + `app.config.ts`).
+3. `make ios` or `make device` — native launch screen reads the imageset from the installed build.
+
+**Edit only** `scripts/generate-brand-assets.mjs` → `writeTrimmedSplashSquare` for trim/resize logic; do not hand-edit `splash-display.png` or the imageset PNGs.
+
 ## After app changes
 
 Run `make verify` before committing app changes (includes auto-reload when Metro is running). Keep `make dev` running in a terminal. A Cursor `stop` hook also reloads the dev client after each agent turn. Before push or dependency/config updates, run `make audit`. After dependency or SDK updates, run `make fix` then `make audit`. Lint touched files and use Expo MCP docs (v57) when unsure. Fix failures before finishing. Install git hooks once with `make hooks`. See `.cursor/rules/app-verify-mcp.mdc`.
