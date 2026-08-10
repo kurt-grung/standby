@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useAnimatedRef } from 'react-native-reanimated';
-import { ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
 import Animated, {
   type AnimatedRef,
   type ScrollHandlerProcessed,
@@ -9,7 +9,7 @@ import Animated, {
 import { useStandbySafeAreaInsets } from '../hooks/useStandbySafeAreaInsets';
 import { useResetAnimatedScrollOnFocus } from '../hooks/useResetScrollOnFocus';
 
-import { groupedScreenBottomInset } from '../theme/groupedLayout';
+import { groupedScreenBottomInset, groupedScreenHorizontalPad } from '../theme/groupedLayout';
 import { nativeTabBarHeight } from '../theme/nativeTabBarMetrics';
 import { useAppChrome } from '../theme/useAppChrome';
 
@@ -24,6 +24,20 @@ type ScreenShellProps = {
 } & Pick<ScrollViewProps, 'showsVerticalScrollIndicator'>;
 
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
+
+function screenContentInset(insets: ReturnType<typeof useStandbySafeAreaInsets>) {
+  const paddingBottom = insets.bottom + nativeTabBarHeight + groupedScreenBottomInset;
+
+  if (Platform.OS === 'web') {
+    return {
+      paddingTop: insets.top,
+      paddingHorizontal: groupedScreenHorizontalPad,
+      paddingBottom,
+    };
+  }
+
+  return { paddingBottom };
+}
 
 type ScrollingScreenShellProps = Omit<ScreenShellProps, 'scroll'>;
 
@@ -41,16 +55,14 @@ function ScrollingScreenShell({
   const internalScrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollRef = scrollRefProp ?? internalScrollRef;
   useResetAnimatedScrollOnFocus(scrollRef, scrollOffset);
-  const contentInsetStyle = {
-    paddingBottom: insets.bottom + nativeTabBarHeight + groupedScreenBottomInset,
-  };
+  const contentInsetStyle = screenContentInset(insets);
 
   return (
     <View className="flex-1" style={{ backgroundColor: chrome.colors.bg }}>
       <AnimatedScrollView
         ref={scrollRef}
         className="flex-1"
-        contentContainerClassName={contentClassName}
+        contentContainerClassName={Platform.OS === 'web' ? undefined : contentClassName}
         contentContainerStyle={contentInsetStyle}
         contentInsetAdjustmentBehavior="never"
         keyboardShouldPersistTaps="handled"
@@ -81,14 +93,12 @@ export function ScreenShell({
 }: ScreenShellProps) {
   const chrome = useAppChrome();
   const insets = useStandbySafeAreaInsets();
-  const contentInsetStyle = {
-    paddingBottom: insets.bottom + nativeTabBarHeight + groupedScreenBottomInset,
-  };
+  const contentInsetStyle = screenContentInset(insets);
 
   if (!scroll) {
     return (
       <View
-        className={`flex-1 ${contentClassName}`}
+        className={Platform.OS === 'web' ? 'flex-1' : `flex-1 ${contentClassName}`}
         style={[{ backgroundColor: chrome.colors.bg }, contentInsetStyle]}
       >
         {overlay}

@@ -3,9 +3,9 @@ import { Pressable, Text, View } from 'react-native';
 import { standbyConfig } from '../config';
 import { appearanceOptions } from '../theme/appearance';
 import { useAppearance } from '../theme/AppearanceContext';
-import { groupedUiWordmarkTopSpacing } from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { GroupedDivider, GroupedSection } from './GroupedSection';
+import { ScreenPageTitle } from './ScreenPageTitle';
 import { SfSymbolIcon } from './SfSymbolIcon';
 
 export function SettingsPanel() {
@@ -14,11 +14,7 @@ export function SettingsPanel() {
 
   return (
     <View>
-      <View className="mb-8" style={{ marginTop: groupedUiWordmarkTopSpacing }}>
-        <Text className="text-[34px] font-extralight" style={{ color: chrome.colors.primary }}>
-          Settings
-        </Text>
-      </View>
+      <ScreenPageTitle title="Settings" />
 
       <GroupedSection title="Appearance">
         {appearanceOptions.map((option, index) => {
@@ -35,9 +31,17 @@ export function SettingsPanel() {
                 style={{ minHeight: 44, paddingHorizontal: 16, paddingVertical: 12 }}
                 onPress={() => setMode(option.id)}
               >
-                <Text className="text-[17px]" style={{ color: chrome.colors.primary }}>
-                  {option.label}
-                </Text>
+                <View className="flex-row items-center">
+                  <SfSymbolIcon
+                    name={option.icon}
+                    size={20}
+                    tintColor={chrome.colors.primary}
+                    weight="semibold"
+                  />
+                  <Text className="ml-3 text-[17px]" style={{ color: chrome.colors.primary }}>
+                    {option.label}
+                  </Text>
+                </View>
                 {active ? (
                   <SfSymbolIcon
                     name="checkmark"

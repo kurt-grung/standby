@@ -6,13 +6,10 @@ import { GlassButtonsShowcase } from '../../ui/GlassButtonsShowcase';
 import { StandByWordmark } from '../../ui/StandByWordmark';
 import { nightMode } from '../../ui/ultra/nightColors';
 import { ProgressBar } from '../../ui/ProgressBar';
+import { ScreenPageTitle } from '../../ui/ScreenPageTitle';
 import { ScreenShell } from '../../ui/ScreenShell';
 import { SectionCard } from '../../ui/SectionCard';
-import {
-  groupedScreenPadding,
-  groupedWordmarkSize,
-  groupedUiWordmarkTopSpacing,
-} from '../../theme/groupedLayout';
+import { groupedScreenPadding, groupedWordmarkSize } from '../../theme/groupedLayout';
 import { useAppChrome } from '../../theme/useAppChrome';
 
 const typographyScale = [
@@ -94,20 +91,7 @@ export default function UiScreen() {
     <>
       <StatusBar style={chrome.statusBar} />
       <ScreenShell contentClassName={groupedScreenPadding}>
-        <View className="mb-8" style={{ marginTop: groupedUiWordmarkTopSpacing }}>
-          <Text className="text-[34px] font-extralight" style={{ color: chrome.colors.primary }}>
-            UI
-          </Text>
-          <Text
-            className="mt-2 text-[28px] font-extralight tracking-tight"
-            style={{ color: chrome.colors.secondary }}
-          >
-            Design System
-          </Text>
-          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
-            Icon, typography, branding, and components
-          </Text>
-        </View>
+        <ScreenPageTitle title="Design System" />
 
         <SectionCard label="Typography" title="Type scale">
           <View className="mt-4 border-b pb-5" style={{ borderColor: chrome.colors.border }}>

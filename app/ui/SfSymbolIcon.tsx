@@ -6,6 +6,7 @@ import Check from 'geist-native-icons/Check';
 import ChevronLeft from 'geist-native-icons/ChevronLeft';
 import ChevronRight from 'geist-native-icons/ChevronRight';
 import Minus from 'geist-native-icons/Minus';
+import Moon from 'geist-native-icons/Moon';
 import Grid from 'geist-native-icons/Grid';
 import Home from 'geist-native-icons/Home';
 import Play from 'geist-native-icons/Play';
@@ -43,6 +44,7 @@ const webSymbolIcons: Partial<Record<SFSymbol, GeistIcon>> = {
   'battery.100': Battery,
   'sunset.fill': Sunset,
   'sun.max.fill': Sun,
+  'moon.fill': Moon,
   waveform: Activity,
   'figure.run': Activity,
 };
