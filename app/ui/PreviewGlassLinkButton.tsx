@@ -34,6 +34,7 @@ type PreviewGlassLinkButtonProps = {
   accessibilityLabel?: string;
   width?: number;
   icon?: SFSymbol;
+  onPress?: () => void;
 };
 
 type GlassPillSurfaceProps = {
@@ -82,6 +83,7 @@ export function PreviewGlassLinkButton({
   accessibilityLabel,
   width = homePreviewGlassWidth,
   icon = 'play.rectangle',
+  onPress,
 }: PreviewGlassLinkButtonProps) {
   const chrome = useAppChrome();
   const colorScheme = useColorScheme() === 'light' ? 'light' : 'dark';
@@ -91,6 +93,24 @@ export function PreviewGlassLinkButton({
     width,
     homePreviewGlassHeight,
     homePreviewGlassOutlineInset,
+  );
+
+  const content = (
+    <>
+      <SymbolView
+        name={icon}
+        size={homePreviewGlassIconSize}
+        tintColor={chrome.colors.primary}
+        weight="semibold"
+      />
+      <Text style={[styles.label, { color: chrome.colors.primary }]}>{label}</Text>
+      <SymbolView
+        name="chevron.right"
+        size={12}
+        tintColor={chrome.colors.primary}
+        weight="semibold"
+      />
+    </>
   );
 
   return (
@@ -110,27 +130,26 @@ export function PreviewGlassLinkButton({
           borderColor: chrome.colors.border,
         }}
       >
-        <Link href={href} asChild>
+        {onPress ? (
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={accessibilityLabel ?? label}
             style={styles.pressable}
+            onPress={onPress}
           >
-            <SymbolView
-              name={icon}
-              size={homePreviewGlassIconSize}
-              tintColor={chrome.colors.primary}
-              weight="semibold"
-            />
-            <Text style={[styles.label, { color: chrome.colors.primary }]}>{label}</Text>
-            <SymbolView
-              name="chevron.right"
-              size={12}
-              tintColor={chrome.colors.primary}
-              weight="semibold"
-            />
+            {content}
           </Pressable>
-        </Link>
+        ) : (
+          <Link href={href} asChild>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={accessibilityLabel ?? label}
+              style={styles.pressable}
+            >
+              {content}
+            </Pressable>
+          </Link>
+        )}
       </GlassPillSurface>
     </View>
   );

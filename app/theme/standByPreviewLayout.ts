@@ -19,4 +19,11 @@ export {
   standByOuterPad,
   standByWidgetGap,
   standByWidgetSize,
+  widgetConfigureTemplateCornerRadius,
+  widgetConfigureTemplateCornerRadiusRatio,
+  widgetConfigureTemplateStrokeWidth,
+  widgetConfigureTemplateVerticalPadding,
+  widgetConfigureSlotInsetRatio,
+  widgetConfigureSlotButtonSize,
+  widgetConfigureSlotPlusSize,
 } from '../design-system';

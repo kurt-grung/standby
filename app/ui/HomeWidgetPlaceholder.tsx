@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, View, type LayoutChangeEvent } from 'react-native';
 
 import {
   homePreviewGlassBottomGap,
@@ -14,6 +14,7 @@ import {
   homeWidgetStripBleed,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
+import { useOpenWidgetConfigure, useWidgetConfig } from '../theme/WidgetConfigContext';
 import { GroupedSection } from './GroupedSection';
 import { PreviewGlassLinkButton } from './PreviewGlassLinkButton';
 import { StandByWidgetPair } from './StandByWidgetPair';
@@ -24,6 +25,8 @@ type HomeWidgetPlaceholderProps = {
 };
 
 export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderProps) {
+  const openConfigure = useOpenWidgetConfigure();
+  const { lastConfigureWidget } = useWidgetConfig();
   const [containerWidth, setContainerWidth] = useState(0);
 
   const onLayout = (event: LayoutChangeEvent) => {
@@ -42,11 +45,7 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
     <View className="mb-5">
       <View style={{ marginHorizontal: -homeWidgetStripBleed }}>
         <GroupedSection className="mb-0">
-          <View
-            accessibilityLabel="StandBy widget preview"
-            accessibilityRole="image"
-            style={{ backgroundColor: nightMode.bg }}
-          >
+          <View style={{ backgroundColor: nightMode.bg }}>
             <View
               style={{
                 height: stripHeight,
@@ -78,6 +77,23 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
                   </View>
                 </View>
               ) : null}
+              <View
+                pointerEvents="box-none"
+                style={{ position: 'absolute', inset: 0, flexDirection: 'row' }}
+              >
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Configure left widget"
+                  style={{ flex: 1 }}
+                  onPress={() => openConfigure('clock')}
+                />
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Configure right widget"
+                  style={{ flex: 1 }}
+                  onPress={() => openConfigure('gauge')}
+                />
+              </View>
             </View>
           </View>
         </GroupedSection>
@@ -94,10 +110,10 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
       >
         <PreviewGlassLinkButton
           label="Configure"
-          href="/ui"
           icon="square.grid.2x2"
           width={homePreviewGlassConfigureWidth}
-          accessibilityLabel="Configure widgets and themes"
+          accessibilityLabel="Configure widgets"
+          onPress={() => openConfigure(lastConfigureWidget)}
         />
         <PreviewGlassLinkButton accessibilityLabel="Preview StandBy widgets" />
       </View>

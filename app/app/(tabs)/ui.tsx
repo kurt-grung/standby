@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
-import { GaugeValueControls } from '../ui/GaugeValueControls';
-import { PreviewGlassBackButton } from '../ui/PreviewGlassBackButton';
-import { StandByWordmark } from '../ui/StandByWordmark';
-import { nightMode } from '../ui/ultra/nightColors';
-import { ProgressBar } from '../ui/ProgressBar';
-import { ScreenShell } from '../ui/ScreenShell';
-import { SectionCard } from '../ui/SectionCard';
-import { useTheme } from '../theme/ThemeContext';
+import { GaugeValueControls } from '../../ui/GaugeValueControls';
+import { PreviewGlassBackButton } from '../../ui/PreviewGlassBackButton';
+import { StandByWordmark } from '../../ui/StandByWordmark';
+import { nightMode } from '../../ui/ultra/nightColors';
+import { ProgressBar } from '../../ui/ProgressBar';
+import { ScreenShell } from '../../ui/ScreenShell';
+import { SectionCard } from '../../ui/SectionCard';
+import { useTheme } from '../../theme/ThemeContext';
 import {
   groupedScreenPadding,
   groupedWordmarkSize,
   groupedUiWordmarkTopSpacing,
-} from '../theme/groupedLayout';
-import { useAppChrome } from '../theme/useAppChrome';
-import { themeList, type ThemeId } from '../theme/themes';
+} from '../../theme/groupedLayout';
+import { useAppChrome } from '../../theme/useAppChrome';
+import { themeList, type ThemeId } from '../../theme/themes';
 
 const typographyScale = [
   {
@@ -46,10 +46,10 @@ const brandPrinciples = [
 ] as const;
 
 const iconVariants = [
-  { label: 'Night', source: require('../designs/icons/icon-night.png') },
-  { label: 'Ultra', source: require('../designs/icons/icon-ultra.png') },
-  { label: 'Graphite', source: require('../designs/icons/icon-graphite.png') },
-  { label: 'Mono', source: require('../assets/adaptive-icon.png') },
+  { label: 'Night', source: require('../../../designs/icons/icon-night.png') },
+  { label: 'Ultra', source: require('../../../designs/icons/icon-ultra.png') },
+  { label: 'Graphite', source: require('../../../designs/icons/icon-graphite.png') },
+  { label: 'Mono', source: require('../../assets/adaptive-icon.png') },
 ] as const;
 
 const marketingPalette = [
@@ -69,23 +69,23 @@ const appPalette = [
 const advertGenerations = [
   {
     label: 'A — medium concrete',
-    source: require('../designs/generations/adverts/advert-a-medium-concrete.png'),
+    source: require('../../../designs/generations/adverts/advert-a-medium-concrete.png'),
   },
   {
     label: 'K — red glow',
-    source: require('../designs/generations/adverts/advert-k-red-glow.png'),
+    source: require('../../../designs/generations/adverts/advert-k-red-glow.png'),
   },
   {
     label: 'M — tech noir',
-    source: require('../designs/generations/adverts/advert-m-tech-noir.png'),
+    source: require('../../../designs/generations/adverts/advert-m-tech-noir.png'),
   },
   {
     label: 'L — side rim light',
-    source: require('../designs/generations/adverts/advert-l-side-rim-light.png'),
+    source: require('../../../designs/generations/adverts/advert-l-side-rim-light.png'),
   },
   {
     label: 'N — Japanese minimal',
-    source: require('../designs/generations/adverts/advert-n-japanese-minimal.png'),
+    source: require('../../../designs/generations/adverts/advert-n-japanese-minimal.png'),
   },
 ] as const;
 
@@ -190,7 +190,7 @@ export default function UiScreen() {
         <SectionCard label="Icon" title="App mark">
           <View className="mt-4 items-center">
             <Image
-              source={require('../assets/icon.png')}
+              source={require('../../assets/icon.png')}
               className="h-28 w-28 rounded-[22px]"
               resizeMode="cover"
             />
@@ -218,12 +218,12 @@ export default function UiScreen() {
 
         <SectionCard label="Branding" title="StandBy+ identity">
           <Image
-            source={require('../assets/branding/wordmark.png')}
+            source={require('../../assets/branding/wordmark.png')}
             className="mt-2 h-16 w-full"
             resizeMode="contain"
           />
           <Image
-            source={require('../assets/splash.png')}
+            source={require('../../assets/splash.png')}
             className="mt-5 h-32 w-full rounded-2xl"
             resizeMode="contain"
           />
@@ -326,12 +326,12 @@ export default function UiScreen() {
                 style={{ borderColor: chrome.colors.border, backgroundColor: '#000000' }}
               >
                 <Image
-                  source={require('../assets/icon.png')}
+                  source={require('../../assets/icon.png')}
                   className="h-20 w-20 rounded-[18px]"
                   resizeMode="cover"
                 />
                 <Image
-                  source={require('../assets/branding/wordmark.png')}
+                  source={require('../../assets/branding/wordmark.png')}
                   className="mt-3 h-10 w-full"
                   resizeMode="contain"
                 />
@@ -362,12 +362,12 @@ export default function UiScreen() {
                 style={{ borderColor: chrome.colors.border, backgroundColor: '#F2F2F0' }}
               >
                 <Image
-                  source={require('../designs/icons/icon-light.png')}
+                  source={require('../../../designs/icons/icon-light.png')}
                   className="h-20 w-20 rounded-[18px]"
                   resizeMode="cover"
                 />
                 <Image
-                  source={require('../designs/wordmarks/wordmark-light.png')}
+                  source={require('../../../designs/wordmarks/wordmark-light.png')}
                   className="mt-3 h-10 w-full"
                   resizeMode="contain"
                 />
@@ -400,7 +400,7 @@ export default function UiScreen() {
             Dark — merged
           </Text>
           <Image
-            source={require('../assets/branding/brand-board-dark.png')}
+            source={require('../../assets/branding/brand-board-dark.png')}
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />
@@ -411,7 +411,7 @@ export default function UiScreen() {
             Light — marketing
           </Text>
           <Image
-            source={require('../designs/boards/brand-board-light.png')}
+            source={require('../../../designs/boards/brand-board-light.png')}
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />
@@ -422,7 +422,7 @@ export default function UiScreen() {
             ChatGPT reference
           </Text>
           <Image
-            source={require('../designs/boards/chatgpt-reference.png')}
+            source={require('../../../designs/boards/chatgpt-reference.png')}
             className="mt-2 h-44 w-full rounded-2xl"
             resizeMode="cover"
           />

@@ -82,6 +82,14 @@ export const standbyDesignSystem = {
       widgetGap: 12,
       referenceLandscape: { width: 844, height: 390 },
     },
+    widgetConfigure: {
+      templateCornerRadiusRatio: 0.225,
+      templateStrokeWidth: 1,
+      templateVerticalPadding: 20,
+      slotInsetRatio: 0.063,
+      slotButtonSize: 36,
+      slotPlusSize: 16,
+    },
     navigation: {
       tabBarHeight: 55,
       tabBarIconSize: 29,
@@ -361,6 +369,18 @@ export const groupedPresetRowInset = 'py-3';
 
 export const standByOuterPad = ds.layout.standByPreview.outerPad;
 export const standByWidgetGap = ds.layout.standByPreview.widgetGap;
+export const widgetConfigureTemplateCornerRadiusRatio =
+  ds.layout.widgetConfigure.templateCornerRadiusRatio;
+export const widgetConfigureTemplateStrokeWidth = ds.layout.widgetConfigure.templateStrokeWidth;
+export const widgetConfigureTemplateVerticalPadding =
+  ds.layout.widgetConfigure.templateVerticalPadding;
+export const widgetConfigureSlotInsetRatio = ds.layout.widgetConfigure.slotInsetRatio;
+export const widgetConfigureSlotButtonSize = ds.layout.widgetConfigure.slotButtonSize;
+export const widgetConfigureSlotPlusSize = ds.layout.widgetConfigure.slotPlusSize;
+
+export function widgetConfigureTemplateCornerRadius(size: number) {
+  return Math.round(size * widgetConfigureTemplateCornerRadiusRatio);
+}
 export const homeWidgetStripPadding = ds.layout.homePreview.stripPadding;
 export const homeWidgetStripBleed = ds.layout.homePreview.stripBleed;
 export const homePreviewGlassHeight = ds.layout.homePreview.glassHeight;
