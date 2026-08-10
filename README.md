@@ -47,7 +47,7 @@ make kill   # stop dev servers
 Regenerate the native iOS project (after `app.config.ts` or widget changes):
 
 ```bash
-make prebuild   # expo prebuild --platform ios + widget patch + pod install
+make prebuild   # expo prebuild --platform ios + widget patch (pods via Expo)
 make rebuild    # clean caches, reinstall, prebuild (full reset)
 ```
 

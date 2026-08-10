@@ -96,14 +96,8 @@ prebuild: ## Generate ios/ native project and widget extension
 	$(call require_app)
 	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npm run prebuild
-	@if [ -f "$(ROOT)/$(APP_DIR)/ios/Podfile" ]; then \
-		cd "$(ROOT)/$(APP_DIR)/ios" && pod install; \
-	fi
 
 rebuild: clean install prebuild ## Clean caches, reinstall, and prebuild iOS
-	@if [ -f "$(ROOT)/$(APP_DIR)/ios/Podfile" ]; then \
-		cd "$(ROOT)/$(APP_DIR)/ios" && pod install; \
-	fi
 
 tsc typecheck: ## Typecheck the app
 	$(call require_app)
