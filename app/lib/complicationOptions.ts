@@ -81,3 +81,13 @@ export const complicationSlotLabels: Record<ComplicationSlotId, string> = {
   bottomCenter: 'bottom center',
   bottomRight: 'bottom right',
 };
+
+export function parseComplicationSlot(value: string | undefined): ComplicationSlotId | null {
+  if (!value) {
+    return null;
+  }
+
+  return complicationSlots.includes(value as ComplicationSlotId)
+    ? (value as ComplicationSlotId)
+    : null;
+}

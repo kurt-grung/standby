@@ -23,7 +23,4 @@ export {
   widgetConfigureTemplateCornerRadiusRatio,
   widgetConfigureTemplateStrokeWidth,
   widgetConfigureTemplateVerticalPadding,
-  widgetConfigureSlotInsetRatio,
-  widgetConfigureSlotButtonSize,
-  widgetConfigureSlotPlusSize,
 } from '../design-system';

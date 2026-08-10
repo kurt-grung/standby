@@ -14,9 +14,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { parseConfigureWidget, type ConfigureWidget } from '../lib/gaugePresets';
 import { groupedScreenPadding } from '../theme/groupedLayout';
-import { useAppChrome } from '../theme/useAppChrome';
 import { WidgetClockConfigureSection } from './WidgetClockConfigureSection';
 import { WidgetGaugeConfigureSection } from './WidgetGaugeConfigureSection';
+
+const configureBg = '#000000';
+const configureFg = '#FFFFFF';
+const configureMuted = 'rgba(255,255,255,0.4)';
 
 const configureWidgets: ConfigureWidget[] = ['clock', 'gauge'];
 
@@ -38,7 +41,6 @@ function ConfigurePage({ widget }: ConfigurePageProps) {
 }
 
 export function WidgetConfigurePanel() {
-  const chrome = useAppChrome();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { widget: widgetParam } = useLocalSearchParams<{ widget?: string }>();
@@ -88,31 +90,31 @@ export function WidgetConfigurePanel() {
   return (
     <View
       className="flex-1"
-      style={{ backgroundColor: chrome.colors.bg, paddingTop: insets.top }}
+      style={{ backgroundColor: configureBg, paddingTop: insets.top }}
       onLayout={onLayout}
     >
       <View
         className={`flex-row items-center justify-between ${groupedScreenPadding}`}
-        style={{ paddingBottom: 12 }}
+        style={{ paddingBottom: 16 }}
       >
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Close widget configure"
-          className="active:opacity-70"
+          className="active:opacity-60"
           hitSlop={12}
           onPress={() => router.back()}
         >
-          <SymbolView name="xmark" size={16} tintColor={chrome.colors.primary} weight="semibold" />
+          <SymbolView name="xmark" size={16} tintColor={configureFg} weight="semibold" />
         </Pressable>
-        <Text className="text-[17px] font-semibold" style={{ color: chrome.colors.primary }}>
+        <Text className="text-[17px] font-semibold" style={{ color: configureFg }}>
           Configure
         </Text>
         <View style={{ width: 16 }} />
       </View>
 
       <View
-        className={`flex-row justify-center gap-6 ${groupedScreenPadding}`}
-        style={{ paddingBottom: 16 }}
+        className={`flex-row justify-center gap-8 ${groupedScreenPadding}`}
+        style={{ paddingBottom: 20 }}
       >
         {configureWidgets.map((widget, index) => {
           const active = index === activeIndex;
@@ -122,12 +124,12 @@ export function WidgetConfigurePanel() {
               key={widget}
               accessibilityRole="button"
               accessibilityState={{ selected: active }}
-              className="active:opacity-70"
+              className="active:opacity-60"
               onPress={() => scrollToWidget(index)}
             >
               <Text
-                className="text-[13px] font-semibold uppercase tracking-[0.06em]"
-                style={{ color: active ? chrome.colors.primary : chrome.colors.muted }}
+                className="text-[13px] font-semibold uppercase tracking-[0.08em]"
+                style={{ color: active ? configureFg : configureMuted }}
               >
                 {configureLabels[widget]}
               </Text>
