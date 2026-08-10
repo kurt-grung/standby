@@ -55,14 +55,27 @@ export const standbyDesignSystem = {
     },
     homePreview: {
       glassHeight: 38,
-      glassWidth: 108,
+      glassWidth: 120,
+      glassConfigureWidth: 142,
       glassInset: 12,
       glassRowGap: 4,
-      glassBottomGap: 12,
-      glassPaddingH: 14,
+      glassBottomGap: 24,
+      glassPaddingH: 12,
       glassGap: 4,
       glassOutlineInset: 8,
-      stripPadding: 14,
+      glassIconSize: 14,
+      stripPadding: 8,
+      stripBleed: 16,
+    },
+    homeGallery: {
+      autoAdvanceMs: standbyConfig.layout.homeGalleryAutoAdvanceMs,
+      slideHeight: standbyConfig.layout.homeSceneHeight,
+      cornerRadius: 16,
+      dotSize: 5,
+      dotActiveWidth: 20,
+      dotGap: 5,
+      indicatorTop: 10,
+      fillFadeMs: 220,
     },
     standByPreview: {
       outerPad: 20,
@@ -349,14 +362,26 @@ export const groupedPresetRowInset = 'py-3';
 export const standByOuterPad = ds.layout.standByPreview.outerPad;
 export const standByWidgetGap = ds.layout.standByPreview.widgetGap;
 export const homeWidgetStripPadding = ds.layout.homePreview.stripPadding;
+export const homeWidgetStripBleed = ds.layout.homePreview.stripBleed;
 export const homePreviewGlassHeight = ds.layout.homePreview.glassHeight;
 export const homePreviewGlassWidth = ds.layout.homePreview.glassWidth;
+export const homePreviewGlassConfigureWidth = ds.layout.homePreview.glassConfigureWidth;
 export const homePreviewGlassInset = ds.layout.homePreview.glassInset;
 export const homePreviewGlassRowGap = ds.layout.homePreview.glassRowGap;
 export const homePreviewGlassBottomGap = ds.layout.homePreview.glassBottomGap;
 export const homePreviewGlassPaddingH = ds.layout.homePreview.glassPaddingH;
 export const homePreviewGlassGap = ds.layout.homePreview.glassGap;
+export const homePreviewGlassIconSize = ds.layout.homePreview.glassIconSize;
 export const homePreviewGlassOutlineInset = ds.layout.homePreview.glassOutlineInset;
+
+export const homeGalleryAutoAdvanceMs = ds.layout.homeGallery.autoAdvanceMs;
+export const homeGallerySlideHeight = ds.layout.homeGallery.slideHeight;
+export const homeGalleryCornerRadius = ds.layout.homeGallery.cornerRadius;
+export const homeGalleryDotSize = ds.layout.homeGallery.dotSize;
+export const homeGalleryDotActiveWidth = ds.layout.homeGallery.dotActiveWidth;
+export const homeGalleryDotGap = ds.layout.homeGallery.dotGap;
+export const homeGalleryIndicatorTop = ds.layout.homeGallery.indicatorTop;
+export const homeGalleryFillFadeMs = ds.layout.homeGallery.fillFadeMs;
 
 export const nativeTabBarHeight = ds.layout.navigation.tabBarHeight;
 export const nativeTabBarIconSize = ds.layout.navigation.tabBarIconSize;

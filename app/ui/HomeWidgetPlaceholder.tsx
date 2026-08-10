@@ -3,6 +3,7 @@ import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
   homePreviewGlassBottomGap,
+  homePreviewGlassConfigureWidth,
   homePreviewGlassInset,
   homePreviewGlassRowGap,
   homeWidgetDisplaySize,
@@ -10,6 +11,7 @@ import {
   homeWidgetPreviewScale,
   homeWidgetReferenceSize,
   homeWidgetStripHeight,
+  homeWidgetStripBleed,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
 import { GroupedSection } from './GroupedSection';
@@ -38,52 +40,66 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
 
   return (
     <View className="mb-5">
-      <GroupedSection title="Widgets" className="mb-0">
-        <View style={{ backgroundColor: nightMode.bg }}>
+      <View style={{ marginHorizontal: -homeWidgetStripBleed }}>
+        <GroupedSection className="mb-0">
           <View
-            style={{
-              height: stripHeight,
-              padding: homeWidgetStripPadding,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onLayout={onLayout}
+            accessibilityLabel="StandBy widget preview"
+            accessibilityRole="image"
+            style={{ backgroundColor: nightMode.bg }}
           >
-            {displaySize > 0 ? (
-              <View
-                style={{
-                  width: scaledPairWidth,
-                  height: scaledPairHeight,
-                  overflow: 'hidden',
-                }}
-              >
+            <View
+              style={{
+                height: stripHeight,
+                padding: homeWidgetStripPadding,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onLayout={onLayout}
+            >
+              {displaySize > 0 ? (
                 <View
                   style={{
-                    position: 'absolute',
-                    left: (scaledPairWidth - referencePairWidth) / 2,
-                    top: (scaledPairHeight - referenceSize) / 2,
-                    width: referencePairWidth,
-                    height: referenceSize,
-                    transform: [{ scale }],
+                    width: scaledPairWidth,
+                    height: scaledPairHeight,
+                    overflow: 'hidden',
                   }}
                 >
-                  <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      left: (scaledPairWidth - referencePairWidth) / 2,
+                      top: (scaledPairHeight - referenceSize) / 2,
+                      width: referencePairWidth,
+                      height: referenceSize,
+                      transform: [{ scale }],
+                    }}
+                  >
+                    <StandByWidgetPair size={referenceSize} gaugeValue={gaugeValue} />
+                  </View>
                 </View>
-              </View>
-            ) : null}
+              ) : null}
+            </View>
           </View>
-        </View>
-      </GroupedSection>
+        </GroupedSection>
+      </View>
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'flex-end',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           paddingTop: homePreviewGlassRowGap,
           paddingBottom: homePreviewGlassBottomGap,
-          paddingRight: homePreviewGlassInset,
+          paddingHorizontal: homePreviewGlassInset,
         }}
       >
-        <PreviewGlassLinkButton />
+        <PreviewGlassLinkButton
+          label="Configure"
+          href="/ui"
+          icon="square.grid.2x2"
+          width={homePreviewGlassConfigureWidth}
+          accessibilityLabel="Configure widgets and themes"
+        />
+        <PreviewGlassLinkButton accessibilityLabel="Preview StandBy widgets" />
       </View>
     </View>
   );

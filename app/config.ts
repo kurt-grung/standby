@@ -43,6 +43,7 @@ export const standbyConfig = {
       stickyPlus: 8,
     },
     homeSceneHeight: 240,
+    homeGalleryAutoAdvanceMs: 4500,
   },
   brand: {
     backgroundColor: '#000000',
