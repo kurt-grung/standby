@@ -100,7 +100,7 @@ export function HomeSetupSection() {
 
   return (
     <View
-      accessibilityLabel="How to use StandBy+"
+      accessibilityLabel="How StandBy+ works"
       style={{
         marginTop: homeSetupTopSpacing,
         paddingHorizontal: homeSetupHorizontalInset,
@@ -115,8 +115,9 @@ export function HomeSetupSection() {
           marginBottom: homeSetupTitleBottom,
         }}
       >
-        How to use StandBy
+        How StandBy
         <Text style={{ color: nightMode.primary }}>+</Text>
+        {' works'}
       </Text>
       <View style={{ gap: homeSetupRowGap }}>
         {setupSteps.map((step) => (
