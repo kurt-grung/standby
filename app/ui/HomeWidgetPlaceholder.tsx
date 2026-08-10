@@ -113,9 +113,10 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
           icon="square.grid.2x2"
           width={homePreviewGlassConfigureWidth}
           accessibilityLabel="Configure widgets"
+          surfaceMode="web"
           onPress={() => openConfigure(lastConfigureWidget)}
         />
-        <PreviewGlassLinkButton accessibilityLabel="Preview StandBy widgets" />
+        <PreviewGlassLinkButton accessibilityLabel="Preview StandBy widgets" surfaceMode="web" />
       </View>
     </View>
   );

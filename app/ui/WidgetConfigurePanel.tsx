@@ -116,6 +116,7 @@ export function WidgetConfigurePanel() {
             accessibilityLabel="Close widget configure"
             iconSize={homePreviewGlassIconSize}
             colorScheme="dark"
+            surfaceMode="web"
             onPress={() => router.back()}
           />
         </View>
@@ -131,6 +132,7 @@ export function WidgetConfigurePanel() {
             colorScheme="dark"
             showChevron={false}
             width={homePreviewGlassWidth}
+            surfaceMode="web"
             onPress={openPreview}
           />
         </View>
@@ -141,7 +143,6 @@ export function WidgetConfigurePanel() {
           widgets={configureWidgets}
           labels={configureLabels}
           activeIndex={activeIndex}
-          surfaceMode="web"
           onSelect={scrollToWidget}
         />
       </View>

@@ -125,7 +125,6 @@ export function ComponentsShowcase() {
             widgets={configureWidgets}
             labels={configureLabels}
             activeIndex={segmentIndex}
-            surfaceMode="web"
             onSelect={setSegmentIndex}
           />
         </NightSurface>
