@@ -60,16 +60,22 @@ function SurfaceColumn({
 }
 
 export function GlassButtonsShowcase({ mutedColor, labelColor }: GlassButtonsShowcaseProps) {
-  const platformLabel = Platform.OS === 'web' ? 'Web' : Platform.OS === 'ios' ? 'iOS' : 'Android';
+  const showGlassColumn = Platform.OS !== 'web';
+  const glassSurfaceMode: GlassSurfaceMode = 'auto';
+  const flatSurfaceMode: GlassSurfaceMode = 'app';
 
   return (
-    <View className="mt-4">
-      <Text className="text-sm leading-5" style={{ color: labelColor }}>
-        Liquid glass on {platformLabel}; CSS blur fallback on web, outline ring on app.
-      </Text>
-      <View className="mt-4 flex-row" style={{ gap: 12 }}>
-        <SurfaceColumn title="Web" surfaceMode="web" mutedColor={mutedColor} />
-        <SurfaceColumn title="App" surfaceMode="app" mutedColor={mutedColor} />
+    <View className={showGlassColumn ? 'mt-4' : undefined}>
+      {showGlassColumn ? (
+        <Text className="mb-4 text-sm leading-5" style={{ color: labelColor }}>
+          Liquid glass vs flat fallback.
+        </Text>
+      ) : null}
+      <View className="flex-row" style={{ gap: 12 }}>
+        {showGlassColumn ? (
+          <SurfaceColumn title="Glass" surfaceMode={glassSurfaceMode} mutedColor={mutedColor} />
+        ) : null}
+        <SurfaceColumn title="Flat" surfaceMode={flatSurfaceMode} mutedColor={mutedColor} />
       </View>
     </View>
   );

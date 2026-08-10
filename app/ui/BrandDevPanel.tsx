@@ -31,7 +31,7 @@ export function BrandDevPanel() {
 
   return (
     <>
-      <GroupedSection title="App chrome" className="mt-5">
+      <GroupedSection title="Colors" className="mt-5">
         <GroupedInset style={{ paddingHorizontal: 16, paddingVertical: 16 }}>
           <View className="flex-row flex-wrap">
             {Object.entries(chrome.colors).map(([key, value]) => (
@@ -41,7 +41,7 @@ export function BrandDevPanel() {
         </GroupedInset>
       </GroupedSection>
 
-      <GroupedSection title="Glass buttons" className="mt-5">
+      <GroupedSection title="Buttons" className="mt-5">
         <GroupedInset style={{ paddingHorizontal: 16, paddingVertical: 16 }}>
           <GlassButtonsShowcase
             mutedColor={chrome.colors.muted}

@@ -5,6 +5,8 @@ import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import {
+  appFallbackGlassBordered,
+  appFallbackGlassFill,
   resolveWebGlassSurface,
   type GlassSurfaceMode,
   webGlassDarkSurface,
@@ -26,10 +28,11 @@ import {
   type PreviewBackShape,
 } from '../theme/nativeTabBarMetrics';
 import {
+  appOutlineGlassFrame,
+  appOutlineGlassFrameStyle,
   CircleOutline,
-  deriveCircleOutlineSize,
-  derivePillOutlineSize,
   PillOutline,
+  type OutlineGlassFrame,
 } from './OutlineShape';
 import { SfSymbolIcon } from './SfSymbolIcon';
 import { nightMode } from './ultra/nightColors';
@@ -44,17 +47,6 @@ const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 const previewIconTint = '#FFFFFF';
-
-const previewBackNightOutline = derivePillOutlineSize(
-  previewBackPillWidth,
-  previewBackPillHeight,
-  previewBackNightOutlineInset,
-);
-
-const previewBackRoundOutline = deriveCircleOutlineSize(
-  previewBackRoundSize,
-  previewBackRoundOutlineInset,
-);
 
 const outlineProps = {
   borderWidth: previewBackNightOutlineBorderWidth,
@@ -72,19 +64,43 @@ function resolvePreviewBackOutlineShape(
   return outlineShape;
 }
 
-function previewBackOutline(outlineShape: ResolvedPreviewBackOutlineShape): ReactNode {
+function resolvePreviewBackAppFrame(
+  outlineShape: ResolvedPreviewBackOutlineShape,
+  width: number,
+  height: number,
+): OutlineGlassFrame | null {
   if (outlineShape === 'none') return null;
+  if (outlineShape === 'round') {
+    return appOutlineGlassFrame(width, height, previewBackRoundOutlineInset);
+  }
+  return appOutlineGlassFrame(width, height, previewBackNightOutlineInset);
+}
+
+function previewBackOutline(
+  outlineShape: ResolvedPreviewBackOutlineShape,
+  width: number,
+  height: number,
+): ReactNode {
+  const appFrame = resolvePreviewBackAppFrame(outlineShape, width, height);
+  if (!appFrame) return null;
 
   if (outlineShape === 'round') {
-    return <CircleOutline size={previewBackRoundOutline.size} {...outlineProps} />;
+    return (
+      <CircleOutline
+        size={appFrame.width}
+        {...outlineProps}
+        style={appOutlineGlassFrameStyle(appFrame)}
+      />
+    );
   }
 
   return (
     <PillOutline
-      width={previewBackNightOutline.width}
-      height={previewBackNightOutline.height}
-      borderRadius={previewBackNightOutline.borderRadius}
+      width={appFrame.width}
+      height={appFrame.height}
+      borderRadius={appFrame.borderRadius}
       {...outlineProps}
+      style={appOutlineGlassFrameStyle(appFrame)}
     />
   );
 }
@@ -95,6 +111,7 @@ type BackGlassSurfaceProps = {
   borderRadius: number;
   children: ReactNode;
   surfaceMode?: GlassSurfaceMode;
+  appFrame?: OutlineGlassFrame | null;
 };
 
 function BackGlassSurface({
@@ -103,10 +120,12 @@ function BackGlassSurface({
   borderRadius,
   children,
   surfaceMode = 'auto',
+  appFrame = null,
 }: BackGlassSurfaceProps) {
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
 
-  if (liquidGlass && surfaceMode !== 'web') {
+  if (useNativeGlass) {
     return (
       <NativeGlassView
         isInteractive
@@ -120,12 +139,20 @@ function BackGlassSurface({
     );
   }
 
+  const frameStyle = appFrame
+    ? appOutlineGlassFrameStyle(appFrame)
+    : { width, height, borderRadius };
+
   return (
     <View
       style={[
         styles.glass,
-        webSurface ? webGlassDarkSurface : styles.fallbackGlass,
-        { width, height, borderRadius },
+        webSurface
+          ? webGlassDarkSurface
+          : appFrame
+            ? appFallbackGlassFill
+            : appFallbackGlassBordered,
+        frameStyle,
       ]}
     >
       {children}
@@ -137,7 +164,7 @@ type GlassBackButtonShellProps = {
   width: number;
   height: number;
   borderRadius: number;
-  outline: ReactNode;
+  outlineShape: ResolvedPreviewBackOutlineShape;
   surfaceMode?: GlassSurfaceMode;
   onPress?: () => void;
 };
@@ -146,11 +173,17 @@ function GlassBackButtonShell({
   width,
   height,
   borderRadius,
-  outline,
+  outlineShape,
   surfaceMode = 'auto',
   onPress,
 }: GlassBackButtonShellProps) {
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
+  const useInsetAppGlass = !webSurface && !useNativeGlass;
+  const appFrame = useInsetAppGlass
+    ? resolvePreviewBackAppFrame(outlineShape, width, height)
+    : null;
+  const outline = previewBackOutline(outlineShape, width, height);
 
   const pressable = (
     <Pressable accessibilityRole="button" accessibilityLabel="Home" style={styles.pressable}>
@@ -171,6 +204,7 @@ function GlassBackButtonShell({
         height={height}
         borderRadius={borderRadius}
         surfaceMode={surfaceMode}
+        appFrame={appFrame}
       >
         {onPress ? (
           <Pressable
@@ -209,7 +243,7 @@ export function PreviewGlassBackButton({
   surfaceMode = 'auto',
   onPress,
 }: PreviewGlassBackButtonProps) {
-  const outline = previewBackOutline(resolvePreviewBackOutlineShape(shape, outlineShape));
+  const resolvedOutlineShape = resolvePreviewBackOutlineShape(shape, outlineShape);
 
   if (shape === 'round') {
     return (
@@ -217,7 +251,7 @@ export function PreviewGlassBackButton({
         width={previewBackRoundSize}
         height={previewBackRoundSize}
         borderRadius={previewBackRoundRadius}
-        outline={outline}
+        outlineShape={resolvedOutlineShape}
         surfaceMode={surfaceMode}
         onPress={onPress}
       />
@@ -229,7 +263,7 @@ export function PreviewGlassBackButton({
       width={previewBackPillWidth}
       height={previewBackPillHeight}
       borderRadius={previewBackPillRadius}
-      outline={outline}
+      outlineShape={resolvedOutlineShape}
       surfaceMode={surfaceMode}
       onPress={onPress}
     />
@@ -246,11 +280,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-  },
-  fallbackGlass: {
-    backgroundColor: 'rgba(255,255,255,0.14)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.22)',
   },
   pressable: {
     width: '100%',

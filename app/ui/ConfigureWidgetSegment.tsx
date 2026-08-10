@@ -5,6 +5,7 @@ import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { ConfigureWidget } from '../lib/gaugePresets';
 import {
+  appFallbackGlassFill,
   resolveWebGlassSurface,
   type GlassSurfaceMode,
   webGlassDarkSurface,
@@ -16,7 +17,6 @@ import {
   widgetConfigureSegmentOutlineInset,
   widgetConfigureSegmentWidth,
 } from '../design-system';
-import { PillOutline, derivePillOutlineSize } from './OutlineShape';
 
 type NativeGlassViewProps = GlassViewProps & {
   borderRadius?: number;
@@ -26,9 +26,10 @@ const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 const borderRadius = widgetConfigureSegmentHeight / 2;
-const segmentInnerHeight = widgetConfigureSegmentHeight - widgetConfigureSegmentInset * 2;
 const segmentRadius = borderRadius - widgetConfigureSegmentInset;
 const outlineBorderColor = 'rgba(255, 255, 255, 0.28)';
+const innerOutlineRadius =
+  (widgetConfigureSegmentHeight - widgetConfigureSegmentOutlineInset * 2) / 2;
 
 type ConfigureWidgetSegmentProps = {
   widgets: readonly ConfigureWidget[];
@@ -41,17 +42,27 @@ type ConfigureWidgetSegmentProps = {
 type SegmentGlassSurfaceProps = {
   children: ReactNode;
   surfaceMode?: GlassSurfaceMode;
-  showOutline: boolean;
 };
 
-function SegmentGlassSurface({
-  children,
-  surfaceMode = 'auto',
-  showOutline,
-}: SegmentGlassSurfaceProps) {
-  const webSurface = resolveWebGlassSurface(surfaceMode);
+function SegmentOutline() {
+  return (
+    <View
+      pointerEvents="none"
+      style={[
+        styles.outlineRing,
+        {
+          borderRadius: innerOutlineRadius,
+        },
+      ]}
+    />
+  );
+}
 
-  if (liquidGlass && surfaceMode !== 'web') {
+function SegmentGlassSurface({ children, surfaceMode = 'auto' }: SegmentGlassSurfaceProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useLiquidGlass = liquidGlass && surfaceMode !== 'web';
+
+  if (useLiquidGlass) {
     return (
       <NativeGlassView
         isInteractive
@@ -66,16 +77,7 @@ function SegmentGlassSurface({
   }
 
   return (
-    <View
-      style={[
-        styles.glass,
-        webSurface
-          ? webGlassDarkSurface
-          : showOutline
-            ? styles.fallbackGlassPlain
-            : styles.fallbackGlass,
-      ]}
-    >
+    <View style={[styles.glass, webSurface ? webGlassDarkSurface : appFallbackGlassFill]}>
       {children}
     </View>
   );
@@ -88,26 +90,13 @@ export function ConfigureWidgetSegment({
   onSelect,
   surfaceMode = 'auto',
 }: ConfigureWidgetSegmentProps) {
-  const webSurface = resolveWebGlassSurface(surfaceMode);
-  const showOutline = !webSurface && !liquidGlass;
-  const outline = derivePillOutlineSize(
-    widgetConfigureSegmentWidth,
-    widgetConfigureSegmentHeight,
-    widgetConfigureSegmentOutlineInset,
-  );
+  const useLiquidGlass = liquidGlass && surfaceMode !== 'web';
+  const showOutline = !useLiquidGlass;
 
   return (
-    <View style={[styles.wrap, { width: widgetConfigureSegmentWidth }]}>
-      {showOutline ? (
-        <PillOutline
-          width={outline.width}
-          height={outline.height}
-          borderRadius={outline.borderRadius}
-          borderWidth={1.5}
-          borderColor={outlineBorderColor}
-        />
-      ) : null}
-      <SegmentGlassSurface surfaceMode={surfaceMode} showOutline={showOutline}>
+    <View style={styles.wrap}>
+      {showOutline ? <SegmentOutline /> : null}
+      <SegmentGlassSurface surfaceMode={surfaceMode}>
         <View style={styles.row}>
           {widgets.map((widget, index) => {
             const active = index === activeIndex;
@@ -126,11 +115,10 @@ export function ConfigureWidgetSegment({
               >
                 <View
                   style={[
-                    styles.segment,
+                    styles.segmentLabel,
                     active
                       ? {
                           backgroundColor: widgetConfigureSegmentActiveFill,
-                          borderRadius: segmentRadius,
                         }
                       : null,
                   ]}
@@ -150,33 +138,35 @@ export function ConfigureWidgetSegment({
 
 const styles = StyleSheet.create({
   wrap: {
+    width: widgetConfigureSegmentWidth,
     height: widgetConfigureSegmentHeight,
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'visible',
+  },
+  outlineRing: {
+    position: 'absolute',
+    top: widgetConfigureSegmentOutlineInset,
+    right: widgetConfigureSegmentOutlineInset,
+    bottom: widgetConfigureSegmentOutlineInset,
+    left: widgetConfigureSegmentOutlineInset,
+    borderWidth: 1.5,
+    borderColor: outlineBorderColor,
   },
   glass: {
-    width: widgetConfigureSegmentWidth,
-    height: widgetConfigureSegmentHeight,
+    width: '100%',
+    height: '100%',
     borderRadius,
     overflow: 'hidden',
   },
-  fallbackGlassPlain: {
-    backgroundColor: 'rgba(255,255,255,0.14)',
-  },
-  fallbackGlass: {
-    backgroundColor: 'rgba(255,255,255,0.14)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.22)',
-  },
   row: {
     flexDirection: 'row',
-    height: widgetConfigureSegmentHeight,
+    height: '100%',
     padding: widgetConfigureSegmentInset,
   },
   segmentPressable: {
     flex: 1,
-    height: segmentInnerHeight,
+    minWidth: 0,
+    height: '100%',
     ...(Platform.OS === 'web'
       ? ({
           cursor: 'pointer',
@@ -187,16 +177,17 @@ const styles = StyleSheet.create({
   segmentPressablePressed: {
     opacity: 0.8,
   },
-  segment: {
-    flex: 1,
-    height: segmentInnerHeight,
+  segmentLabel: {
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: segmentRadius,
   },
   label: {
     fontSize: 13,
     fontWeight: '600',
-    letterSpacing: 0.08 * 13,
+    letterSpacing: 1.04,
     textTransform: 'uppercase',
   },
   labelActive: {

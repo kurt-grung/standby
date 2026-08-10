@@ -1,5 +1,58 @@
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
+export type OutlineGlassFrame = {
+  width: number;
+  height: number;
+  borderRadius: number;
+  top: number;
+  left: number;
+};
+
+export function appOutlineGlassFrame(
+  containerWidth: number,
+  containerHeight: number,
+  inset: number,
+): OutlineGlassFrame {
+  const width = Math.max(0, containerWidth - inset);
+  const height = Math.max(0, containerHeight - inset);
+
+  return {
+    width,
+    height,
+    borderRadius: height / 2,
+    top: (containerHeight - height) / 2,
+    left: (containerWidth - width) / 2,
+  };
+}
+
+export function appOutlineGlassFrameStyle(frame: OutlineGlassFrame): ViewStyle {
+  return {
+    position: 'absolute',
+    top: frame.top,
+    left: frame.left,
+    width: frame.width,
+    height: frame.height,
+    borderRadius: frame.borderRadius,
+  };
+}
+
+export function centeredCircleOutlineStyle(containerSize: number, outlineSize: number): ViewStyle {
+  const offset = (containerSize - outlineSize) / 2;
+  return { top: offset, left: offset };
+}
+
+export function centeredOutlineStyle(
+  containerWidth: number,
+  containerHeight: number,
+  outlineWidth: number,
+  outlineHeight: number,
+): ViewStyle {
+  return {
+    top: (containerHeight - outlineHeight) / 2,
+    left: (containerWidth - outlineWidth) / 2,
+  };
+}
+
 type OutlineShapeProps = {
   width: number;
   height: number;

@@ -141,6 +141,7 @@ export function WidgetConfigurePanel() {
           widgets={configureWidgets}
           labels={configureLabels}
           activeIndex={activeIndex}
+          surfaceMode="web"
           onSelect={scrollToWidget}
         />
       </View>

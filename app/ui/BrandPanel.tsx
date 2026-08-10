@@ -179,7 +179,7 @@ export function BrandPanel({ showPageTitle = true }: BrandPanelProps) {
           className="mb-1.5 text-[13px] font-normal uppercase tracking-[0.04em]"
           style={{ color: chrome.colors.secondary }}
         >
-          Home scenes
+          Scenes
         </Text>
         <HomePhoneRefGallery />
       </View>

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import {
+  appFallbackGlassFill,
   resolveWebGlassSurface,
   type GlassSurfaceMode,
   webGlassDarkSurface,
@@ -16,7 +17,12 @@ import {
   groupedStickyPlusSize,
 } from '../theme/groupedLayout';
 import { previewBackGlassColorScheme } from '../theme/nativeTabBarMetrics';
-import { CircleOutline, deriveCircleOutlineSize } from './OutlineShape';
+import {
+  appOutlineGlassFrame,
+  appOutlineGlassFrameStyle,
+  CircleOutline,
+  type OutlineGlassFrame,
+} from './OutlineShape';
 import { SfSymbolIcon } from './SfSymbolIcon';
 import { nightMode } from './ultra/nightColors';
 
@@ -27,8 +33,6 @@ type NativeGlassViewProps = GlassViewProps & {
 const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
 const radius = groupedStickyPlusGlassSize / 2;
-const outline = deriveCircleOutlineSize(groupedStickyPlusGlassSize, groupedStickyPlusOutlineInset);
-const outlineOffset = (groupedStickyPlusGlassSize - outline.size) / 2;
 const plusIconSize = Math.round(groupedStickyPlusSize * 0.58);
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
@@ -40,12 +44,18 @@ type StickyPlusGlassButtonProps = {
 type RoundGlassSurfaceProps = {
   children: ReactNode;
   surfaceMode?: GlassSurfaceMode;
+  appFrame?: OutlineGlassFrame | null;
 };
 
-function RoundGlassSurface({ children, surfaceMode = 'auto' }: RoundGlassSurfaceProps) {
+function RoundGlassSurface({
+  children,
+  surfaceMode = 'auto',
+  appFrame = null,
+}: RoundGlassSurfaceProps) {
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
 
-  if (liquidGlass && surfaceMode !== 'web') {
+  if (useNativeGlass) {
     return (
       <NativeGlassView
         isInteractive
@@ -62,17 +72,17 @@ function RoundGlassSurface({ children, surfaceMode = 'auto' }: RoundGlassSurface
     );
   }
 
+  const frameStyle = appFrame
+    ? appOutlineGlassFrameStyle(appFrame)
+    : {
+        width: groupedStickyPlusGlassSize,
+        height: groupedStickyPlusGlassSize,
+        borderRadius: radius,
+      };
+
   return (
     <View
-      style={[
-        styles.glass,
-        webSurface ? webGlassDarkSurface : styles.fallbackGlass,
-        {
-          width: groupedStickyPlusGlassSize,
-          height: groupedStickyPlusGlassSize,
-          borderRadius: radius,
-        },
-      ]}
+      style={[styles.glass, webSurface ? webGlassDarkSurface : appFallbackGlassFill, frameStyle]}
     >
       {children}
     </View>
@@ -85,6 +95,15 @@ export function StickyPlusGlassButton({
 }: StickyPlusGlassButtonProps) {
   const [pressed, setPressed] = useState(false);
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
+  const useInsetAppGlass = !webSurface && !useNativeGlass;
+  const appFrame = useInsetAppGlass
+    ? appOutlineGlassFrame(
+        groupedStickyPlusGlassSize,
+        groupedStickyPlusGlassSize,
+        groupedStickyPlusOutlineInset,
+      )
+    : null;
 
   return (
     <View
@@ -93,15 +112,15 @@ export function StickyPlusGlassButton({
         { width: groupedStickyPlusGlassSize, height: groupedStickyPlusGlassSize },
       ]}
     >
-      {!webSurface ? (
+      {!webSurface && appFrame ? (
         <CircleOutline
-          size={outline.size}
+          size={appFrame.width}
           borderWidth={1.5}
           borderColor="rgba(255,255,255,0.28)"
-          style={{ top: outlineOffset, left: outlineOffset }}
+          style={appOutlineGlassFrameStyle(appFrame)}
         />
       ) : null}
-      <RoundGlassSurface surfaceMode={surfaceMode}>
+      <RoundGlassSurface surfaceMode={surfaceMode} appFrame={appFrame}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Expand header"
@@ -133,13 +152,7 @@ const styles = StyleSheet.create({
   glass: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: radius,
     overflow: 'hidden',
-  },
-  fallbackGlass: {
-    backgroundColor: 'rgba(255,255,255,0.14)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.22)',
   },
   pressable: {
     width: '100%',

@@ -15,18 +15,23 @@ import {
   homePreviewGlassWidth,
 } from '../theme/standByPreviewLayout';
 import {
+  appFallbackGlassFill,
   resolveWebGlassSurface,
   type GlassSurfaceMode,
   webGlassDarkSurface,
   webGlassLightSurface,
 } from '../lib/webGlassSurface';
 import { useAppChrome } from '../theme/useAppChrome';
-import { PillOutline, derivePillOutlineSize } from './OutlineShape';
+import {
+  appOutlineGlassFrame,
+  appOutlineGlassFrameStyle,
+  PillOutline,
+  type OutlineGlassFrame,
+} from './OutlineShape';
 
 const configureGlassFg = '#FFFFFF';
 const configureGlassFallback = {
   backgroundColor: 'rgba(255,255,255,0.14)',
-  borderColor: 'rgba(255,255,255,0.22)',
 } as const;
 
 type NativeGlassViewProps = GlassViewProps & {
@@ -55,33 +60,40 @@ type PreviewGlassLinkButtonProps = {
 type GlassPillSurfaceProps = {
   colorScheme: 'light' | 'dark';
   width: number;
-  fallbackStyle: { backgroundColor: string; borderColor: string };
+  fallbackFill: { backgroundColor: string };
   children: ReactNode;
   surfaceMode?: GlassSurfaceMode;
+  appFrame?: OutlineGlassFrame | null;
 };
 
 function GlassPillSurface({
   colorScheme,
   width,
-  fallbackStyle,
+  fallbackFill,
   children,
   surfaceMode = 'auto',
+  appFrame = null,
 }: GlassPillSurfaceProps) {
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
 
-  if (liquidGlass && surfaceMode !== 'web') {
+  if (useNativeGlass) {
     return (
       <NativeGlassView
         isInteractive
         glassEffectStyle="regular"
         colorScheme={colorScheme}
         borderRadius={borderRadius}
-        style={[styles.glass, { width }]}
+        style={[styles.glass, { width, height: homePreviewGlassHeight, borderRadius }]}
       >
         {children}
       </NativeGlassView>
     );
   }
+
+  const frameStyle = appFrame
+    ? appOutlineGlassFrameStyle(appFrame)
+    : { width, height: homePreviewGlassHeight, borderRadius };
 
   return (
     <View
@@ -91,8 +103,8 @@ function GlassPillSurface({
           ? colorScheme === 'dark'
             ? webGlassDarkSurface
             : webGlassLightSurface
-          : [styles.fallbackGlass, fallbackStyle],
-        { width, borderRadius },
+          : [appFallbackGlassFill, fallbackFill],
+        frameStyle,
       ]}
     >
       {children}
@@ -115,19 +127,17 @@ export function PreviewGlassLinkButton({
   const systemScheme = useColorScheme() === 'light' ? 'light' : 'dark';
   const colorScheme = colorSchemeProp ?? systemScheme;
   const webSurface = resolveWebGlassSurface(surfaceMode);
+  const useNativeGlass = liquidGlass && surfaceMode !== 'web';
+  const useInsetAppGlass = !webSurface && !useNativeGlass;
   const showChevron = showChevronProp ?? !webSurface;
   const foreground = colorScheme === 'dark' ? configureGlassFg : chrome.colors.primary;
   const outlineBorderColor =
     colorScheme === 'light' ? 'rgba(0, 0, 0, 0.16)' : 'rgba(255, 255, 255, 0.28)';
-  const fallbackStyle =
-    colorScheme === 'dark'
-      ? configureGlassFallback
-      : { backgroundColor: chrome.colors.accentSoft, borderColor: chrome.colors.border };
-  const outline = derivePillOutlineSize(
-    width,
-    homePreviewGlassHeight,
-    homePreviewGlassOutlineInset,
-  );
+  const fallbackFill =
+    colorScheme === 'dark' ? configureGlassFallback : { backgroundColor: chrome.colors.accentSoft };
+  const appFrame = useInsetAppGlass
+    ? appOutlineGlassFrame(width, homePreviewGlassHeight, homePreviewGlassOutlineInset)
+    : null;
 
   const content = (
     <>
@@ -146,20 +156,22 @@ export function PreviewGlassLinkButton({
 
   return (
     <View style={[styles.wrap, { width }]}>
-      {!webSurface ? (
+      {!webSurface && appFrame ? (
         <PillOutline
-          width={outline.width}
-          height={outline.height}
-          borderRadius={outline.borderRadius}
+          width={appFrame.width}
+          height={appFrame.height}
+          borderRadius={appFrame.borderRadius}
           borderWidth={1.5}
           borderColor={outlineBorderColor}
+          style={appOutlineGlassFrameStyle(appFrame)}
         />
       ) : null}
       <GlassPillSurface
         colorScheme={colorScheme}
         width={width}
-        fallbackStyle={fallbackStyle}
+        fallbackFill={fallbackFill}
         surfaceMode={surfaceMode}
+        appFrame={appFrame}
       >
         {onPress ? (
           <Pressable
@@ -194,12 +206,7 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   glass: {
-    height: homePreviewGlassHeight,
-    borderRadius,
     overflow: 'hidden',
-  },
-  fallbackGlass: {
-    borderWidth: 1,
   },
   pressable: {
     width: '100%',

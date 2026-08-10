@@ -33,3 +33,14 @@ export const webGlassLightSurface: ViewStyle = {
       } as ViewStyle)
     : {}),
 };
+
+export const appFallbackGlassFill: ViewStyle = {
+  backgroundColor: 'rgba(255, 255, 255, 0.14)',
+  borderWidth: 0,
+};
+
+export const appFallbackGlassBordered: ViewStyle = {
+  ...appFallbackGlassFill,
+  borderWidth: 1,
+  borderColor: 'rgba(255, 255, 255, 0.22)',
+};
