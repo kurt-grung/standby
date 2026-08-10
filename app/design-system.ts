@@ -57,7 +57,8 @@ export const standbyDesignSystem = {
       glassHeight: 38,
       glassWidth: 108,
       glassInset: 12,
-      glassRowGap: 10,
+      glassRowGap: 4,
+      glassBottomGap: 12,
       glassPaddingH: 14,
       glassGap: 4,
       glassOutlineInset: 8,
@@ -352,6 +353,7 @@ export const homePreviewGlassHeight = ds.layout.homePreview.glassHeight;
 export const homePreviewGlassWidth = ds.layout.homePreview.glassWidth;
 export const homePreviewGlassInset = ds.layout.homePreview.glassInset;
 export const homePreviewGlassRowGap = ds.layout.homePreview.glassRowGap;
+export const homePreviewGlassBottomGap = ds.layout.homePreview.glassBottomGap;
 export const homePreviewGlassPaddingH = ds.layout.homePreview.glassPaddingH;
 export const homePreviewGlassGap = ds.layout.homePreview.glassGap;
 export const homePreviewGlassOutlineInset = ds.layout.homePreview.glassOutlineInset;

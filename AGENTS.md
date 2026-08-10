@@ -25,7 +25,7 @@ All paths are under `app/` unless noted.
 | `app/widgets/` | StandBy widget UIs (Swift UI via expo-widgets) |
 | `app/hooks/`, `app/lib/` | Hooks and utilities |
 | `app/assets/` | Icons, splash, branding PNGs |
-| `app/scripts/` | Asset generation, Expo checks, dev reload |
+| `app/scripts/` | Asset generation, Expo checks, dev reload, Metro auto-start |
 
 **Conventions**
 
@@ -56,6 +56,23 @@ Three surfaces must match at handoff — same trimmed wordmark, same **280pt** w
 
 **Edit only** `scripts/generate-brand-assets.mjs` → `writeTrimmedSplashSquare` for trim/resize logic; do not hand-edit `splash-display.png` or the imageset PNGs.
 
+## Dev server (Metro + dev client)
+
+The dev client (`launchMode: most-recent`) connects to Metro on port **8081**. **`localhost` does not work on a physical iPhone** — the phone cannot reach your Mac that way.
+
+`patch-dev-launcher-autoconnect.mjs` (postinstall) makes the dev client **auto-connect on launch** instead of showing the server picker. **`make device` once** installs the patched native code + LAN URL.
+
+**Do not embed a JS bundle on Debug device builds** (`unset SKIP_BUNDLING` in `ios/.xcode.env.updates`). When `main.jsbundle` is embedded, expo-dev-launcher always opens the Development Servers home screen. `make device` keeps Debug bundling skipped so Metro auto-connect works. Use `make standby` (Release) for an offline bundle.
+
+| Command | Behavior |
+|---------|----------|
+| `make dev` | Metro on **LAN** + opens iOS simulator dev client |
+| `make connect` | Patch LAN URL, ensure Metro, deep-link dev client (sim or `IOS_DEVICE`) |
+| `make device` | Auto-connect patch + LAN URL + Metro + build to iPhone (no embedded bundle) |
+| `make verify` / reload hook | Starts Metro if needed, patches URL, reloads |
+
+`patch-dev-client-url.mjs` sets `DEV_CLIENT_DEFAULT_LAUNCHER_URL` to your Mac's LAN IP and writes `ios/.xcode.env.local`. Metro logs: `app/.expo-dev-server.log`.
+
 ## After app changes
 
-Run `make verify` before committing app changes (includes auto-reload when Metro is running). Keep `make dev` running in a terminal. A Cursor `stop` hook also reloads the dev client after each agent turn. Before push or dependency/config updates, run `make audit`. After dependency or SDK updates, run `make fix` then `make audit`. Lint touched files and use Expo MCP docs (v57) when unsure. Fix failures before finishing. Install git hooks once with `make hooks`. See `.cursor/rules/app-verify-mcp.mdc`.
+Run `make verify` before committing app changes (includes auto-reload; starts Metro when needed). Use `make dev` for interactive dev (Metro logs + simulator). A Cursor `stop` hook also reloads the dev client after each agent turn. Before push or dependency/config updates, run `make audit`. After dependency or SDK updates, run `make fix` then `make audit`. Lint touched files and use Expo MCP docs (v57) when unsure. Fix failures before finishing. Install git hooks once with `make hooks`. See `.cursor/rules/app-verify-mcp.mdc`.

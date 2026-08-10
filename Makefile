@@ -13,7 +13,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload brand-assets \
+.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload brand-assets connect \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -32,27 +32,39 @@ app: ios ## Build native app and run on iOS simulator
 
 run: ## Start Expo dev server (Metro) for the dev client
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
+	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT) --lan
 
 start s: run ## Alias for run
+
+connect: ## Ensure Metro, patch LAN URL, and connect the dev client
+	$(call require_app)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/connect-dev-client.mjs
 
 ios: ## Build native app and run on iOS simulator (widgets need this, not Expo Go)
 	$(call require_app)
 	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-launcher-autoconnect.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-dev-server.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npm run ios
 
-dev: ## Live dev: Metro + open simulator app (run ios once first)
+dev: ## Live dev: Metro on LAN + open iOS simulator dev client
 	$(call require_app)
-	@echo "Starting Metro on :$(EXPO_PORT). Press i to open iOS simulator, or reload with r."
-	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT)
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
+	cd "$(ROOT)/$(APP_DIR)" && npm run start -- --dev-client --port $(EXPO_PORT) --lan --ios
 
-device: ## Dev build on iPhone — embeds JS; open app once so widgets register
+device: ## Dev build on iPhone — Metro auto-connect (no embedded bundle)
 	$(call require_app)
-	@printf 'unset SKIP_BUNDLING\n' > "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
+	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-launcher-autoconnect.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-dev-server.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npx expo run:ios --device "$(IOS_DEVICE)"
+	cd "$(ROOT)/$(APP_DIR)" && IOS_DEVICE="$(IOS_DEVICE)" node scripts/connect-dev-client.mjs
 	@echo ""
-	@echo "After install: unlock the phone, open Standby, wait for the home screen,"
-	@echo "then remove and re-add widgets in StandBy if they still show red squares."
+	@echo "App should open straight into StandBy+ via Metro. Open once so widgets register;"
+	@echo "re-add StandBy widgets if they still show red squares."
 
 standby: ## Release build on iPhone — best for StandBy widgets (no Metro required)
 	$(call require_app)

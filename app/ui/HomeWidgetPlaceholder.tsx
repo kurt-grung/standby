@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
+  homePreviewGlassBottomGap,
   homePreviewGlassInset,
   homePreviewGlassRowGap,
   homeWidgetDisplaySize,
@@ -11,7 +12,6 @@ import {
   homeWidgetStripHeight,
   homeWidgetStripPadding,
 } from '../theme/standByPreviewLayout';
-import { useSplashVisible } from '../theme/SplashGate';
 import { GroupedSection } from './GroupedSection';
 import { PreviewGlassLinkButton } from './PreviewGlassLinkButton';
 import { StandByWidgetPair } from './StandByWidgetPair';
@@ -22,12 +22,7 @@ type HomeWidgetPlaceholderProps = {
 };
 
 export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderProps) {
-  const splashVisible = useSplashVisible();
   const [containerWidth, setContainerWidth] = useState(0);
-
-  if (splashVisible) {
-    return null;
-  }
 
   const onLayout = (event: LayoutChangeEvent) => {
     setContainerWidth(event.nativeEvent.layout.width);
@@ -43,7 +38,7 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
 
   return (
     <View className="mb-5">
-      <GroupedSection title="Widgets" className="mb-2">
+      <GroupedSection title="Widgets" className="mb-0">
         <View style={{ backgroundColor: nightMode.bg }}>
           <View
             style={{
@@ -84,6 +79,7 @@ export function HomeWidgetPlaceholder({ gaugeValue = 0 }: HomeWidgetPlaceholderP
           flexDirection: 'row',
           justifyContent: 'flex-end',
           paddingTop: homePreviewGlassRowGap,
+          paddingBottom: homePreviewGlassBottomGap,
           paddingRight: homePreviewGlassInset,
         }}
       >

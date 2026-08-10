@@ -1,4 +1,5 @@
 export {
+  homePreviewGlassBottomGap,
   homePreviewGlassGap,
   homePreviewGlassHeight,
   homePreviewGlassInset,

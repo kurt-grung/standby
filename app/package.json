@@ -30,7 +30,7 @@
     "eas:build:preview": "eas build --profile preview --platform ios",
     "eas:build:production": "eas build --profile production --platform ios",
     "eas:submit": "eas submit --profile production --platform ios",
-    "postinstall": "node scripts/patch-expo-modules-jsi.mjs && node scripts/ensure-ios-bundle-id.mjs && node scripts/patch-widget-container-background.mjs"
+    "postinstall": "node scripts/patch-expo-modules-jsi.mjs && node scripts/patch-dev-launcher-autoconnect.mjs && node scripts/ensure-ios-bundle-id.mjs && node scripts/patch-widget-container-background.mjs"
   },
   "dependencies": {
     "@expo/ui": "~57.0.2",

@@ -13,10 +13,14 @@ export const standbyConfig = {
   launch: {
     initialRoute: '/' as const,
     splashMinDurationMs: 700,
+    splashFadeDurationMs: 320,
+    homeRevealDurationMs: 480,
+    homeRevealStaggerMs: 70,
   },
   devClient: {
     launchMode: 'most-recent' as const,
-    defaultLaunchURL: 'http://localhost:8081',
+    defaultLaunchURL: 'http://127.0.0.1:8081',
+    autoConnectOnLaunch: true,
     skipOnboarding: true,
     showMenuAtLaunch: false,
     toolsButton: false,

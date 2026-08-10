@@ -19,6 +19,7 @@ import {
 import { useLiveClock } from '../hooks/useLiveClock';
 import { ScreenShell } from '../ui/ScreenShell';
 import { HomePhoneRefGallery } from '../ui/HomePhoneRefGallery';
+import { HomeRevealSection } from '../ui/HomeRevealSection';
 import { HomeWidgetPlaceholder } from '../ui/HomeWidgetPlaceholder';
 import { ArcGauge } from '../ui/ultra/ArcGauge';
 import { nightMode } from '../ui/ultra/nightColors';
@@ -81,9 +82,15 @@ export default function HomeScreen() {
         overlay={<StickyWordmarkPlus scrollRef={scrollRef} scrollY={scrollY} />}
         onScroll={onScroll}
       >
-        <AppWordmarkHeader scrollRef={scrollRef} scrollY={scrollY} />
-        <HomeWidgetPlaceholder gaugeValue={displayValue} />
-        <HomePhoneRefGallery />
+        <HomeRevealSection step={0}>
+          <AppWordmarkHeader scrollRef={scrollRef} scrollY={scrollY} />
+        </HomeRevealSection>
+        <HomeRevealSection step={1}>
+          <HomeWidgetPlaceholder gaugeValue={displayValue} />
+        </HomeRevealSection>
+        <HomeRevealSection step={2}>
+          <HomePhoneRefGallery />
+        </HomeRevealSection>
 
         <GroupedSection title="Gauge" footer="Auto mirrors day progress in the Ultra Gauge widget.">
           <GroupedInset className={groupedHeroInset} style={{ paddingTop: groupedGaugeTopPadding }}>

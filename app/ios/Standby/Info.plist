@@ -41,7 +41,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>DEV_CLIENT_DEFAULT_LAUNCHER_URL</key>
-	<string>http://localhost:8081</string>
+	<string>http://192.168.0.24:8081</string>
 	<key>EXDefaultScreenOrientationMask</key>
 	<string>UIInterfaceOrientationMaskPortrait</string>
 	<key>EXDevMenuIsOnboardingFinished</key>

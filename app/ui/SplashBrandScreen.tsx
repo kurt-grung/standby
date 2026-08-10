@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { Image, InteractionManager, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
 import Animated, {
+  Easing,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -9,6 +10,7 @@ import Animated, {
 import * as SplashScreen from 'expo-splash-screen';
 
 import { standbyConfig } from '../config';
+import { useBeginHomeReveal } from '../theme/SplashGate';
 
 type SplashBrandScreenProps = {
   onFinish: () => void;
@@ -16,55 +18,82 @@ type SplashBrandScreenProps = {
 
 export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
   const mountTime = useRef(Date.now());
-  const splashReady = useRef(false);
   const finished = useRef(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const finishedCallback = useRef(false);
+  const scheduled = useRef(false);
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const maxWaitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const finishTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [touchBlocked, setTouchBlocked] = useState(true);
   const opacity = useSharedValue(1);
   const splashLogoSize = standbyConfig.brand.splashImageWidth;
+  const beginHomeReveal = useBeginHomeReveal();
+  const { splashMinDurationMs, splashFadeDurationMs } = standbyConfig.launch;
+  const maxSplashWaitMs = splashMinDurationMs + splashFadeDurationMs + 1200;
+
+  const complete = useCallback(() => {
+    if (finishedCallback.current) {
+      return;
+    }
+
+    finishedCallback.current = true;
+    onFinish();
+  }, [onFinish]);
 
   const dismiss = useCallback(() => {
-    opacity.value = withTiming(0, { duration: 180 }, (complete) => {
-      if (complete) {
-        runOnJS(onFinish)();
-      }
-    });
-  }, [onFinish, opacity]);
-
-  const finishSplash = useCallback(() => {
-    if (finished.current || !splashReady.current) {
+    if (finished.current) {
       return;
     }
 
     finished.current = true;
-    const remaining = Math.max(
+    setTouchBlocked(false);
+    beginHomeReveal();
+    opacity.value = withTiming(
       0,
-      standbyConfig.launch.splashMinDurationMs - (Date.now() - mountTime.current),
+      {
+        duration: splashFadeDurationMs,
+        easing: Easing.out(Easing.quad),
+      },
+      (completeAnimation) => {
+        if (completeAnimation) {
+          runOnJS(complete)();
+        }
+      },
     );
-    timerRef.current = setTimeout(dismiss, remaining);
-  }, [dismiss]);
 
-  useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(finishSplash);
+    finishTimerRef.current = setTimeout(() => {
+      complete();
+    }, splashFadeDurationMs + 120);
+  }, [beginHomeReveal, complete, opacity, splashFadeDurationMs]);
 
-    return () => {
-      task.cancel();
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, [finishSplash]);
-
-  const onSplashReady = () => {
-    if (splashReady.current) {
+  const scheduleDismiss = useCallback(() => {
+    if (finished.current || scheduled.current) {
       return;
     }
 
-    splashReady.current = true;
-    requestAnimationFrame(() => {
-      SplashScreen.hideAsync().catch(() => {});
-      finishSplash();
-    });
-  };
+    scheduled.current = true;
+    SplashScreen.hideAsync().catch(() => {});
+
+    const remaining = Math.max(0, splashMinDurationMs - (Date.now() - mountTime.current));
+    dismissTimerRef.current = setTimeout(dismiss, remaining);
+  }, [dismiss, splashMinDurationMs]);
+
+  useEffect(() => {
+    scheduleDismiss();
+    maxWaitTimerRef.current = setTimeout(dismiss, maxSplashWaitMs);
+
+    return () => {
+      if (dismissTimerRef.current) {
+        clearTimeout(dismissTimerRef.current);
+      }
+      if (maxWaitTimerRef.current) {
+        clearTimeout(maxWaitTimerRef.current);
+      }
+      if (finishTimerRef.current) {
+        clearTimeout(finishTimerRef.current);
+      }
+    };
+  }, [dismiss, maxSplashWaitMs, scheduleDismiss]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -72,6 +101,7 @@ export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
 
   return (
     <Animated.View
+      pointerEvents={touchBlocked ? 'auto' : 'none'}
       style={[styles.root, animatedStyle, { backgroundColor: standbyConfig.brand.backgroundColor }]}
       accessibilityLabel="StandBy+"
     >
@@ -79,7 +109,9 @@ export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
         source={require('../assets/splash-display.png')}
         style={{ width: splashLogoSize, height: splashLogoSize }}
         resizeMode="contain"
-        onLoad={onSplashReady}
+        onLoad={scheduleDismiss}
+        onLoadEnd={scheduleDismiss}
+        onError={scheduleDismiss}
       />
     </Animated.View>
   );
