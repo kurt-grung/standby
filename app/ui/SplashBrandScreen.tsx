@@ -9,6 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 
+import { splashBrand } from '../lib/splashBrand';
 import { standbyConfig } from '../config';
 import { useBeginHomeReveal } from '../theme/SplashGate';
 
@@ -26,7 +27,6 @@ export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
   const finishTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [touchBlocked, setTouchBlocked] = useState(true);
   const opacity = useSharedValue(1);
-  const splashLogoSize = standbyConfig.brand.splashImageWidth;
   const beginHomeReveal = useBeginHomeReveal();
   const { splashMinDurationMs, splashFadeDurationMs } = standbyConfig.launch;
   const maxSplashWaitMs = splashMinDurationMs + splashFadeDurationMs + 1200;
@@ -102,13 +102,13 @@ export function SplashBrandScreen({ onFinish }: SplashBrandScreenProps) {
   return (
     <Animated.View
       pointerEvents={touchBlocked ? 'auto' : 'none'}
-      style={[styles.root, animatedStyle, { backgroundColor: standbyConfig.brand.backgroundColor }]}
+      style={[styles.root, animatedStyle, { backgroundColor: splashBrand.backgroundColor }]}
       accessibilityLabel="StandBy+"
     >
       <Image
-        source={require('../assets/splash-display.png')}
-        style={{ width: splashLogoSize, height: splashLogoSize }}
-        resizeMode="contain"
+        source={splashBrand.imageSource}
+        style={{ width: splashBrand.imageWidth, height: splashBrand.imageWidth }}
+        resizeMode={splashBrand.resizeMode}
         onLoad={scheduleDismiss}
         onLoadEnd={scheduleDismiss}
         onError={scheduleDismiss}

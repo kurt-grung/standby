@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -223,6 +223,35 @@ function syncIosSplashImages() {
   console.log(`Wrote ${splashDisplayOutput} (copy of iOS @3x splash)`);
 }
 
+function syncIosSplashStoryboard() {
+  const storyboardPath = join(appRoot, 'ios', 'Standby', 'SplashScreen.storyboard');
+  if (!existsSync(storyboardPath)) {
+    console.log('Skipping iOS splash storyboard (ios/ not generated yet)');
+    return;
+  }
+
+  const width = iosSplashImageWidth;
+  const previewWidth = 393;
+  const previewHeight = 852;
+  const x = (previewWidth - width) / 2;
+  const y = (previewHeight - width) / 2;
+
+  let content = readFileSync(storyboardPath, 'utf8');
+
+  content = content.replace(
+    /(<image name="SplashScreenLogo" width=")\d+(" height=")\d+("\/>)/,
+    `$1${width}$2${width}$3`,
+  );
+
+  content = content.replace(
+    /(id="EXPO-SplashScreen"[\s\S]*?<rect key="frame" x=")[\d.]+(" y=")[\d.]+(" width=")\d+(" height=")\d+("\/>)/,
+    `$1${x}$2${y}$3${width}$4${width}$5`,
+  );
+
+  writeFileSync(storyboardPath, content);
+  console.log(`Synced iOS splash storyboard logo size to ${width}pt`);
+}
+
 function syncIosAppIcon() {
   if (!existsSync(iosAppIconPath)) {
     console.log('Skipping iOS app icon (ios/ not generated yet)');
@@ -238,6 +267,7 @@ generateIcon();
 generateAdaptiveIcon();
 generateSplash();
 syncIosSplashImages();
+syncIosSplashStoryboard();
 syncIosAppIcon();
 
 console.log('Brand assets generated (S+ icon, StandBy+ splash)');
