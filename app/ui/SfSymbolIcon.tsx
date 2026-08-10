@@ -13,6 +13,7 @@ import Play from 'geist-native-icons/Play';
 import PlayFill from 'geist-native-icons/PlayFill';
 import Plus from 'geist-native-icons/Plus';
 import Settings from 'geist-native-icons/Settings';
+import Smartphone from 'geist-native-icons/Smartphone';
 import Sun from 'geist-native-icons/Sun';
 import Sunset from 'geist-native-icons/Sunset';
 import Thermometer from 'geist-native-icons/Thermometer';
@@ -45,6 +46,7 @@ const webSymbolIcons: Partial<Record<SFSymbol, GeistIcon>> = {
   'sunset.fill': Sunset,
   'sun.max.fill': Sun,
   'moon.fill': Moon,
+  'circle.lefthalf.filled': Smartphone,
   waveform: Activity,
   'figure.run': Activity,
 };

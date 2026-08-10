@@ -149,7 +149,7 @@ export const standbyDesignSystem = {
 
 export type StandbyDesignSystem = typeof standbyDesignSystem;
 
-export type AppearanceMode = 'light' | 'dark';
+export type AppearanceMode = 'system' | 'light' | 'dark';
 
 export type AppChrome = {
   statusBar: 'light' | 'dark';

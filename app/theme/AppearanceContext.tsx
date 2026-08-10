@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Platform, useColorScheme } from 'react-native';
 
-import type { AppearanceMode } from './appearance';
+import { resolveEffectiveColorScheme, type AppearanceMode } from './appearance';
 
 type AppearanceContextValue = {
   mode: AppearanceMode;
@@ -10,19 +10,16 @@ type AppearanceContextValue = {
 
 const AppearanceContext = createContext<AppearanceContextValue | null>(null);
 
-function resolveInitialMode(systemScheme: ReturnType<typeof useColorScheme>): AppearanceMode {
-  return systemScheme === 'light' ? 'light' : 'dark';
-}
-
 export function AppearanceProvider({ children }: { children: ReactNode }) {
   const systemScheme = useColorScheme();
-  const [mode, setMode] = useState<AppearanceMode>(() => resolveInitialMode(systemScheme));
+  const [mode, setMode] = useState<AppearanceMode>('system');
+  const effectiveScheme = resolveEffectiveColorScheme(mode, systemScheme);
 
   useEffect(() => {
     if (Platform.OS === 'web' && typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', mode === 'dark');
+      document.documentElement.classList.toggle('dark', effectiveScheme === 'dark');
     }
-  }, [mode]);
+  }, [effectiveScheme]);
 
   const value = useMemo(
     () => ({
@@ -41,4 +38,10 @@ export function useAppearance() {
     throw new Error('useAppearance must be used within AppearanceProvider');
   }
   return context;
+}
+
+export function useEffectiveColorScheme() {
+  const { mode } = useAppearance();
+  const systemScheme = useColorScheme();
+  return resolveEffectiveColorScheme(mode, systemScheme);
 }

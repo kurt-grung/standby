@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
 
 import { dynamicSystemColor } from '../../lib/dynamicSystemColor';
-import { useAppearance } from '../../theme/AppearanceContext';
+import { useEffectiveColorScheme } from '../../theme/AppearanceContext';
 import { WebNativeTabBar } from '../../ui/WebNativeTabBar';
 import { nightMode } from '../../ui/ultra/nightColors';
 
@@ -20,7 +20,7 @@ const tabTint = dynamicSystemColor({
 });
 
 export default function TabsLayout() {
-  const { mode } = useAppearance();
+  const effectiveScheme = useEffectiveColorScheme();
   const pathname = usePathname();
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
@@ -41,7 +41,7 @@ export default function TabsLayout() {
   }, [isPreview]);
 
   return (
-    <NavigationThemeProvider value={mode === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <NativeTabs minimizeBehavior="onScrollDown" tintColor={tabTint} hidden={tabBarHidden}>
         <NativeTabs.Trigger name="index" accessibilityLabel="Home" disableTransparentOnScrollEdge>
           <NativeTabs.Trigger.Icon sf={{ default: 'house', selected: 'house.fill' }} md="home" />
