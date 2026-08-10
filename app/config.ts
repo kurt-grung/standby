@@ -57,7 +57,7 @@ export const standbyConfig = {
       canvasSize: 1024,
       iconPointSize: 460,
       iconPlusPointSize: 382,
-      iconPlusOffsetY: 24,
+      iconPlusOffsetY: 40,
       splashPointSize: 200,
       splashKerning: -2,
       splashLogoMaxWidth: 880,

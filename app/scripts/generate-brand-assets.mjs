@@ -113,7 +113,7 @@ function compositeLogo({ logoPath, width, height, output, maxWidth }) {
   run(
     [
       `magick -size ${width}x${height} xc:'${backgroundColor}'`,
-      `\\( "${logoPath}" -resize ${maxWidth}x \\) -gravity center -composite "${output}"`,
+      `\\( "${logoPath}" -trim +repage -resize ${maxWidth}x \\) -gravity center -composite "${output}"`,
     ].join(' '),
   );
 }
@@ -129,7 +129,7 @@ function generateIcon() {
     pointSize: iconPointSize,
     plusPointSize: iconPlusPointSize,
     plusOffsetY: iconPlusOffsetY,
-    plusAlign: 'top',
+    plusAlign: 'center',
     letterWeight,
     plusWeight,
   });

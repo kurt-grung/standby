@@ -4,6 +4,7 @@ import Foundation
 enum PlusAlign {
   case baseline
   case top
+  case center
 }
 
 struct Options {
@@ -74,7 +75,14 @@ func parseOptions() -> Options {
     case "--plus-offset-y":
       plusOffsetY = CGFloat(Double(value) ?? 0)
     case "--plus-align":
-      plusAlign = value == "top" ? .top : .baseline
+      switch value {
+      case "top":
+        plusAlign = .top
+      case "center":
+        plusAlign = .center
+      default:
+        plusAlign = .baseline
+      }
     case "--letter-weight":
       letterWeight = parseWeight(value, fallback: .thin)
     case "--plus-weight":
@@ -166,6 +174,9 @@ let plusBaseline: CGFloat
 switch options.plusAlign {
 case .top:
   plusBaseline = letterBaseline + letterMetrics.ascent - plusMetrics.ascent + options.plusOffsetY
+case .center:
+  plusBaseline =
+    letterBaseline + letterFont.capHeight / 2 - plusFont.capHeight / 2 + options.plusOffsetY
 case .baseline:
   plusBaseline = letterBaseline + options.plusOffsetY
 }
