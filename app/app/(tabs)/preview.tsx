@@ -2,7 +2,7 @@ import { useFocusEffect } from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { LandscapePreviewFrame } from '../../ui/LandscapePreviewFrame';
@@ -15,6 +15,10 @@ const previewBg = nightMode.bg;
 export default function PreviewScreen() {
   useFocusEffect(
     useCallback(() => {
+      if (Platform.OS === 'web') {
+        return;
+      }
+
       void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       return () => {
         void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);

@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+configurator/node_modules/
+configurator/dist/
 
 # Expo
 .expo/

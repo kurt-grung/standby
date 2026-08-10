@@ -1,8 +1,11 @@
 .DEFAULT_GOAL := help
 
 APP_DIR := app
+CONFIGURATOR_DIR := configurator
 ROOT := $(abspath $(CURDIR))
 EXPO_PORT ?= 8081
+WEB_PORT ?= 8082
+CONFIGURATOR_PORT ?= 5173
 IOS_DEVICE ?= K Phone
 IOS_TEAM_ID ?= 85FP2SN2JN
 
@@ -13,7 +16,7 @@ define require_app
 	fi
 endef
 
-.PHONY: help install i app run start s dev ios device standby android web kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload brand-assets connect \
+.PHONY: help install i app run start s dev ios device standby android web configurator configurator-build kill clean prebuild rebuild tsc typecheck compat doc verify check c audit fix format f hooks reload brand-assets connect \
 	eas-init eas-build-dev eas-build-dev-device eas-build-preview eas-build-production eas-submit
 
 EAS ?= eas
@@ -77,9 +80,17 @@ android: ## Build native app and run on Android
 	$(call require_app)
 	cd "$(ROOT)/$(APP_DIR)" && npm run android
 
-web: ## Start Expo for web
+web: ## Start Expo for web (app/) on port $(WEB_PORT)
 	$(call require_app)
-	cd "$(ROOT)/$(APP_DIR)" && npm run web
+	cd "$(ROOT)/$(APP_DIR)" && npx expo start --web --port $(WEB_PORT)
+
+configurator: ## Start widget configurator UI (configurator/)
+	@if [ ! -f "$(ROOT)/$(CONFIGURATOR_DIR)/package.json" ]; then echo "Missing $(CONFIGURATOR_DIR)/package.json"; exit 1; fi
+	cd "$(ROOT)/$(CONFIGURATOR_DIR)" && npm install && npm run dev -- --port $(CONFIGURATOR_PORT)
+
+configurator-build: ## Production build for widget configurator (configurator/)
+	@if [ ! -f "$(ROOT)/$(CONFIGURATOR_DIR)/package.json" ]; then echo "Missing $(CONFIGURATOR_DIR)/package.json"; exit 1; fi
+	cd "$(ROOT)/$(CONFIGURATOR_DIR)" && npm install && npm run build
 
 prebuild: ## Generate ios/ native project and widget extension
 	$(call require_app)
@@ -153,8 +164,8 @@ clean: ## Remove Expo / Metro caches (keeps node_modules and ios/)
 	@echo "Cleaned Expo caches."
 
 kill: ## Stop Expo / Metro dev servers and stale iOS builds for this repo
-	@echo "Killing listeners on $(EXPO_PORT) 8082 19000–19002 19006…"
-	@for p in $(EXPO_PORT) 8082 19000 19001 19002 19006; do \
+	@echo "Killing listeners on $(EXPO_PORT) $(WEB_PORT) $(CONFIGURATOR_PORT) 19000–19002 19006…"
+	@for p in $(EXPO_PORT) $(WEB_PORT) $(CONFIGURATOR_PORT) 19000 19001 19002 19006; do \
 		kill -9 $$(lsof -tiTCP:$$p -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true; \
 	done
 	@for pattern in \

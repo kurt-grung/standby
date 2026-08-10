@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import { Pressable, Text, View } from 'react-native';
 
 type GaugeValueControlsProps = {
@@ -63,7 +63,7 @@ export function GaugeValueControls({
   return (
     <View className="flex-row">
       <ControlCell accessibilityLabel="Decrease gauge value" border={border} onPress={onDecrease}>
-        <SymbolView name="minus" size={16} tintColor={text} weight="semibold" />
+        <SfSymbolIcon name="minus" size={16} tintColor={text} weight="semibold" />
       </ControlCell>
       <ControlCell
         accessibilityLabel="Use automatic day progress"
@@ -85,7 +85,7 @@ export function GaugeValueControls({
         showDivider={false}
         onPress={onIncrease}
       >
-        <SymbolView name="plus" size={16} tintColor="#FFFFFF" weight="semibold" />
+        <SfSymbolIcon name="plus" size={16} tintColor="#FFFFFF" weight="semibold" />
       </ControlCell>
     </View>
   );

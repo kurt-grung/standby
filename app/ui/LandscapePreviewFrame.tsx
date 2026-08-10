@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
-import { View, useWindowDimensions } from 'react-native';
+import { useState } from 'react';
+import { Platform, View, type LayoutChangeEvent } from 'react-native';
 
+import { webPhoneWidth } from '../design-system';
 import {
   glassPressOverflow,
   previewBackOverlayPressPaddingRight,
@@ -71,18 +73,52 @@ export function LandscapePreviewFrame({
   inset = 16,
   overlay,
 }: LandscapePreviewFrameProps) {
-  const { width, height } = useWindowDimensions();
+  const [container, setContainer] = useState({ width: 0, height: 0 });
+
+  const onLayout = (event: LayoutChangeEvent) => {
+    let { width, height } = event.nativeEvent.layout;
+    if (Platform.OS === 'web') {
+      width = Math.min(width, webPhoneWidth);
+    }
+    setContainer((current) =>
+      current.width === width && current.height === height ? current : { width, height },
+    );
+  };
+
+  const { width, height } = container;
   const isPortrait = height >= width;
 
-  if (!isPortrait) {
-    return (
-      <View className="flex-1 overflow-visible" style={{ backgroundColor: previewBg }}>
-        {children}
-        {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
-      </View>
-    );
-  }
+  return (
+    <View className="flex-1" style={{ backgroundColor: previewBg }} onLayout={onLayout}>
+      {width <= 0 || height <= 0 ? null : isPortrait ? (
+        <PortraitLandscapePreview width={width} height={height} inset={inset} overlay={overlay}>
+          {children}
+        </PortraitLandscapePreview>
+      ) : (
+        <View className="flex-1 overflow-visible" style={{ backgroundColor: previewBg }}>
+          {children}
+          {overlay ? <LandscapeTopRightOverlay>{overlay}</LandscapeTopRightOverlay> : null}
+        </View>
+      )}
+    </View>
+  );
+}
 
+type PortraitLandscapePreviewProps = {
+  width: number;
+  height: number;
+  inset: number;
+  overlay?: ReactNode;
+  children: ReactNode;
+};
+
+function PortraitLandscapePreview({
+  width,
+  height,
+  inset,
+  overlay,
+  children,
+}: PortraitLandscapePreviewProps) {
   const landscapeWidth = height;
   const landscapeHeight = width;
   const availableWidth = width - inset * 2;

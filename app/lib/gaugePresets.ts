@@ -1,10 +1,10 @@
-import type { UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
+import type { UltraGaugePreset } from './standbyWidgetTypes';
 
 export const gaugePresets = [
   { label: 'DAY', icon: 'sun.max.fill' },
   { label: 'ENERGY', icon: 'bolt.fill' },
   { label: 'FOCUS', icon: 'scope' },
-] as const satisfies readonly Pick<UltraGaugeWidgetProps, 'label' | 'icon'>[];
+] as const satisfies readonly UltraGaugePreset[];
 
 export const gaugeStep = 0.05;
 

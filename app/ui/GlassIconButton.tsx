@@ -1,12 +1,13 @@
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
-import { SymbolView } from 'expo-symbols';
 import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, useColorScheme, View } from 'react-native';
 import type { SFSymbol } from 'sf-symbols-typescript';
 
 import { homePreviewGlassHeight } from '../theme/standByPreviewLayout';
+import { isWebGlassSurface, webGlassDarkSurface } from '../lib/webGlassSurface';
 import { CircleOutline, deriveCircleOutlineSize } from './OutlineShape';
+import { SfSymbolIcon } from './SfSymbolIcon';
 
 const configureGlassFg = '#FFFFFF';
 
@@ -55,7 +56,7 @@ function RoundGlassSurface({ size, colorScheme, children }: RoundGlassSurfacePro
     <View
       style={[
         styles.glass,
-        styles.fallbackGlass,
+        isWebGlassSurface ? webGlassDarkSurface : styles.fallbackGlass,
         { width: size, height: size, borderRadius: radius },
       ]}
     >
@@ -80,11 +81,13 @@ export function GlassIconButton({
 
   return (
     <View style={[styles.wrap, { width: size, height: size }]}>
-      <CircleOutline
-        size={outline.size}
-        borderWidth={1.5}
-        borderColor={colorScheme === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.16)'}
-      />
+      {!isWebGlassSurface ? (
+        <CircleOutline
+          size={outline.size}
+          borderWidth={1.5}
+          borderColor={colorScheme === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.16)'}
+        />
+      ) : null}
       <RoundGlassSurface size={size} colorScheme={colorScheme}>
         <Pressable
           accessibilityRole="button"
@@ -92,7 +95,7 @@ export function GlassIconButton({
           style={styles.pressable}
           onPress={onPress}
         >
-          <SymbolView name={icon} size={iconSize} tintColor={iconTint} weight="semibold" />
+          <SfSymbolIcon name={icon} size={iconSize} tintColor={iconTint} weight="semibold" />
         </Pressable>
       </RoundGlassSurface>
     </View>

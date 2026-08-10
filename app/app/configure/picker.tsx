@@ -1,9 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from '../../ui/SfSymbolIcon';
 import { useEffect } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { useStandbySafeAreaInsets } from '../../hooks/useStandbySafeAreaInsets';
 import {
   complicationOptionsForWidget,
   complicationSlotLabels,
@@ -18,7 +17,7 @@ const sheetLine = 'rgba(255,255,255,0.12)';
 
 export default function ComplicationPickerScreen() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
+  const insets = useStandbySafeAreaInsets();
   const { widget: widgetParam, slot: slotParam } = useLocalSearchParams<{
     widget?: string;
     slot?: string;
@@ -86,7 +85,7 @@ export default function ComplicationPickerScreen() {
             }}
             onPress={() => select(option.id)}
           >
-            <SymbolView
+            <SfSymbolIcon
               name={option.icon}
               size={20}
               tintColor={sheetFg}
@@ -96,7 +95,7 @@ export default function ComplicationPickerScreen() {
               {option.label}
             </Text>
             {active ? (
-              <SymbolView name="checkmark" size={14} tintColor={sheetFg} weight="semibold" />
+              <SfSymbolIcon name="checkmark" size={14} tintColor={sheetFg} weight="semibold" />
             ) : null}
           </Pressable>
         );

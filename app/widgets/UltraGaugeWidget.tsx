@@ -10,13 +10,12 @@ import {
   padding,
   tint,
 } from '@expo/ui/swift-ui/modifiers';
-import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 import type { SFSymbol } from 'sf-symbols-typescript';
 
-export type UltraGaugeWidgetProps = {
-  label: string;
-  value: number;
-  unit: string;
+import type { UltraGaugeWidgetProps as StandbyGaugeWidgetProps } from '../lib/standbyWidgetTypes';
+import { createWidget, type WidgetEnvironment } from 'expo-widgets';
+
+export type UltraGaugeWidgetProps = StandbyGaugeWidgetProps & {
   icon: SFSymbol;
 };
 

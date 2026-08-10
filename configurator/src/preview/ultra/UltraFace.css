@@ -1,0 +1,100 @@
+.ultra-face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1.5px solid;
+  border-radius: 34px;
+}
+
+.ultra-face__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ultra-face__row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ultra-face__metrics {
+  flex-shrink: 0;
+}
+
+.ultra-face__hero {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.arc-gauge__content {
+  position: relative;
+  z-index: 1;
+}
+
+.ultra-face__eyebrow {
+  margin: 0 0 4px;
+  color: #c23b33;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.ultra-face__time {
+  margin: 0;
+  color: #ff453a;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.ultra-face__date {
+  margin: 4px 0 0;
+  color: #c23b33;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ultra-face__metric-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.ultra-face__metric-label {
+  color: #c23b33;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ultra-face__metric-value {
+  color: #ff453a;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ultra-face__metric-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #1c0c0a;
+}
+
+.ultra-face__metric-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #ff453a;
+}

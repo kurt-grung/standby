@@ -1,0 +1,60 @@
+.preview-trigger {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.preview-trigger:active {
+  opacity: 0.75;
+}
+
+.preview-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.preview-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(920px, 100%);
+  min-height: min(520px, 86vh);
+  padding: 16px;
+  border-radius: 0;
+  border: none;
+  background: #000000;
+}
+
+.preview-modal__close-wrap {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+@media (max-width: 720px) {
+  .preview-backdrop {
+    padding: 8px;
+  }
+
+  .preview-modal {
+    min-height: min(360px, 68vh);
+  }
+
+  .preview-modal__close-wrap {
+    top: 8px;
+    right: 8px;
+  }
+}

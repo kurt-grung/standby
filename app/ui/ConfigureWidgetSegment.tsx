@@ -4,6 +4,7 @@ import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { ConfigureWidget } from '../lib/gaugePresets';
+import { isWebGlassSurface, webGlassDarkSurface } from '../lib/webGlassSurface';
 import {
   widgetConfigureSegmentActiveFill,
   widgetConfigureSegmentHeight,
@@ -49,7 +50,11 @@ function SegmentGlassSurface({ children }: SegmentGlassSurfaceProps) {
     );
   }
 
-  return <View style={[styles.glass, styles.fallbackGlass]}>{children}</View>;
+  return (
+    <View style={[styles.glass, isWebGlassSurface ? webGlassDarkSurface : styles.fallbackGlass]}>
+      {children}
+    </View>
+  );
 }
 
 export function ConfigureWidgetSegment({
@@ -66,13 +71,15 @@ export function ConfigureWidgetSegment({
 
   return (
     <View style={[styles.wrap, { width: widgetConfigureSegmentWidth }]}>
-      <PillOutline
-        width={outline.width}
-        height={outline.height}
-        borderRadius={outline.borderRadius}
-        borderWidth={1.5}
-        borderColor={outlineBorderColor}
-      />
+      {!isWebGlassSurface ? (
+        <PillOutline
+          width={outline.width}
+          height={outline.height}
+          borderRadius={outline.borderRadius}
+          borderWidth={1.5}
+          borderColor={outlineBorderColor}
+        />
+      ) : null}
       <SegmentGlassSurface>
         <View style={styles.row}>
           {widgets.map((widget, index) => {
@@ -84,8 +91,10 @@ export function ConfigureWidgetSegment({
                 key={widget}
                 accessibilityRole="button"
                 accessibilityState={{ selected: active }}
-                className="flex-1 active:opacity-80"
-                style={styles.segmentPressable}
+                style={({ pressed }) => [
+                  styles.segmentPressable,
+                  pressed ? styles.segmentPressablePressed : null,
+                ]}
                 onPress={() => onSelect(index)}
               >
                 <View
@@ -99,10 +108,7 @@ export function ConfigureWidgetSegment({
                       : null,
                   ]}
                 >
-                  <Text
-                    className="text-[13px] font-semibold uppercase tracking-[0.08em]"
-                    style={{ color: active ? '#FFFFFF' : 'rgba(255,255,255,0.4)' }}
-                  >
+                  <Text style={[styles.label, active ? styles.labelActive : styles.labelInactive]}>
                     {labels[widget]}
                   </Text>
                 </View>
@@ -136,14 +142,38 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
     flexDirection: 'row',
+    height: '100%',
     padding: widgetConfigureSegmentInset,
   },
   segmentPressable: {
     flex: 1,
+    height: '100%',
+    ...(Platform.OS === 'web'
+      ? ({
+          cursor: 'pointer',
+          userSelect: 'none',
+        } as const)
+      : null),
+  },
+  segmentPressablePressed: {
+    opacity: 0.8,
   },
   segment: {
     flex: 1,
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.08 * 13,
+    textTransform: 'uppercase',
+  },
+  labelActive: {
+    color: '#FFFFFF',
+  },
+  labelInactive: {
+    color: 'rgba(255,255,255,0.4)',
   },
 });

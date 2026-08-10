@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, type ScrollViewProps } from 'react-native';
 import Animated, { type AnimatedRef, type ScrollHandlerProcessed } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStandbySafeAreaInsets } from '../hooks/useStandbySafeAreaInsets';
 
 import { groupedScreenBottomInset } from '../theme/groupedLayout';
 import { nativeTabBarHeight } from '../theme/nativeTabBarMetrics';
@@ -28,7 +28,7 @@ export function ScreenShell({
   scrollRef,
 }: ScreenShellProps) {
   const chrome = useAppChrome();
-  const insets = useSafeAreaInsets();
+  const insets = useStandbySafeAreaInsets();
   const contentInsetStyle = {
     paddingBottom: insets.bottom + nativeTabBarHeight + groupedScreenBottomInset,
   };

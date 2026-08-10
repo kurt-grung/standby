@@ -1,0 +1,19 @@
+.standby-preview {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.standby-preview__frame {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.standby-preview__scaled {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+}

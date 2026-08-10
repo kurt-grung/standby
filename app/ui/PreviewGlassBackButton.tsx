@@ -1,9 +1,11 @@
 import { Link } from 'expo-router';
 import { GlassView } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import type { ComponentType, ReactNode } from 'react';
-import { DynamicColorIOS, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+
+import { dynamicSystemColor } from '../lib/dynamicSystemColor';
 
 import {
   nativeTabBarIconSize,
@@ -38,7 +40,7 @@ type NativeGlassViewProps = GlassViewProps & {
 
 const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
-const iconTint = DynamicColorIOS({
+const iconTint = dynamicSystemColor({
   dark: '#FFFFFF',
   light: '#000000',
 });
@@ -107,7 +109,7 @@ function GlassBackButtonShell({ width, height, borderRadius, outline }: GlassBac
       >
         <Link href="/" asChild>
           <Pressable accessibilityRole="button" accessibilityLabel="Home" style={styles.pressable}>
-            <SymbolView
+            <SfSymbolIcon
               name="chevron.left"
               size={nativeTabBarIconSize}
               tintColor={iconTint}

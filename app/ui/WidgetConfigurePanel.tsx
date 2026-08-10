@@ -8,7 +8,7 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStandbySafeAreaInsets } from '../hooks/useStandbySafeAreaInsets';
 
 import { parseConfigureWidget, type ConfigureWidget } from '../lib/gaugePresets';
 import { groupedScreenPadding } from '../theme/groupedLayout';
@@ -44,7 +44,7 @@ function ConfigurePage({ widget }: ConfigurePageProps) {
 
 export function WidgetConfigurePanel() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
+  const insets = useStandbySafeAreaInsets();
   const { setLastConfigureWidget } = useWidgetConfig();
   const { widget: widgetParam } = useLocalSearchParams<{ widget?: string }>();
   const initialWidget = parseConfigureWidget(

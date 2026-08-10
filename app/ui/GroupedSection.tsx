@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import { Pressable, Text, View, type ViewStyle } from 'react-native';
 
 import {
@@ -146,7 +146,7 @@ export function GroupedLinkRow({ href, label, accessibilityLabel }: GroupedLinkR
         <Text className="text-[17px]" style={{ color: chrome.colors.primary }}>
           {label}
         </Text>
-        <SymbolView
+        <SfSymbolIcon
           name="chevron.right"
           size={13}
           tintColor={chrome.colors.muted}

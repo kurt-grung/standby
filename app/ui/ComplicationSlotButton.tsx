@@ -1,4 +1,4 @@
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import { Pressable, View } from 'react-native';
 
 import type { ComplicationId, ComplicationSlotKind } from '../lib/complicationOptions';
@@ -51,9 +51,14 @@ export function ComplicationSlotButton({
       }}
     >
       {option ? (
-        <SymbolView name={option.icon} size={iconSize} tintColor={configureFg} weight="semibold" />
+        <SfSymbolIcon
+          name={option.icon}
+          size={iconSize}
+          tintColor={configureFg}
+          weight="semibold"
+        />
       ) : (
-        <SymbolView name="plus" size={plusSize} tintColor={configureFg} weight="semibold" />
+        <SfSymbolIcon name="plus" size={plusSize} tintColor={configureFg} weight="semibold" />
       )}
     </View>
   );

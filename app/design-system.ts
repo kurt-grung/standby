@@ -92,6 +92,11 @@ export const standbyDesignSystem = {
       widgetGap: 12,
       referenceLandscape: { width: 844, height: 390 },
     },
+    web: {
+      phoneWidth: 480,
+      phoneHeight: 1044,
+      safeArea: { top: 62, bottom: 34, left: 0, right: 0 },
+    },
     widgetConfigure: {
       templateCornerRadiusRatio: 0.225,
       templateStrokeWidth: 1,
@@ -385,6 +390,9 @@ export const groupedPresetRowInset = 'py-3';
 
 export const standByOuterPad = ds.layout.standByPreview.outerPad;
 export const standByWidgetGap = ds.layout.standByPreview.widgetGap;
+export const webPhoneWidth = ds.layout.web.phoneWidth;
+export const webPhoneHeight = ds.layout.web.phoneHeight;
+export const webPhoneSafeArea = ds.layout.web.safeArea;
 export const widgetConfigureTemplateCornerRadiusRatio =
   ds.layout.widgetConfigure.templateCornerRadiusRatio;
 export const widgetConfigureTemplateStrokeWidth = ds.layout.widgetConfigure.templateStrokeWidth;

@@ -1,0 +1,8 @@
+.standby-widget-pair {
+  display: flex;
+  align-items: center;
+}
+
+.standby-widget-pair__slot {
+  flex-shrink: 0;
+}

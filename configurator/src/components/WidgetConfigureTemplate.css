@@ -1,0 +1,32 @@
+.configure-template-measure {
+  width: 100%;
+}
+
+.configure-template {
+  position: relative;
+  overflow: hidden;
+  border-style: solid;
+  border-color: #ffffff;
+  background: #000000;
+}
+
+.configure-template--placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  border: none;
+}
+
+.configure-template__slot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.configure-template__slot:active {
+  opacity: 0.6;
+}

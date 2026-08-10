@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
-import { SymbolView } from 'expo-symbols';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import type { SFSymbol } from 'sf-symbols-typescript';
@@ -14,6 +14,11 @@ import {
   homePreviewGlassPaddingH,
   homePreviewGlassWidth,
 } from '../theme/standByPreviewLayout';
+import {
+  isWebGlassSurface,
+  webGlassDarkSurface,
+  webGlassLightSurface,
+} from '../lib/webGlassSurface';
 import { useAppChrome } from '../theme/useAppChrome';
 import { PillOutline, derivePillOutlineSize } from './OutlineShape';
 
@@ -71,13 +76,12 @@ function GlassPillSurface({ colorScheme, width, fallbackStyle, children }: Glass
     <View
       style={[
         styles.glass,
-        styles.fallbackGlass,
-        {
-          width,
-          borderRadius,
-          backgroundColor: fallbackStyle.backgroundColor,
-          borderColor: fallbackStyle.borderColor,
-        },
+        isWebGlassSurface
+          ? colorScheme === 'dark'
+            ? webGlassDarkSurface
+            : webGlassLightSurface
+          : [styles.fallbackGlass, fallbackStyle],
+        { width, borderRadius },
       ]}
     >
       {children}
@@ -92,7 +96,7 @@ export function PreviewGlassLinkButton({
   width = homePreviewGlassWidth,
   icon = 'play.rectangle',
   colorScheme: colorSchemeProp,
-  showChevron = true,
+  showChevron = !isWebGlassSurface,
   onPress,
 }: PreviewGlassLinkButtonProps) {
   const chrome = useAppChrome();
@@ -113,7 +117,7 @@ export function PreviewGlassLinkButton({
 
   const content = (
     <>
-      <SymbolView
+      <SfSymbolIcon
         name={icon}
         size={homePreviewGlassIconSize}
         tintColor={foreground}
@@ -121,20 +125,22 @@ export function PreviewGlassLinkButton({
       />
       <Text style={[styles.label, { color: foreground }]}>{label}</Text>
       {showChevron ? (
-        <SymbolView name="chevron.right" size={12} tintColor={foreground} weight="semibold" />
+        <SfSymbolIcon name="chevron.right" size={12} tintColor={foreground} weight="semibold" />
       ) : null}
     </>
   );
 
   return (
     <View style={[styles.wrap, { width }]}>
-      <PillOutline
-        width={outline.width}
-        height={outline.height}
-        borderRadius={outline.borderRadius}
-        borderWidth={1.5}
-        borderColor={outlineBorderColor}
-      />
+      {!isWebGlassSurface ? (
+        <PillOutline
+          width={outline.width}
+          height={outline.height}
+          borderRadius={outline.borderRadius}
+          borderWidth={1.5}
+          borderColor={outlineBorderColor}
+        />
+      ) : null}
       <GlassPillSurface colorScheme={colorScheme} width={width} fallbackStyle={fallbackStyle}>
         {onPress ? (
           <Pressable
