@@ -5,7 +5,16 @@ export type ComplicationId =
   'temperature' | 'date' | 'battery' | 'sunset' | 'uv' | 'noise' | 'activity';
 
 export type ComplicationSlotId =
-  'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
+  | 'topLeft'
+  | 'topCenter'
+  | 'topRight'
+  | 'largeTop'
+  | 'largeBottom'
+  | 'bottomLeft'
+  | 'bottomCenter'
+  | 'bottomRight';
+
+export type ComplicationSlotKind = 'small' | 'large';
 
 export type ComplicationLayout = Record<ComplicationSlotId, ComplicationId | null>;
 
@@ -17,15 +26,30 @@ export type ComplicationOption = {
 };
 
 export const complicationTopSlots: ComplicationSlotId[] = ['topLeft', 'topCenter', 'topRight'];
+export const complicationLargeSlots: ComplicationSlotId[] = ['largeTop', 'largeBottom'];
 export const complicationBottomSlots: ComplicationSlotId[] = [
   'bottomLeft',
   'bottomCenter',
   'bottomRight',
 ];
-export const complicationSlots: ComplicationSlotId[] = [
-  ...complicationTopSlots,
-  ...complicationBottomSlots,
+export const complicationSlotRows: ComplicationSlotId[][] = [
+  complicationTopSlots,
+  ['largeTop'],
+  ['largeBottom'],
+  complicationBottomSlots,
 ];
+export const complicationSlots: ComplicationSlotId[] = complicationSlotRows.flat();
+
+export const complicationSlotKind: Record<ComplicationSlotId, ComplicationSlotKind> = {
+  topLeft: 'small',
+  topCenter: 'small',
+  topRight: 'small',
+  largeTop: 'large',
+  largeBottom: 'large',
+  bottomLeft: 'small',
+  bottomCenter: 'small',
+  bottomRight: 'small',
+};
 
 export const complicationOptions: ComplicationOption[] = [
   {
@@ -46,6 +70,8 @@ export const defaultClockComplications: ComplicationLayout = {
   topLeft: 'temperature',
   topCenter: 'date',
   topRight: 'battery',
+  largeTop: null,
+  largeBottom: null,
   bottomLeft: 'activity',
   bottomCenter: 'sunset',
   bottomRight: 'uv',
@@ -55,6 +81,8 @@ export const defaultGaugeComplications: ComplicationLayout = {
   topLeft: 'temperature',
   topCenter: 'noise',
   topRight: 'battery',
+  largeTop: null,
+  largeBottom: null,
   bottomLeft: 'activity',
   bottomCenter: 'sunset',
   bottomRight: 'uv',
@@ -77,6 +105,8 @@ export const complicationSlotLabels: Record<ComplicationSlotId, string> = {
   topLeft: 'top left',
   topCenter: 'top center',
   topRight: 'top right',
+  largeTop: 'large top',
+  largeBottom: 'large bottom',
   bottomLeft: 'bottom left',
   bottomCenter: 'bottom center',
   bottomRight: 'bottom right',

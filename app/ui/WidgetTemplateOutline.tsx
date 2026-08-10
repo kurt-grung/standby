@@ -1,16 +1,17 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, View, type LayoutChangeEvent } from 'react-native';
 
 import { complicationSlotLabels, type ComplicationSlotId } from '../lib/complicationOptions';
 import type { ConfigureWidget } from '../lib/gaugePresets';
-import { widgetConfigureSlotPositions } from '../lib/widgetConfigureLayout';
+import { widgetConfigureSlotCells } from '../lib/widgetConfigureLayout';
 import { useWidgetConfig } from '../theme/WidgetConfigContext';
 import {
   widgetConfigureTemplateCornerRadius,
   widgetConfigureTemplateStrokeWidth,
 } from '../theme/standByPreviewLayout';
 import { ComplicationSlotButton } from './ComplicationSlotButton';
+import { WidgetConfigureRegionGrid } from './WidgetConfigureRegionGrid';
 
 const configureBg = '#000000';
 const configureStroke = '#FFFFFF';
@@ -30,7 +31,7 @@ export function WidgetConfigureTemplate({ widget }: WidgetConfigureTemplateProps
   };
 
   const cornerRadius = widgetConfigureTemplateCornerRadius(width);
-  const slotPositions = width > 0 ? widgetConfigureSlotPositions(width) : [];
+  const slotCells = width > 0 ? widgetConfigureSlotCells(width) : [];
 
   const openPicker = (slot: ComplicationSlotId) => {
     router.push({
@@ -50,28 +51,49 @@ export function WidgetConfigureTemplate({ widget }: WidgetConfigureTemplateProps
             borderWidth: widgetConfigureTemplateStrokeWidth,
             borderColor: configureStroke,
             backgroundColor: configureBg,
+            overflow: 'hidden',
           }}
         >
-          {slotPositions.map(({ slot, size, left, right, top, bottom }) => (
-            <View
-              key={slot}
-              pointerEvents="box-none"
-              style={{
-                position: 'absolute',
-                left,
-                right,
-                top,
-                bottom,
-              }}
-            >
-              <ComplicationSlotButton
-                slotLabel={complicationSlotLabels[slot]}
-                complicationId={complications[slot]}
-                size={size}
+          <WidgetConfigureRegionGrid size={width} />
+
+          {slotCells.map(
+            ({
+              slot,
+              kind,
+              left,
+              top,
+              width: cellWidth,
+              height: cellHeight,
+              buttonWidth,
+              buttonHeight,
+            }) => (
+              <Pressable
+                key={slot}
+                accessibilityRole="button"
+                accessibilityLabel={`${complicationSlotLabels[slot]} complication`}
+                className="active:opacity-60"
+                style={{
+                  position: 'absolute',
+                  left,
+                  top,
+                  width: cellWidth,
+                  height: cellHeight,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 onPress={() => openPicker(slot)}
-              />
-            </View>
-          ))}
+              >
+                <ComplicationSlotButton
+                  slotLabel={complicationSlotLabels[slot]}
+                  complicationId={complications[slot]}
+                  width={buttonWidth}
+                  height={buttonHeight}
+                  kind={kind}
+                  interactive={false}
+                />
+              </Pressable>
+            ),
+          )}
         </View>
       ) : (
         <View style={{ width: '100%', aspectRatio: 1 }} />

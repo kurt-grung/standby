@@ -86,6 +86,10 @@ export const standbyDesignSystem = {
       templateCornerRadiusRatio: 0.225,
       templateStrokeWidth: 1,
       templateVerticalPadding: 20,
+      rowHeightRatios: [0.19, 0.31, 0.31, 0.19] as const,
+      slotInsetXRatio: 0.04,
+      slotInsetYRatio: 0.14,
+      slotCornerRadiusRatio: 0.18,
     },
     navigation: {
       tabBarHeight: 55,
@@ -371,6 +375,10 @@ export const widgetConfigureTemplateCornerRadiusRatio =
 export const widgetConfigureTemplateStrokeWidth = ds.layout.widgetConfigure.templateStrokeWidth;
 export const widgetConfigureTemplateVerticalPadding =
   ds.layout.widgetConfigure.templateVerticalPadding;
+export const widgetConfigureRowHeightRatios = ds.layout.widgetConfigure.rowHeightRatios;
+export const widgetConfigureSlotInsetXRatio = ds.layout.widgetConfigure.slotInsetXRatio;
+export const widgetConfigureSlotInsetYRatio = ds.layout.widgetConfigure.slotInsetYRatio;
+export const widgetConfigureSlotCornerRadiusRatio = ds.layout.widgetConfigure.slotCornerRadiusRatio;
 
 export function widgetConfigureTemplateCornerRadius(size: number) {
   return Math.round(size * widgetConfigureTemplateCornerRadiusRatio);
