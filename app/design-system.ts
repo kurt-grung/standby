@@ -77,6 +77,16 @@ export const standbyDesignSystem = {
       indicatorTop: 10,
       fillFadeMs: 220,
     },
+    homeSetup: {
+      topSpacing: 12,
+      titleSize: 17,
+      titleBottom: 16,
+      rowGap: 12,
+      numberWidth: 20,
+      numberGap: 10,
+      bodySize: 15,
+      lineHeight: 22,
+    },
     standByPreview: {
       outerPad: 20,
       widgetGap: 12,
@@ -414,6 +424,15 @@ export const homeGalleryDotActiveWidth = ds.layout.homeGallery.dotActiveWidth;
 export const homeGalleryDotGap = ds.layout.homeGallery.dotGap;
 export const homeGalleryIndicatorTop = ds.layout.homeGallery.indicatorTop;
 export const homeGalleryFillFadeMs = ds.layout.homeGallery.fillFadeMs;
+
+export const homeSetupTopSpacing = ds.layout.homeSetup.topSpacing;
+export const homeSetupTitleSize = ds.layout.homeSetup.titleSize;
+export const homeSetupTitleBottom = ds.layout.homeSetup.titleBottom;
+export const homeSetupRowGap = ds.layout.homeSetup.rowGap;
+export const homeSetupNumberWidth = ds.layout.homeSetup.numberWidth;
+export const homeSetupNumberGap = ds.layout.homeSetup.numberGap;
+export const homeSetupBodySize = ds.layout.homeSetup.bodySize;
+export const homeSetupLineHeight = ds.layout.homeSetup.lineHeight;
 
 export const nativeTabBarHeight = ds.layout.navigation.tabBarHeight;
 export const nativeTabBarIconSize = ds.layout.navigation.tabBarIconSize;

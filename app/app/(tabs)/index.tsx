@@ -6,23 +6,16 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { AppWordmarkHeader, StickyWordmarkPlus } from '../../ui/AppWordmarkHeader';
-import { GroupedSection, GroupedStepRows } from '../../ui/GroupedSection';
 import { useLiveClock } from '../../hooks/useLiveClock';
 import { ScreenShell } from '../../ui/ScreenShell';
 import { HomePhoneRefGallery } from '../../ui/HomePhoneRefGallery';
 import { HomeRevealSection } from '../../ui/HomeRevealSection';
+import { HomeSetupSection } from '../../ui/HomeSetupSection';
 import { HomeWidgetPlaceholder } from '../../ui/HomeWidgetPlaceholder';
 import { useWidgetConfig } from '../../theme/WidgetConfigContext';
 import { groupedScreenPadding } from '../../theme/groupedLayout';
 import { useAppChrome } from '../../theme/useAppChrome';
 import { dayProgress } from '../../theme/ultra';
-
-const standBySteps = [
-  'Deploy widgets with make standby or make device, then open StandBy+ on your iPhone',
-  'Plug in, rotate to landscape, and long-press StandBy',
-  'Tap Edit, then add Ultra Clock (left) and Ultra Gauge (right)',
-  'Choose Night or Mono in StandBy settings',
-] as const;
 
 export default function HomeScreen() {
   const chrome = useAppChrome();
@@ -56,13 +49,9 @@ export default function HomeScreen() {
           <HomePhoneRefGallery />
         </HomeRevealSection>
 
-        <GroupedSection
-          title="StandBy"
-          footer="Add both widgets at the small size — one in each side column."
-          className="mb-0"
-        >
-          <GroupedStepRows steps={standBySteps} />
-        </GroupedSection>
+        <HomeRevealSection step={3}>
+          <HomeSetupSection />
+        </HomeRevealSection>
       </ScreenShell>
     </>
   );
