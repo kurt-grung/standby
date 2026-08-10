@@ -2,8 +2,22 @@ export const panelLayout = {
   padX: 22,
   padY: 16,
   sectionGap: 14,
-  metricGap: 8,
+  metricGap: 4,
+  metricHeadGap: 2,
+  metricBarHeight: 6,
+  metricLabelSize: 9,
+  metricValueSize: 12,
 } as const;
+
+export function panelMetricRowHeight() {
+  return panelLayout.metricLabelSize + panelLayout.metricHeadGap + panelLayout.metricBarHeight;
+}
+
+export function panelMetricsBlockHeight(rowCount = 3) {
+  const row = panelMetricRowHeight();
+  const gaps = Math.max(0, rowCount - 1) * panelLayout.metricGap;
+  return row * rowCount + gaps;
+}
 
 export function panelRingSize(height: number) {
   if (height <= 0) return 44;
@@ -21,8 +35,7 @@ export function panelStatusHeroSize(faceHeight: number) {
   const ring = panelRingSize(faceHeight);
   const topRow = ring + 16;
   const bottomRow = ring + 16;
-  const metricRow = 25;
-  const metrics = metricRow * 3 + panelLayout.metricGap * 2;
+  const metrics = panelMetricsBlockHeight();
   const reserved =
     panelLayout.padY * 2 + topRow + bottomRow + metrics + panelLayout.sectionGap * 2 + 18;
   const available = faceHeight - reserved;

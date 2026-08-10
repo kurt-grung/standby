@@ -50,7 +50,7 @@ func parseOptions() -> Options {
   var letterWeight = NSFont.Weight.thin
   var plusWeight = NSFont.Weight.light
   var textColor = NSColor.white
-  var plusColor = NSColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+  var plusColor = NSColor(red: 240.0 / 255.0, green: 42.0 / 255.0, blue: 31.0 / 255.0, alpha: 1)
   var outputPath = ""
 
   var index = 1

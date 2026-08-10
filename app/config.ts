@@ -1,3 +1,5 @@
+export const standByNightRed = '#F02A1F';
+
 export const standbyConfig = {
   name: 'StandBy+',
   slug: 'standby',
@@ -48,7 +50,7 @@ export const standbyConfig = {
   brand: {
     backgroundColor: '#000000',
     textColor: '#FFFFFF',
-    plusColor: '#FF453A',
+    plusColor: standByNightRed,
     icon: './assets/icon.png',
     adaptiveIcon: './assets/adaptive-icon.png',
     splash: './assets/splash.png',

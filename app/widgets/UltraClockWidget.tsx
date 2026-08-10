@@ -11,6 +11,7 @@ import {
   tint,
 } from '@expo/ui/swift-ui/modifiers';
 import { createWidget, type WidgetEnvironment } from 'expo-widgets';
+import { nightMode } from '../design-system';
 
 type UltraClockWidgetProps = Record<string, never>;
 
@@ -18,11 +19,11 @@ const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', '
 
 const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvironment) => {
   'widget';
-  const background = '#000000';
-  const primary = '#FF453A';
-  const secondary = '#C23B33';
-  const muted = '#5C221E';
-  const accent = '#FF453A';
+  const background = nightMode.bg;
+  const primary = nightMode.primary;
+  const secondary = nightMode.secondary;
+  const muted = nightMode.muted;
+  const accent = nightMode.primary;
   const date = environment.date;
   const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
   const hour12 = date.getHours() % 12 || 12;

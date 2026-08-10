@@ -75,9 +75,8 @@ const typographyScale = [
 ] as const;
 
 const brandColors = [
-  { name: 'Plus', value: standbyConfig.brand.plusColor },
+  { name: 'StandBy night', value: nightMode.primary },
   { name: 'Background', value: standbyConfig.brand.backgroundColor },
-  { name: 'Widget primary', value: nightMode.primary },
 ] as const;
 
 type BrandPanelProps = {

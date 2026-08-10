@@ -34,11 +34,17 @@ function MetricRow({
 
   return (
     <div style={{ marginBottom: last ? 0 : panelLayout.metricGap }}>
-      <div className="ultra-face__metric-head">
+      <div
+        className="ultra-face__metric-head"
+        style={{ marginBottom: panelLayout.metricHeadGap }}
+      >
         <span className="ultra-face__metric-label">{label}</span>
         <span className="ultra-face__metric-value">{value}</span>
       </div>
-      <div className="ultra-face__metric-track">
+      <div
+        className="ultra-face__metric-track"
+        style={{ height: panelLayout.metricBarHeight }}
+      >
         <div className="ultra-face__metric-fill" style={{ width: `${percent}%` }} />
       </div>
     </div>

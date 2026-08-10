@@ -13,6 +13,7 @@ import {
 import type { SFSymbol } from 'sf-symbols-typescript';
 
 import type { UltraGaugeWidgetProps as StandbyGaugeWidgetProps } from '../lib/standbyWidgetTypes';
+import { nightMode } from '../design-system';
 import { createWidget, type WidgetEnvironment } from 'expo-widgets';
 
 export type UltraGaugeWidgetProps = StandbyGaugeWidgetProps & {
@@ -21,11 +22,11 @@ export type UltraGaugeWidgetProps = StandbyGaugeWidgetProps & {
 
 const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvironment) => {
   'widget';
-  const background = '#000000';
-  const primary = '#FF453A';
-  const secondary = '#C23B33';
-  const muted = '#5C221E';
-  const accent = '#FF453A';
+  const background = nightMode.bg;
+  const primary = nightMode.primary;
+  const secondary = nightMode.secondary;
+  const muted = nightMode.muted;
+  const accent = nightMode.primary;
   const isSmall = environment.widgetFamily === 'systemSmall';
   const isLarge = environment.widgetFamily === 'systemLarge';
   const clamped = Math.min(1, Math.max(0, props.value));

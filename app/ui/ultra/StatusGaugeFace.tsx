@@ -5,7 +5,7 @@ import { ArcGauge, TempComplication, UvComplication } from './ArcGauge';
 import { ActivityRings } from './ActivityRings';
 import { BatteryComplication, NoiseComplication, SunsetComplication } from './Complications';
 import { nightMode } from './nightColors';
-import { panelHeroSize, panelLayout, panelRingSize } from './panelLayout';
+import { panelLayout, panelRingSize, panelStatusHeroSize } from './panelLayout';
 import { dayProgress } from '../../theme/ultra';
 
 type StatusGaugeFaceProps = {
@@ -32,13 +32,17 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
 
   return (
     <View style={{ marginBottom: last ? 0 : panelLayout.metricGap }}>
-      <View className="mb-1 flex-row items-end justify-between">
+      <View
+        className="flex-row items-end justify-between"
+        style={{ marginBottom: panelLayout.metricHeadGap }}
+      >
         <Text
           style={{
             color: nightMode.secondary,
-            fontSize: 10,
+            fontSize: panelLayout.metricLabelSize,
             fontWeight: '800',
             letterSpacing: 1.2,
+            lineHeight: panelLayout.metricLabelSize + 2,
           }}
         >
           {label}
@@ -46,9 +50,10 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
         <Text
           style={{
             color: nightMode.primary,
-            fontSize: 13,
+            fontSize: panelLayout.metricValueSize,
             fontWeight: '700',
             fontVariant: ['tabular-nums'],
+            lineHeight: panelLayout.metricValueSize + 1,
           }}
         >
           {value}
@@ -56,7 +61,7 @@ function MetricRow({ label, value, progress, last = false }: MetricRowProps) {
       </View>
       <View
         className="overflow-hidden rounded-full"
-        style={{ height: 8, backgroundColor: nightMode.track }}
+        style={{ height: panelLayout.metricBarHeight, backgroundColor: nightMode.track }}
       >
         <View
           className="h-full rounded-full"
@@ -83,7 +88,7 @@ export const StatusGaugeFace = memo(function StatusGaugeFace({
   const dayPercent = Math.round(progress * 100);
   const focus = focusPercent ?? Math.max(0.2, 1 - progress);
   const ringSize = panelRingSize(size.height);
-  const heroSize = panelHeroSize(size.height);
+  const heroSize = panelStatusHeroSize(size.height);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;

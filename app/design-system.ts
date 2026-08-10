@@ -1,7 +1,10 @@
 import { standbyConfig } from './config';
+import { buildStandByNightPalette } from './lib/standByNightPalette';
 
 export type PreviewBackShape = 'pill' | 'round';
 export type PreviewBackOutlineShape = 'auto' | 'none' | 'pill' | 'round';
+
+const standByNightPalette = buildStandByNightPalette(standbyConfig.brand.plusColor);
 
 export const standbyDesignSystem = {
   brand: {
@@ -134,16 +137,7 @@ export const standbyDesignSystem = {
     },
   },
   widget: {
-    night: {
-      bg: '#000000',
-      primary: '#FF453A',
-      secondary: '#C23B33',
-      tertiary: '#8A2E28',
-      muted: '#5C221E',
-      track: '#1C0C0A',
-      border: '#2E1210',
-      glow: 'rgba(255, 69, 58, 0.22)',
-    },
+    night: standByNightPalette,
   },
 } as const;
 
@@ -211,21 +205,21 @@ export const ultraColors = {
   secondary: '#8E8E93',
   accent: '#FF9F0A',
   accentGreen: '#30D158',
-  accentRed: '#FF453A',
+  accentRed: standByNightPalette.primary,
   ringTrack: '#2C2C2E',
 } as const;
 
 export const nightColors = {
-  background: '#000000',
-  surface: '#110808',
-  card: '#160A0A',
-  border: '#3A1512',
-  primary: standbyDesignSystem.brand.plusColor,
-  secondary: '#A8423A',
-  muted: '#6B2E28',
-  accent: standbyDesignSystem.brand.plusColor,
+  background: standByNightPalette.bg,
+  surface: standByNightPalette.track,
+  card: standByNightPalette.border,
+  border: standByNightPalette.tertiary,
+  primary: standByNightPalette.primary,
+  secondary: standByNightPalette.secondary,
+  muted: standByNightPalette.muted,
+  accent: standByNightPalette.primary,
   orange: '#FF9F0A',
-  track: '#2A1210',
+  track: standByNightPalette.track,
 } as const;
 
 export function dayProgress(date: Date): number {
