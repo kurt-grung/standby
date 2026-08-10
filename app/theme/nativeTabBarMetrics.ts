@@ -14,6 +14,7 @@ export {
   previewBackOverlayRightTune,
   previewBackOverlayTop,
   previewBackOverlayTopTune,
+  previewBackOverlayPortraitTopTune,
   previewBackPillHeight,
   previewBackPillRadius,
   previewBackPillWidth,

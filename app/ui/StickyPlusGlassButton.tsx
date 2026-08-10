@@ -5,6 +5,11 @@ import { useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import {
+  resolveWebGlassSurface,
+  type GlassSurfaceMode,
+  webGlassDarkSurface,
+} from '../lib/webGlassSurface';
+import {
   groupedStickyPlusGlassSize,
   groupedStickyPlusHitSlop,
   groupedStickyPlusOutlineInset,
@@ -26,10 +31,18 @@ const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
 type StickyPlusGlassButtonProps = {
   onPress: () => void;
+  surfaceMode?: GlassSurfaceMode;
 };
 
-function RoundGlassSurface({ children }: { children: ReactNode }) {
-  if (liquidGlass) {
+type RoundGlassSurfaceProps = {
+  children: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
+};
+
+function RoundGlassSurface({ children, surfaceMode = 'auto' }: RoundGlassSurfaceProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+
+  if (liquidGlass && surfaceMode !== 'web') {
     return (
       <NativeGlassView
         isInteractive
@@ -50,7 +63,7 @@ function RoundGlassSurface({ children }: { children: ReactNode }) {
     <View
       style={[
         styles.glass,
-        styles.fallbackGlass,
+        webSurface ? webGlassDarkSurface : styles.fallbackGlass,
         {
           width: groupedStickyPlusGlassSize,
           height: groupedStickyPlusGlassSize,
@@ -63,8 +76,12 @@ function RoundGlassSurface({ children }: { children: ReactNode }) {
   );
 }
 
-export function StickyPlusGlassButton({ onPress }: StickyPlusGlassButtonProps) {
+export function StickyPlusGlassButton({
+  onPress,
+  surfaceMode = 'auto',
+}: StickyPlusGlassButtonProps) {
   const [pressed, setPressed] = useState(false);
+  const webSurface = resolveWebGlassSurface(surfaceMode);
 
   return (
     <View
@@ -73,8 +90,10 @@ export function StickyPlusGlassButton({ onPress }: StickyPlusGlassButtonProps) {
         { width: groupedStickyPlusGlassSize, height: groupedStickyPlusGlassSize },
       ]}
     >
-      <CircleOutline size={outline.size} borderWidth={1.5} borderColor="rgba(255,255,255,0.28)" />
-      <RoundGlassSurface>
+      {!webSurface ? (
+        <CircleOutline size={outline.size} borderWidth={1.5} borderColor="rgba(255,255,255,0.28)" />
+      ) : null}
+      <RoundGlassSurface surfaceMode={surfaceMode}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Expand header"

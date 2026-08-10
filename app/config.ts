@@ -4,7 +4,7 @@ export const standbyConfig = {
   owner: 'kurtgrung',
   version: '1.0.0',
   scheme: 'standby',
-  orientation: 'portrait' as const,
+  orientation: 'default' as const,
   userInterfaceStyle: 'automatic' as const,
   expo: {
     projectId: 'c112d885-1090-4f24-81fc-74ec7a64ad98',

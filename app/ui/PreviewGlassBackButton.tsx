@@ -1,15 +1,16 @@
 import { Link } from 'expo-router';
-import { GlassView } from 'expo-glass-effect';
+import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
-import { SfSymbolIcon } from './SfSymbolIcon';
 import type { ComponentType, ReactNode } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-
-import { dynamicSystemColor } from '../lib/dynamicSystemColor';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import {
+  resolveWebGlassSurface,
+  type GlassSurfaceMode,
+  webGlassDarkSurface,
+} from '../lib/webGlassSurface';
+import {
   nativeTabBarIconSize,
-  previewBackGlassColorScheme,
   previewBackNightOutlineBorderWidth,
   previewBackNightOutlineInset,
   previewBackNightOutlineOpacity,
@@ -30,6 +31,7 @@ import {
   derivePillOutlineSize,
   PillOutline,
 } from './OutlineShape';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import { nightMode } from './ultra/nightColors';
 
 export type { PreviewBackOutlineShape, PreviewBackShape };
@@ -40,10 +42,8 @@ type NativeGlassViewProps = GlassViewProps & {
 
 const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
-const iconTint = dynamicSystemColor({
-  dark: '#FFFFFF',
-  light: '#000000',
-});
+const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
+const previewIconTint = '#FFFFFF';
 
 const previewBackNightOutline = derivePillOutlineSize(
   previewBackPillWidth,
@@ -89,35 +89,109 @@ function previewBackOutline(outlineShape: ResolvedPreviewBackOutlineShape): Reac
   );
 }
 
+type BackGlassSurfaceProps = {
+  width: number;
+  height: number;
+  borderRadius: number;
+  children: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
+};
+
+function BackGlassSurface({
+  width,
+  height,
+  borderRadius,
+  children,
+  surfaceMode = 'auto',
+}: BackGlassSurfaceProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+
+  if (liquidGlass && surfaceMode !== 'web') {
+    return (
+      <NativeGlassView
+        isInteractive
+        glassEffectStyle="clear"
+        colorScheme="dark"
+        borderRadius={borderRadius}
+        style={[styles.glass, { width, height, borderRadius }]}
+      >
+        {children}
+      </NativeGlassView>
+    );
+  }
+
+  return (
+    <View
+      style={[
+        styles.glass,
+        webSurface ? webGlassDarkSurface : styles.fallbackGlass,
+        { width, height, borderRadius },
+      ]}
+    >
+      {children}
+    </View>
+  );
+}
+
 type GlassBackButtonShellProps = {
   width: number;
   height: number;
   borderRadius: number;
   outline: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
+  onPress?: () => void;
 };
 
-function GlassBackButtonShell({ width, height, borderRadius, outline }: GlassBackButtonShellProps) {
+function GlassBackButtonShell({
+  width,
+  height,
+  borderRadius,
+  outline,
+  surfaceMode = 'auto',
+  onPress,
+}: GlassBackButtonShellProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+
+  const pressable = (
+    <Pressable accessibilityRole="button" accessibilityLabel="Home" style={styles.pressable}>
+      <SfSymbolIcon
+        name="chevron.left"
+        size={nativeTabBarIconSize}
+        tintColor={previewIconTint}
+        weight="semibold"
+      />
+    </Pressable>
+  );
+
   return (
     <View style={[styles.wrap, { width, height }]}>
-      {outline}
-      <NativeGlassView
-        isInteractive
-        glassEffectStyle="clear"
-        colorScheme={previewBackGlassColorScheme}
+      {!webSurface ? outline : null}
+      <BackGlassSurface
+        width={width}
+        height={height}
         borderRadius={borderRadius}
-        style={[styles.glass, { width, height }]}
+        surfaceMode={surfaceMode}
       >
-        <Link href="/" asChild>
-          <Pressable accessibilityRole="button" accessibilityLabel="Home" style={styles.pressable}>
+        {onPress ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Home"
+            style={styles.pressable}
+            onPress={onPress}
+          >
             <SfSymbolIcon
               name="chevron.left"
               size={nativeTabBarIconSize}
-              tintColor={iconTint}
+              tintColor={previewIconTint}
               weight="semibold"
             />
           </Pressable>
-        </Link>
-      </NativeGlassView>
+        ) : (
+          <Link href="/" asChild>
+            {pressable}
+          </Link>
+        )}
+      </BackGlassSurface>
     </View>
   );
 }
@@ -125,11 +199,15 @@ function GlassBackButtonShell({ width, height, borderRadius, outline }: GlassBac
 type PreviewGlassBackButtonProps = {
   shape?: PreviewBackShape;
   outlineShape?: PreviewBackOutlineShape;
+  surfaceMode?: GlassSurfaceMode;
+  onPress?: () => void;
 };
 
 export function PreviewGlassBackButton({
   shape = previewBackShape,
   outlineShape = previewBackOutlineShape,
+  surfaceMode = 'auto',
+  onPress,
 }: PreviewGlassBackButtonProps) {
   const outline = previewBackOutline(resolvePreviewBackOutlineShape(shape, outlineShape));
 
@@ -140,6 +218,8 @@ export function PreviewGlassBackButton({
         height={previewBackRoundSize}
         borderRadius={previewBackRoundRadius}
         outline={outline}
+        surfaceMode={surfaceMode}
+        onPress={onPress}
       />
     );
   }
@@ -150,6 +230,8 @@ export function PreviewGlassBackButton({
       height={previewBackPillHeight}
       borderRadius={previewBackPillRadius}
       outline={outline}
+      surfaceMode={surfaceMode}
+      onPress={onPress}
     />
   );
 }
@@ -163,12 +245,23 @@ const styles = StyleSheet.create({
   glass: {
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'visible',
+    overflow: 'hidden',
+  },
+  fallbackGlass: {
+    backgroundColor: 'rgba(255,255,255,0.14)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.22)',
   },
   pressable: {
     width: '100%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    ...(Platform.OS === 'web'
+      ? ({
+          cursor: 'pointer',
+          userSelect: 'none',
+        } as const)
+      : null),
   },
 });

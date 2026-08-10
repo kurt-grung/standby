@@ -15,7 +15,8 @@ import {
   homePreviewGlassWidth,
 } from '../theme/standByPreviewLayout';
 import {
-  isWebGlassSurface,
+  resolveWebGlassSurface,
+  type GlassSurfaceMode,
   webGlassDarkSurface,
   webGlassLightSurface,
 } from '../lib/webGlassSurface';
@@ -47,6 +48,7 @@ type PreviewGlassLinkButtonProps = {
   icon?: SFSymbol;
   colorScheme?: 'light' | 'dark';
   showChevron?: boolean;
+  surfaceMode?: GlassSurfaceMode;
   onPress?: () => void;
 };
 
@@ -55,10 +57,19 @@ type GlassPillSurfaceProps = {
   width: number;
   fallbackStyle: { backgroundColor: string; borderColor: string };
   children: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
 };
 
-function GlassPillSurface({ colorScheme, width, fallbackStyle, children }: GlassPillSurfaceProps) {
-  if (liquidGlass) {
+function GlassPillSurface({
+  colorScheme,
+  width,
+  fallbackStyle,
+  children,
+  surfaceMode = 'auto',
+}: GlassPillSurfaceProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+
+  if (liquidGlass && surfaceMode !== 'web') {
     return (
       <NativeGlassView
         isInteractive
@@ -76,7 +87,7 @@ function GlassPillSurface({ colorScheme, width, fallbackStyle, children }: Glass
     <View
       style={[
         styles.glass,
-        isWebGlassSurface
+        webSurface
           ? colorScheme === 'dark'
             ? webGlassDarkSurface
             : webGlassLightSurface
@@ -96,12 +107,15 @@ export function PreviewGlassLinkButton({
   width = homePreviewGlassWidth,
   icon = 'play.rectangle',
   colorScheme: colorSchemeProp,
-  showChevron = !isWebGlassSurface,
+  showChevron: showChevronProp,
+  surfaceMode = 'auto',
   onPress,
 }: PreviewGlassLinkButtonProps) {
   const chrome = useAppChrome();
   const systemScheme = useColorScheme() === 'light' ? 'light' : 'dark';
   const colorScheme = colorSchemeProp ?? systemScheme;
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+  const showChevron = showChevronProp ?? !webSurface;
   const foreground = colorScheme === 'dark' ? configureGlassFg : chrome.colors.primary;
   const outlineBorderColor =
     colorScheme === 'light' ? 'rgba(0, 0, 0, 0.16)' : 'rgba(255, 255, 255, 0.28)';
@@ -132,7 +146,7 @@ export function PreviewGlassLinkButton({
 
   return (
     <View style={[styles.wrap, { width }]}>
-      {!isWebGlassSurface ? (
+      {!webSurface ? (
         <PillOutline
           width={outline.width}
           height={outline.height}
@@ -141,7 +155,12 @@ export function PreviewGlassLinkButton({
           borderColor={outlineBorderColor}
         />
       ) : null}
-      <GlassPillSurface colorScheme={colorScheme} width={width} fallbackStyle={fallbackStyle}>
+      <GlassPillSurface
+        colorScheme={colorScheme}
+        width={width}
+        fallbackStyle={fallbackStyle}
+        surfaceMode={surfaceMode}
+      >
         {onPress ? (
           <Pressable
             accessibilityRole="button"

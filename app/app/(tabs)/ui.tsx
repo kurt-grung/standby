@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { GaugeValueControls } from '../../ui/GaugeValueControls';
-import { PreviewGlassBackButton } from '../../ui/PreviewGlassBackButton';
+import { GlassButtonsShowcase } from '../../ui/GlassButtonsShowcase';
 import { StandByWordmark } from '../../ui/StandByWordmark';
 import { nightMode } from '../../ui/ultra/nightColors';
 import { ProgressBar } from '../../ui/ProgressBar';
@@ -98,26 +98,18 @@ export default function UiScreen() {
       <StatusBar style={chrome.statusBar} />
       <ScreenShell contentClassName={groupedScreenPadding}>
         <View className="mb-8" style={{ marginTop: groupedUiWordmarkTopSpacing }}>
-          <View className="flex-row items-start justify-between">
-            <View className="flex-1 pr-3">
-              <Text
-                className="text-[34px] font-extralight"
-                style={{ color: chrome.colors.primary }}
-              >
-                UI
-              </Text>
-              <Text
-                className="mt-2 text-[28px] font-extralight tracking-tight"
-                style={{ color: chrome.colors.secondary }}
-              >
-                Design System
-              </Text>
-              <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
-                Icon, typography, branding, and themes
-              </Text>
-            </View>
-            <PreviewGlassBackButton />
-          </View>
+          <Text className="text-[34px] font-extralight" style={{ color: chrome.colors.primary }}>
+            UI
+          </Text>
+          <Text
+            className="mt-2 text-[28px] font-extralight tracking-tight"
+            style={{ color: chrome.colors.secondary }}
+          >
+            Design System
+          </Text>
+          <Text className="mt-1 text-base" style={{ color: chrome.colors.secondary }}>
+            Icon, typography, branding, and themes
+          </Text>
         </View>
 
         <SectionCard label="Themes">
@@ -262,6 +254,13 @@ export default function UiScreen() {
               </Text>
             ))}
           </View>
+        </SectionCard>
+
+        <SectionCard label="Glass buttons" title="Navigation controls">
+          <GlassButtonsShowcase
+            mutedColor={chrome.colors.muted}
+            labelColor={chrome.colors.secondary}
+          />
         </SectionCard>
 
         <SectionCard label="Components" title="UI kit">

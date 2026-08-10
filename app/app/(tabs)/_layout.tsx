@@ -5,6 +5,8 @@ import {
   usePathname,
 } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { useEffect } from 'react';
 import { Platform, useColorScheme } from 'react-native';
 
 import { dynamicSystemColor } from '../../lib/dynamicSystemColor';
@@ -21,6 +23,19 @@ export default function TabsLayout() {
   const colorScheme = useColorScheme();
   const pathname = usePathname();
   const tabBarHidden = pathname === '/preview';
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      return;
+    }
+
+    if (tabBarHidden) {
+      void ScreenOrientation.unlockAsync();
+      return;
+    }
+
+    void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  }, [tabBarHidden]);
 
   return (
     <StandbyThemeProvider>

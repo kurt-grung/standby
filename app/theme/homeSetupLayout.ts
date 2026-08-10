@@ -1,10 +1,12 @@
 export {
   homeSetupBodySize,
+  homeSetupDotSize,
+  homeSetupHorizontalInset,
   homeSetupLineHeight,
-  homeSetupNumberGap,
-  homeSetupNumberWidth,
+  homeSetupMarkerGap,
   homeSetupRowGap,
   homeSetupTitleBottom,
+  homeSetupTitleLineHeight,
   homeSetupTitleSize,
   homeSetupTopSpacing,
 } from '../design-system';

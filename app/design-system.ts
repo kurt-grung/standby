@@ -64,8 +64,8 @@ export const standbyDesignSystem = {
       glassGap: 4,
       glassOutlineInset: 8,
       glassIconSize: 14,
-      stripPadding: 8,
-      stripBleed: 16,
+      stripPadding: 16,
+      stripBleed: 0,
     },
     homeGallery: {
       autoAdvanceMs: standbyConfig.layout.homeGalleryAutoAdvanceMs,
@@ -78,12 +78,14 @@ export const standbyDesignSystem = {
       fillFadeMs: 220,
     },
     homeSetup: {
-      topSpacing: 12,
+      topSpacing: 8,
+      horizontalInset: 16,
       titleSize: 17,
-      titleBottom: 16,
-      rowGap: 12,
-      numberWidth: 20,
-      numberGap: 10,
+      titleLineHeight: 22,
+      titleBottom: 12,
+      rowGap: 10,
+      markerGap: 12,
+      dotSize: 13,
       bodySize: 15,
       lineHeight: 22,
     },
@@ -119,6 +121,7 @@ export const standbyDesignSystem = {
       previewBack: {
         overlayRightTune: -40,
         overlayTopTune: -10,
+        overlayPortraitTopTune: -20,
         glassColorScheme: 'auto' as const,
         shape: 'round' satisfies PreviewBackShape,
         outlineShape: 'auto' satisfies PreviewBackOutlineShape,
@@ -434,11 +437,13 @@ export const homeGalleryIndicatorTop = ds.layout.homeGallery.indicatorTop;
 export const homeGalleryFillFadeMs = ds.layout.homeGallery.fillFadeMs;
 
 export const homeSetupTopSpacing = ds.layout.homeSetup.topSpacing;
+export const homeSetupHorizontalInset = ds.layout.homeSetup.horizontalInset;
 export const homeSetupTitleSize = ds.layout.homeSetup.titleSize;
+export const homeSetupTitleLineHeight = ds.layout.homeSetup.titleLineHeight;
 export const homeSetupTitleBottom = ds.layout.homeSetup.titleBottom;
 export const homeSetupRowGap = ds.layout.homeSetup.rowGap;
-export const homeSetupNumberWidth = ds.layout.homeSetup.numberWidth;
-export const homeSetupNumberGap = ds.layout.homeSetup.numberGap;
+export const homeSetupMarkerGap = ds.layout.homeSetup.markerGap;
+export const homeSetupDotSize = ds.layout.homeSetup.dotSize;
 export const homeSetupBodySize = ds.layout.homeSetup.bodySize;
 export const homeSetupLineHeight = ds.layout.homeSetup.lineHeight;
 
@@ -448,6 +453,8 @@ export const nativeTabBarEdgePadding = ds.layout.navigation.edgePadding;
 export const glassPressOverflow = ds.layout.navigation.glassPressOverflow;
 export const previewBackOverlayRightTune = ds.layout.navigation.previewBack.overlayRightTune;
 export const previewBackOverlayTopTune = ds.layout.navigation.previewBack.overlayTopTune;
+export const previewBackOverlayPortraitTopTune =
+  ds.layout.navigation.previewBack.overlayPortraitTopTune;
 export const previewBackGlassColorScheme = ds.layout.navigation.previewBack.glassColorScheme;
 export const previewBackShape = ds.layout.navigation.previewBack.shape;
 export const previewBackOutlineShape = ds.layout.navigation.previewBack.outlineShape;
@@ -467,10 +474,15 @@ export const previewBackPillRadius = previewBackPillHeight / 2;
 export const previewBackRoundSize = nativeTabBarHeight;
 export const previewBackRoundRadius = previewBackRoundSize / 2;
 
-export function standByWidgetSize(landscapeWidth: number, landscapeHeight: number) {
-  if (landscapeWidth <= 0 || landscapeHeight <= 0) return 0;
-  const maxByHeight = landscapeHeight - standByOuterPad * 2;
-  const maxByWidth = (landscapeWidth - standByOuterPad * 2 - standByWidgetGap) / 2;
+export function standByWidgetSize(containerWidth: number, containerHeight: number) {
+  if (containerWidth <= 0 || containerHeight <= 0) return 0;
+  if (containerHeight > containerWidth) {
+    const maxByWidth = containerWidth - standByOuterPad * 2;
+    const maxByHeight = (containerHeight - standByOuterPad * 2 - standByWidgetGap) / 2;
+    return Math.floor(Math.min(maxByWidth, maxByHeight));
+  }
+  const maxByHeight = containerHeight - standByOuterPad * 2;
+  const maxByWidth = (containerWidth - standByOuterPad * 2 - standByWidgetGap) / 2;
   return Math.floor(Math.min(maxByHeight, maxByWidth));
 }
 

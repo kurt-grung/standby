@@ -114,7 +114,7 @@ function ActiveIndicatorPill({ activeIndex, advanceEpoch }: ActiveIndicatorPillP
           {
             height: homeGalleryDotSize,
             borderRadius: pillRadius,
-            backgroundColor: standbyConfig.brand.textColor,
+            backgroundColor: chrome.colors.primary,
           },
           fillStyle,
         ]}

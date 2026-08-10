@@ -18,6 +18,7 @@ export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
   };
 
   const size = standByWidgetSize(frame.width, frame.height);
+  const layout = frame.height > frame.width ? 'column' : 'row';
 
   return (
     <View
@@ -25,7 +26,7 @@ export function StandByPreview({ gaugeValue = 0 }: StandByPreviewProps) {
       style={{ backgroundColor: nightMode.bg }}
       onLayout={onLayout}
     >
-      <StandByWidgetPair size={size} gaugeValue={gaugeValue} />
+      <StandByWidgetPair size={size} layout={layout} gaugeValue={gaugeValue} />
     </View>
   );
 }

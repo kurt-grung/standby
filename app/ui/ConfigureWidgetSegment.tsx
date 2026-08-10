@@ -4,7 +4,11 @@ import type { ComponentType, ReactNode } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { ConfigureWidget } from '../lib/gaugePresets';
-import { isWebGlassSurface, webGlassDarkSurface } from '../lib/webGlassSurface';
+import {
+  resolveWebGlassSurface,
+  type GlassSurfaceMode,
+  webGlassDarkSurface,
+} from '../lib/webGlassSurface';
 import {
   widgetConfigureSegmentActiveFill,
   widgetConfigureSegmentHeight,
@@ -22,6 +26,8 @@ const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 const borderRadius = widgetConfigureSegmentHeight / 2;
+const segmentInnerHeight = widgetConfigureSegmentHeight - widgetConfigureSegmentInset * 2;
+const segmentRadius = borderRadius - widgetConfigureSegmentInset;
 const outlineBorderColor = 'rgba(255, 255, 255, 0.28)';
 
 type ConfigureWidgetSegmentProps = {
@@ -29,14 +35,23 @@ type ConfigureWidgetSegmentProps = {
   labels: Record<ConfigureWidget, string>;
   activeIndex: number;
   onSelect: (index: number) => void;
+  surfaceMode?: GlassSurfaceMode;
 };
 
 type SegmentGlassSurfaceProps = {
   children: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
+  showOutline: boolean;
 };
 
-function SegmentGlassSurface({ children }: SegmentGlassSurfaceProps) {
-  if (liquidGlass) {
+function SegmentGlassSurface({
+  children,
+  surfaceMode = 'auto',
+  showOutline,
+}: SegmentGlassSurfaceProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+
+  if (liquidGlass && surfaceMode !== 'web') {
     return (
       <NativeGlassView
         isInteractive
@@ -51,7 +66,16 @@ function SegmentGlassSurface({ children }: SegmentGlassSurfaceProps) {
   }
 
   return (
-    <View style={[styles.glass, isWebGlassSurface ? webGlassDarkSurface : styles.fallbackGlass]}>
+    <View
+      style={[
+        styles.glass,
+        webSurface
+          ? webGlassDarkSurface
+          : showOutline
+            ? styles.fallbackGlassPlain
+            : styles.fallbackGlass,
+      ]}
+    >
       {children}
     </View>
   );
@@ -62,7 +86,10 @@ export function ConfigureWidgetSegment({
   labels,
   activeIndex,
   onSelect,
+  surfaceMode = 'auto',
 }: ConfigureWidgetSegmentProps) {
+  const webSurface = resolveWebGlassSurface(surfaceMode);
+  const showOutline = !webSurface && !liquidGlass;
   const outline = derivePillOutlineSize(
     widgetConfigureSegmentWidth,
     widgetConfigureSegmentHeight,
@@ -71,7 +98,7 @@ export function ConfigureWidgetSegment({
 
   return (
     <View style={[styles.wrap, { width: widgetConfigureSegmentWidth }]}>
-      {!isWebGlassSurface ? (
+      {showOutline ? (
         <PillOutline
           width={outline.width}
           height={outline.height}
@@ -80,16 +107,16 @@ export function ConfigureWidgetSegment({
           borderColor={outlineBorderColor}
         />
       ) : null}
-      <SegmentGlassSurface>
+      <SegmentGlassSurface surfaceMode={surfaceMode} showOutline={showOutline}>
         <View style={styles.row}>
           {widgets.map((widget, index) => {
             const active = index === activeIndex;
-            const segmentRadius = borderRadius - widgetConfigureSegmentInset;
 
             return (
               <Pressable
                 key={widget}
                 accessibilityRole="button"
+                accessibilityLabel={labels[widget]}
                 accessibilityState={{ selected: active }}
                 style={({ pressed }) => [
                   styles.segmentPressable,
@@ -134,20 +161,22 @@ const styles = StyleSheet.create({
     borderRadius,
     overflow: 'hidden',
   },
+  fallbackGlassPlain: {
+    backgroundColor: 'rgba(255,255,255,0.14)',
+  },
   fallbackGlass: {
     backgroundColor: 'rgba(255,255,255,0.14)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.22)',
   },
   row: {
-    flex: 1,
     flexDirection: 'row',
-    height: '100%',
+    height: widgetConfigureSegmentHeight,
     padding: widgetConfigureSegmentInset,
   },
   segmentPressable: {
     flex: 1,
-    height: '100%',
+    height: segmentInnerHeight,
     ...(Platform.OS === 'web'
       ? ({
           cursor: 'pointer',
@@ -160,7 +189,7 @@ const styles = StyleSheet.create({
   },
   segment: {
     flex: 1,
-    height: '100%',
+    height: segmentInnerHeight,
     alignItems: 'center',
     justifyContent: 'center',
   },

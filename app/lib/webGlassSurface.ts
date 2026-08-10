@@ -1,6 +1,14 @@
 import { Platform, type ViewStyle } from 'react-native';
 
+export type GlassSurfaceMode = 'auto' | 'web' | 'app';
+
 export const isWebGlassSurface = Platform.OS === 'web';
+
+export function resolveWebGlassSurface(mode: GlassSurfaceMode = 'auto'): boolean {
+  if (mode === 'web') return true;
+  if (mode === 'app') return false;
+  return Platform.OS === 'web';
+}
 
 export const webGlassDarkSurface: ViewStyle = {
   backgroundColor: 'rgba(255, 255, 255, 0.14)',

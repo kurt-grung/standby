@@ -2,11 +2,13 @@ import { Text, View } from 'react-native';
 
 import {
   homeSetupBodySize,
+  homeSetupDotSize,
+  homeSetupHorizontalInset,
   homeSetupLineHeight,
-  homeSetupNumberGap,
-  homeSetupNumberWidth,
+  homeSetupMarkerGap,
   homeSetupRowGap,
   homeSetupTitleBottom,
+  homeSetupTitleLineHeight,
   homeSetupTitleSize,
   homeSetupTopSpacing,
 } from '../theme/homeSetupLayout';
@@ -54,10 +56,12 @@ const setupSteps: readonly SetupStep[] = [
   },
 ];
 
+const dotTopInset = (homeSetupLineHeight - homeSetupDotSize) / 2;
+
 function SetupStepText({ parts, color }: { parts: readonly SetupStepPart[]; color: string }) {
   return (
     <Text
-      className="flex-1"
+      className="flex-1 shrink"
       style={{
         color,
         fontSize: homeSetupBodySize,
@@ -76,38 +80,48 @@ function SetupStepText({ parts, color }: { parts: readonly SetupStepPart[]; colo
   );
 }
 
+function SetupStepDot({ color }: { color: string }) {
+  return (
+    <View
+      style={{
+        width: homeSetupDotSize,
+        height: homeSetupDotSize,
+        borderRadius: homeSetupDotSize / 2,
+        backgroundColor: color,
+      }}
+    />
+  );
+}
+
 export function HomeSetupSection() {
   const chrome = useAppChrome();
+  const dotColor = chrome.colors.primary;
 
   return (
-    <View accessibilityLabel="How to use StandBy+" style={{ marginTop: homeSetupTopSpacing }}>
+    <View
+      accessibilityLabel="How to use StandBy+"
+      style={{
+        marginTop: homeSetupTopSpacing,
+        paddingHorizontal: homeSetupHorizontalInset,
+      }}
+    >
       <Text
         style={{
           color: chrome.colors.primary,
           fontSize: homeSetupTitleSize,
           fontWeight: '600',
-          lineHeight: homeSetupLineHeight,
+          lineHeight: homeSetupTitleLineHeight,
           marginBottom: homeSetupTitleBottom,
         }}
       >
         How to use
       </Text>
       <View style={{ gap: homeSetupRowGap }}>
-        {setupSteps.map((step, index) => (
-          <View key={step.id} className="flex-row items-center" style={{ gap: homeSetupNumberGap }}>
-            <Text
-              style={{
-                width: homeSetupNumberWidth,
-                color: chrome.colors.primary,
-                fontSize: homeSetupBodySize,
-                fontVariant: ['tabular-nums'],
-                fontWeight: '600',
-                lineHeight: homeSetupLineHeight,
-                textAlign: 'right',
-              }}
-            >
-              {index + 1}
-            </Text>
+        {setupSteps.map((step) => (
+          <View key={step.id} className="flex-row" style={{ gap: homeSetupMarkerGap }}>
+            <View style={{ paddingTop: dotTopInset }}>
+              <SetupStepDot color={dotColor} />
+            </View>
             <SetupStepText parts={step.parts} color={chrome.colors.primary} />
           </View>
         ))}

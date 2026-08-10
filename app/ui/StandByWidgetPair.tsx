@@ -5,23 +5,29 @@ import { standByWidgetGap } from '../theme/standByPreviewLayout';
 import { ModularUltraFace } from './ultra/ModularUltraFace';
 import { StatusGaugeFace } from './ultra/StatusGaugeFace';
 
+type StandByWidgetPairLayout = 'row' | 'column';
+
 type StandByWidgetPairProps = {
   size: number;
   gaugeValue?: number;
   gap?: number;
+  layout?: StandByWidgetPairLayout;
 };
 
 export function StandByWidgetPair({
   size,
   gaugeValue = 0,
   gap = standByWidgetGap,
+  layout = 'row',
 }: StandByWidgetPairProps) {
   const now = useLiveClock();
 
   if (size <= 0) return null;
 
+  const isColumn = layout === 'column';
+
   return (
-    <View className="flex-row items-center">
+    <View className={isColumn ? 'items-center' : 'flex-row items-center'}>
       <View style={{ width: size, height: size }}>
         <ModularUltraFace
           now={now}
@@ -33,7 +39,7 @@ export function StandByWidgetPair({
           batteryPercent={86}
         />
       </View>
-      <View style={{ width: gap }} />
+      <View style={isColumn ? { height: gap } : { width: gap }} />
       <View style={{ width: size, height: size }}>
         <StatusGaugeFace
           now={now}

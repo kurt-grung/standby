@@ -5,7 +5,11 @@ import { Platform, Pressable, StyleSheet, useColorScheme, View } from 'react-nat
 import type { SFSymbol } from 'sf-symbols-typescript';
 
 import { homePreviewGlassHeight } from '../theme/standByPreviewLayout';
-import { isWebGlassSurface, webGlassDarkSurface } from '../lib/webGlassSurface';
+import {
+  resolveWebGlassSurface,
+  type GlassSurfaceMode,
+  webGlassDarkSurface,
+} from '../lib/webGlassSurface';
 import { CircleOutline, deriveCircleOutlineSize } from './OutlineShape';
 import { SfSymbolIcon } from './SfSymbolIcon';
 
@@ -27,18 +31,26 @@ type GlassIconButtonProps = {
   iconSize?: number;
   colorScheme?: 'light' | 'dark';
   outlineInset?: number;
+  surfaceMode?: GlassSurfaceMode;
 };
 
 type RoundGlassSurfaceProps = {
   size: number;
   colorScheme: 'light' | 'dark';
   children: ReactNode;
+  surfaceMode?: GlassSurfaceMode;
 };
 
-function RoundGlassSurface({ size, colorScheme, children }: RoundGlassSurfaceProps) {
+function RoundGlassSurface({
+  size,
+  colorScheme,
+  children,
+  surfaceMode = 'auto',
+}: RoundGlassSurfaceProps) {
   const radius = size / 2;
+  const webSurface = resolveWebGlassSurface(surfaceMode);
 
-  if (liquidGlass) {
+  if (liquidGlass && surfaceMode !== 'web') {
     return (
       <NativeGlassView
         isInteractive
@@ -56,7 +68,7 @@ function RoundGlassSurface({ size, colorScheme, children }: RoundGlassSurfacePro
     <View
       style={[
         styles.glass,
-        isWebGlassSurface ? webGlassDarkSurface : styles.fallbackGlass,
+        webSurface ? webGlassDarkSurface : styles.fallbackGlass,
         { width: size, height: size, borderRadius: radius },
       ]}
     >
@@ -73,22 +85,24 @@ export function GlassIconButton({
   iconSize = 16,
   colorScheme: colorSchemeProp,
   outlineInset = 4,
+  surfaceMode = 'auto',
 }: GlassIconButtonProps) {
   const systemScheme = useColorScheme() === 'light' ? 'light' : 'dark';
   const colorScheme = colorSchemeProp ?? systemScheme;
+  const webSurface = resolveWebGlassSurface(surfaceMode);
   const outline = deriveCircleOutlineSize(size, outlineInset);
   const iconTint = colorScheme === 'dark' ? configureGlassFg : '#000000';
 
   return (
     <View style={[styles.wrap, { width: size, height: size }]}>
-      {!isWebGlassSurface ? (
+      {!webSurface ? (
         <CircleOutline
           size={outline.size}
           borderWidth={1.5}
           borderColor={colorScheme === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.16)'}
         />
       ) : null}
-      <RoundGlassSurface size={size} colorScheme={colorScheme}>
+      <RoundGlassSurface size={size} colorScheme={colorScheme} surfaceMode={surfaceMode}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={accessibilityLabel}
