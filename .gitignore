@@ -4,6 +4,7 @@
 node_modules/
 configurator/node_modules/
 configurator/dist/
+.vite/
 
 # Expo
 .expo/
