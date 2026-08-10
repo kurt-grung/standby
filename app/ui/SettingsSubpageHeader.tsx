@@ -2,7 +2,10 @@ import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
 import { standbyDesignSystem } from '../design-system';
-import { groupedWordmarkBottomSpacing } from '../theme/groupedLayout';
+import {
+  groupedHomeWordmarkTopSpacing,
+  groupedWordmarkBottomSpacing,
+} from '../theme/groupedLayout';
 import { useAppChrome } from '../theme/useAppChrome';
 import { standByWordmarkMetrics } from './StandByWordmark';
 import { SfSymbolIcon } from './SfSymbolIcon';
@@ -21,7 +24,7 @@ export function SettingsSubpageHeader({ title }: SettingsSubpageHeaderProps) {
     <View
       className="flex-row items-center"
       style={{
-        marginTop: 16,
+        marginTop: groupedHomeWordmarkTopSpacing,
         marginBottom: groupedWordmarkBottomSpacing,
       }}
     >
