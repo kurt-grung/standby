@@ -72,8 +72,8 @@ const config: ExpoConfig = {
           {
             name: 'UltraGaugeWidget',
             contentMarginsDisabled: true,
-            displayName: 'Ultra Gauge',
-            description: 'Right StandBy column — Ultra gauge with live value (Small)',
+            displayName: 'Ultra Status',
+            description: 'Right StandBy column — live status ring (Small)',
             supportedFamilies: ['systemSmall', 'systemMedium', 'systemLarge'],
           },
         ],

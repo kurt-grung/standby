@@ -20,8 +20,8 @@ export const standbyDesignSystem = {
     sectionTitle: 13,
     sectionLabel: 11,
     caption: 10,
-    gaugeValue: 38,
-    gaugeUnit: 18,
+    heroValue: 38,
+    heroUnit: 18,
   },
   spacing: {
     screenHorizontal: 16,
@@ -35,8 +35,8 @@ export const standbyDesignSystem = {
     stepGap: 16,
     stepBadge: 24,
     heroHorizontal: 16,
-    gaugeTop: 20,
-    gaugeBottomClearance: 14,
+    heroTop: 20,
+    heroBottomClearance: 14,
     presetRowVertical: 12,
   },
   radius: {
@@ -272,8 +272,8 @@ export const groupedStickyPlusGlassSize = ds.layout.grouped.stickyPlus.glassSize
 export const groupedStickyPlusOutlineInset = ds.layout.grouped.stickyPlus.outlineInset;
 export const groupedStickyPlusTopInset = ds.layout.grouped.stickyPlus.topInset;
 export const groupedStickyPlusHitSlop = ds.layout.grouped.stickyPlus.hitSlop;
-export const groupedGaugeTopPadding = ds.spacing.gaugeTop;
-export const groupedGaugeBottomClearance = ds.spacing.gaugeBottomClearance;
+export const groupedHeroTopPadding = ds.spacing.heroTop;
+export const groupedHeroBottomClearance = ds.spacing.heroBottomClearance;
 export const groupedStepHorizontalPad = ds.spacing.stepHorizontal;
 export const groupedStepBadgeSize = ds.spacing.stepBadge;
 export const groupedStepGap = ds.spacing.stepGap;

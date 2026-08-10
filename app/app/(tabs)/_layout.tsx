@@ -59,13 +59,6 @@ export default function TabsLayout() {
           />
           <NativeTabs.Trigger.Label hidden />
         </NativeTabs.Trigger>
-        <NativeTabs.Trigger name="ui" accessibilityLabel="UI" disableTransparentOnScrollEdge>
-          <NativeTabs.Trigger.Icon
-            sf={{ default: 'square.grid.2x2', selected: 'square.grid.2x2.fill' }}
-            md="grid_view"
-          />
-          <NativeTabs.Trigger.Label hidden />
-        </NativeTabs.Trigger>
         <NativeTabs.Trigger
           name="settings"
           accessibilityLabel="Settings"

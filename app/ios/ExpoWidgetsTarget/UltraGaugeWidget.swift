@@ -16,8 +16,8 @@ struct UltraGaugeWidget: Widget {
         }
       }
     }
-    .configurationDisplayName("Ultra Gauge")
-    .description("Right StandBy column — Ultra gauge with live value (Small)")
+    .configurationDisplayName("Ultra Status")
+    .description("Right StandBy column — live status ring (Small)")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     .contentMarginsDisabled()
   }

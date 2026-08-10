@@ -2,7 +2,7 @@ import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import type { GlassViewProps } from 'expo-glass-effect/build/GlassView.types';
 import type { ComponentType, ReactNode } from 'react';
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import {
   resolveWebGlassSurface,
@@ -17,6 +17,7 @@ import {
 } from '../theme/groupedLayout';
 import { previewBackGlassColorScheme } from '../theme/nativeTabBarMetrics';
 import { CircleOutline, deriveCircleOutlineSize } from './OutlineShape';
+import { SfSymbolIcon } from './SfSymbolIcon';
 import { nightMode } from './ultra/nightColors';
 
 type NativeGlassViewProps = GlassViewProps & {
@@ -27,6 +28,8 @@ const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 
 const radius = groupedStickyPlusGlassSize / 2;
 const outline = deriveCircleOutlineSize(groupedStickyPlusGlassSize, groupedStickyPlusOutlineInset);
+const outlineOffset = (groupedStickyPlusGlassSize - outline.size) / 2;
+const plusIconSize = Math.round(groupedStickyPlusSize * 0.58);
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
 type StickyPlusGlassButtonProps = {
@@ -91,7 +94,12 @@ export function StickyPlusGlassButton({
       ]}
     >
       {!webSurface ? (
-        <CircleOutline size={outline.size} borderWidth={1.5} borderColor="rgba(255,255,255,0.28)" />
+        <CircleOutline
+          size={outline.size}
+          borderWidth={1.5}
+          borderColor="rgba(255,255,255,0.28)"
+          style={{ top: outlineOffset, left: outlineOffset }}
+        />
       ) : null}
       <RoundGlassSurface surfaceMode={surfaceMode}>
         <Pressable
@@ -103,7 +111,13 @@ export function StickyPlusGlassButton({
           onPressIn={() => setPressed(true)}
           onPressOut={() => setPressed(false)}
         >
-          <Text style={[styles.plus, pressed ? styles.plusPressed : undefined]}>+</Text>
+          <SfSymbolIcon
+            name="plus"
+            size={plusIconSize}
+            tintColor={nightMode.primary}
+            weight="light"
+            style={pressed ? styles.plusPressed : undefined}
+          />
         </Pressable>
       </RoundGlassSurface>
     </View>
@@ -132,12 +146,6 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  plus: {
-    color: nightMode.primary,
-    fontSize: groupedStickyPlusSize,
-    lineHeight: groupedStickyPlusSize + 2,
-    fontWeight: '300',
   },
   plusPressed: {
     opacity: 0.82,

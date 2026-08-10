@@ -4,7 +4,7 @@ import { standbyConfig } from '../config';
 import { appearanceOptions } from '../theme/appearance';
 import { useAppearance } from '../theme/AppearanceContext';
 import { useAppChrome } from '../theme/useAppChrome';
-import { GroupedDivider, GroupedSection } from './GroupedSection';
+import { GroupedDivider, GroupedLinkRow, GroupedSection } from './GroupedSection';
 import { ScreenPageTitle } from './ScreenPageTitle';
 import { SfSymbolIcon } from './SfSymbolIcon';
 
@@ -57,6 +57,8 @@ export function SettingsPanel() {
       </GroupedSection>
 
       <GroupedSection title="About" className="mt-5">
+        <GroupedLinkRow href="/settings/branding" label="Branding" />
+        <GroupedDivider />
         <View
           className="flex-row items-center justify-between"
           style={{ minHeight: 44, paddingHorizontal: 16, paddingVertical: 12 }}

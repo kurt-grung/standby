@@ -38,7 +38,7 @@ const NativeGlassView = GlassView as ComponentType<NativeGlassViewProps>;
 const borderRadius = homePreviewGlassHeight / 2;
 const liquidGlass = Platform.OS === 'ios' && isLiquidGlassAvailable();
 
-type HomeGlassLinkHref = '/' | '/preview' | '/ui';
+type HomeGlassLinkHref = '/' | '/preview';
 
 type PreviewGlassLinkButtonProps = {
   label?: string;

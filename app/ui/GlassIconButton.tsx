@@ -91,6 +91,7 @@ export function GlassIconButton({
   const colorScheme = colorSchemeProp ?? systemScheme;
   const webSurface = resolveWebGlassSurface(surfaceMode);
   const outline = deriveCircleOutlineSize(size, outlineInset);
+  const outlineOffset = (size - outline.size) / 2;
   const iconTint = colorScheme === 'dark' ? configureGlassFg : '#000000';
 
   return (
@@ -100,6 +101,7 @@ export function GlassIconButton({
           size={outline.size}
           borderWidth={1.5}
           borderColor={colorScheme === 'dark' ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.16)'}
+          style={{ top: outlineOffset, left: outlineOffset }}
         />
       ) : null}
       <RoundGlassSurface size={size} colorScheme={colorScheme} surfaceMode={surfaceMode}>

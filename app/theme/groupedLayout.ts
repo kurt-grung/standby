@@ -1,6 +1,6 @@
 export {
-  groupedGaugeBottomClearance,
-  groupedGaugeTopPadding,
+  groupedHeroBottomClearance,
+  groupedHeroTopPadding,
   groupedHeroInset,
   groupedPresetRowInset,
   groupedScreenBottomInset,
