@@ -7,12 +7,7 @@ import { useStandbySafeAreaInsets } from '../hooks/useStandbySafeAreaInsets';
 import {
   nativeTabBarEdgePadding,
   previewBackOverlayPortraitTopTune,
-  previewBackOverlayPressPaddingRight,
-  previewBackOverlayPressPaddingTop,
-  previewBackOverlayRight,
   previewBackOverlayRightTune,
-  previewBackOverlayTop,
-  previewBackOverlayTopTune,
 } from '../theme/nativeTabBarMetrics';
 import { nightMode } from './ultra/nightColors';
 
@@ -26,33 +21,16 @@ const previewBg = nightMode.bg;
 
 function PreviewBackOverlay({ children, portrait }: { children: ReactNode; portrait: boolean }) {
   const insets = useStandbySafeAreaInsets();
+  let edgeTop = Math.max(nativeTabBarEdgePadding, insets.top);
+  let edgeRight = Math.max(nativeTabBarEdgePadding, insets.right);
 
-  if (Platform.OS === 'web') {
-    const edgeTop = Math.max(nativeTabBarEdgePadding, insets.top);
-    const edgeRight = Math.max(nativeTabBarEdgePadding, insets.right);
-
-    return (
-      <View
-        pointerEvents="box-none"
-        style={{
-          position: 'absolute',
-          top: edgeTop,
-          right: edgeRight,
-          zIndex: 10,
-          alignItems: 'flex-end',
-          overflow: 'visible',
-        }}
-      >
-        {children}
-      </View>
-    );
+  if (Platform.OS !== 'web') {
+    if (portrait) {
+      edgeTop = Math.max(8, edgeTop + previewBackOverlayPortraitTopTune);
+    } else {
+      edgeRight += previewBackOverlayRightTune;
+    }
   }
-
-  const edgeTop =
-    previewBackOverlayTop +
-    previewBackOverlayTopTune +
-    (portrait ? previewBackOverlayPortraitTopTune : 0);
-  const edgeRight = previewBackOverlayRight + previewBackOverlayRightTune;
 
   return (
     <View
@@ -61,8 +39,6 @@ function PreviewBackOverlay({ children, portrait }: { children: ReactNode; portr
         position: 'absolute',
         top: edgeTop,
         right: edgeRight,
-        paddingTop: previewBackOverlayPressPaddingTop,
-        paddingRight: previewBackOverlayPressPaddingRight,
         zIndex: 10,
         alignItems: 'flex-end',
         overflow: 'visible',

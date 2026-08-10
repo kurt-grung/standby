@@ -85,7 +85,7 @@ export const standbyDesignSystem = {
       titleBottom: 12,
       rowGap: 10,
       markerGap: 12,
-      dotSize: 13,
+      dotSize: 16,
       bodySize: 15,
       lineHeight: 22,
     },
@@ -121,7 +121,7 @@ export const standbyDesignSystem = {
       previewBack: {
         overlayRightTune: -40,
         overlayTopTune: -10,
-        overlayPortraitTopTune: -20,
+        overlayPortraitTopTune: -36,
         glassColorScheme: 'auto' as const,
         shape: 'round' satisfies PreviewBackShape,
         outlineShape: 'auto' satisfies PreviewBackOutlineShape,
