@@ -80,10 +80,7 @@ export function HomeSetupSection() {
   const chrome = useAppChrome();
 
   return (
-    <View
-      accessibilityLabel="How to add widgets to StandBy"
-      style={{ marginTop: homeSetupTopSpacing }}
-    >
+    <View accessibilityLabel="How to use StandBy+" style={{ marginTop: homeSetupTopSpacing }}>
       <Text
         style={{
           color: chrome.colors.primary,
@@ -93,7 +90,7 @@ export function HomeSetupSection() {
           marginBottom: homeSetupTitleBottom,
         }}
       >
-        Add to StandBy
+        How to use
       </Text>
       <View style={{ gap: homeSetupRowGap }}>
         {setupSteps.map((step, index) => (
