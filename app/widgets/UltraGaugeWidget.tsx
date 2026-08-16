@@ -1,6 +1,7 @@
 /** @jsxImportSource react */
 import {
-  Gauge,
+  Capsule,
+  Circle,
   HStack,
   Image,
   ProgressView,
@@ -16,7 +17,6 @@ import {
   font,
   foregroundStyle,
   frame,
-  gaugeStyle,
   monospacedDigit,
   padding,
   progressViewStyle,
@@ -31,10 +31,13 @@ export type UltraGaugeWidgetProps = StandbyGaugeWidgetProps & {
 
 const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvironment) => {
   'widget';
-  const { bg, primary, secondary } = {
+  const { bg, primary, secondary, muted, track, border } = {
     bg: '#000000',
     primary: '#F02A1F',
     secondary: '#B62018',
+    muted: '#560F0B',
+    track: '#1A0503',
+    border: '#2B0806',
   };
   const date = environment.date;
   const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
@@ -44,47 +47,64 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
   const temp = 68;
   const tempLow = 49;
   const tempHigh = 84;
-  const tempProgress = (temp - tempLow) / Math.max(1, tempHigh - tempLow);
   const uv = 4;
-  const uvProgress = uv / 11;
   const battery = 74;
-  const batteryProgress = battery / 100;
   const noiseDb = 38;
-  const noiseProgress = noiseDb / 100;
   const sunsetLabel = '7:31PM';
-  const isLarge = environment.widgetFamily === 'systemLarge';
-  const isSmall = environment.widgetFamily === 'systemSmall';
-  const padX = isLarge ? 26 : 22;
-  const padY = isLarge ? 18 : 16;
-  const sectionGap = isLarge ? 16 : 14;
-  const ring = isLarge ? 50 : isSmall ? 40 : 44;
-  const ringInner = ring * 0.72;
-  const ringCore = ring * 0.44;
-  const hero = isLarge ? 96 : isSmall ? 72 : 84;
+  const family = `${environment.widgetFamily ?? ''}`;
+  const isLarge = family === 'systemLarge' || family.toLowerCase().includes('large');
+  const isSmall = family === 'systemSmall' || family.toLowerCase().includes('small');
+  const padX = isLarge ? 22 : isSmall ? 12 : 16;
+  const padY = isLarge ? 14 : 8;
+  const ring = isLarge ? 34 : isSmall ? 22 : 26;
+  const ringInner = ring * 0.7;
+  const ringCore = ring * 0.42;
+  const stroke = Math.max(3, ring * 0.12);
+  const hole = ring - stroke * 2;
+  const innerHole = ringInner - stroke * 2;
+  const coreHole = Math.max(ringCore - stroke * 2, ringCore * 0.45);
+  const captionHeight = isLarge ? 12 : isSmall ? 8 : 10;
+  const hero = isLarge ? 64 : isSmall ? 38 : 46;
+  const heroStroke = Math.max(5, hero * 0.1);
+  const heroHole = hero - heroStroke * 2;
   const heroValueSize = hero * 0.28;
-  const labelSize = isLarge ? 12 : 11;
-  const metricLabelSize = isLarge ? 10 : 9;
-  const metricValueSize = isLarge ? 13 : 12;
+  const labelSize = isLarge ? 11 : isSmall ? 8 : 9;
+  const metricLabelSize = isLarge ? 9 : isSmall ? 7 : 8;
+  const metricValueSize = isLarge ? 12 : isSmall ? 8 : 10;
+  const metricGap = isLarge ? 3 : 2;
 
   return (
-    <ZStack modifiers={[containerBackground(bg, 'widget'), clipShape('containerRelativeShape')]}>
+    <ZStack
+      alignment="topLeading"
+      modifiers={[
+        containerBackground(bg, 'widget'),
+        clipShape('containerRelativeShape'),
+        frame({ maxWidth: Infinity, maxHeight: Infinity }),
+      ]}
+    >
       <VStack
         alignment="leading"
-        spacing={sectionGap}
+        spacing={0}
         modifiers={[
           padding({ horizontal: padX, vertical: padY }),
           frame({ maxWidth: Infinity, maxHeight: Infinity, alignment: 'topLeading' }),
         ]}
       >
-        <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
+        <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={tempProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <Text
@@ -97,7 +117,7 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 {temp}
               </Text>
             </ZStack>
-            <HStack modifiers={[frame({ maxWidth: ring })]}>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
               <Text
                 modifiers={[
                   font({ design: 'rounded', weight: 'bold', size: 9 }),
@@ -119,17 +139,21 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               </Text>
             </HStack>
           </VStack>
-
           <Spacer />
-
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={noiseProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <VStack alignment="center" spacing={1}>
@@ -145,28 +169,38 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
                 </Text>
               </VStack>
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
-
           <Spacer />
-
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={batteryProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <Image systemName="battery.50" size={ring * 0.34} color={primary} />
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
         </HStack>
 
         <Spacer />
 
-        <VStack alignment="center" spacing={6} modifiers={[frame({ maxWidth: Infinity })]}>
+        <VStack alignment="center" spacing={4} modifiers={[frame({ maxWidth: Infinity })]}>
           <Text
             modifiers={[
               font({ design: 'rounded', weight: 'bold', size: labelSize }),
@@ -176,12 +210,18 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
             STATUS
           </Text>
           <ZStack modifiers={[frame({ width: hero, height: hero })]}>
-            <Gauge
-              value={progress}
+            <Circle
               modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
                 frame({ width: hero, height: hero }),
+                background(primary),
+                clipShape('circle'),
+              ]}
+            />
+            <Circle
+              modifiers={[
+                frame({ width: heroHole, height: heroHole }),
+                background(bg),
+                clipShape('circle'),
               ]}
             />
             <VStack alignment="center" spacing={2}>
@@ -208,8 +248,8 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
 
         <Spacer />
 
-        <VStack spacing={4} modifiers={[frame({ maxWidth: Infinity })]}>
-          <VStack spacing={2}>
+        <VStack spacing={metricGap} modifiers={[frame({ maxWidth: Infinity })]}>
+          <VStack spacing={2} modifiers={[frame({ maxWidth: Infinity })]}>
             <HStack modifiers={[frame({ maxWidth: Infinity })]}>
               <Text
                 modifiers={[
@@ -235,12 +275,13 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               modifiers={[
                 progressViewStyle('linear'),
                 tint(primary),
+                background(track),
+                clipShape('capsule'),
                 frame({ maxWidth: Infinity }),
               ]}
             />
           </VStack>
-
-          <VStack spacing={2}>
+          <VStack spacing={2} modifiers={[frame({ maxWidth: Infinity })]}>
             <HStack modifiers={[frame({ maxWidth: Infinity })]}>
               <Text
                 modifiers={[
@@ -262,16 +303,17 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               </Text>
             </HStack>
             <ProgressView
-              value={batteryProgress}
+              value={battery / 100}
               modifiers={[
                 progressViewStyle('linear'),
                 tint(primary),
+                background(track),
+                clipShape('capsule'),
                 frame({ maxWidth: Infinity }),
               ]}
             />
           </VStack>
-
-          <VStack spacing={2}>
+          <VStack spacing={2} modifiers={[frame({ maxWidth: Infinity })]}>
             <HStack modifiers={[frame({ maxWidth: Infinity })]}>
               <Text
                 modifiers={[
@@ -293,87 +335,139 @@ const UltraGaugeWidget = (props: UltraGaugeWidgetProps, environment: WidgetEnvir
               </Text>
             </HStack>
             <ProgressView
-              value={noiseProgress}
+              value={noiseDb / 100}
               modifiers={[
                 progressViewStyle('linear'),
                 tint(primary),
+                background(track),
+                clipShape('capsule'),
                 frame({ maxWidth: Infinity }),
               ]}
             />
           </VStack>
         </VStack>
 
-        <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
-          <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-            <Gauge
-              value={0.78}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ring, height: ring }),
-              ]}
-            />
-            <Gauge
-              value={0.52}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ringInner, height: ringInner }),
-              ]}
-            />
-            <Gauge
-              value={0.91}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ringCore, height: ringCore }),
-              ]}
-            />
-          </ZStack>
-          <Spacer />
+        <Spacer />
+
+        <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={1}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
                 ]}
               />
-              <Image systemName="sunset.fill" size={ring * 0.28} color={primary} />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: ringInner, height: ringInner }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: innerHole, height: innerHole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: ringCore, height: ringCore }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: coreHole, height: coreHole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
             </ZStack>
-            <Text
-              modifiers={[
-                font({ design: 'rounded', weight: 'bold', size: 10 }),
-                monospacedDigit(),
-                foregroundStyle(primary),
-              ]}
-            >
-              {sunsetLabel}
-            </Text>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={uvProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
                 ]}
               />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Image systemName="sunset.fill" size={ring * 0.28} color={primary} />
+            </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
               <Text
                 modifiers={[
-                  font({ design: 'rounded', weight: 'semibold', size: ring * 0.34 }),
+                  font({ design: 'rounded', weight: 'bold', size: 10 }),
                   monospacedDigit(),
                   foregroundStyle(primary),
                 ]}
               >
-                {uv}
+                {sunsetLabel}
               </Text>
+            </HStack>
+          </VStack>
+          <Spacer />
+          <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
+            <ZStack modifiers={[frame({ width: ring, height: ring })]}>
+              <Circle
+                modifiers={[
+                  frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <VStack alignment="center" spacing={1}>
+                <Text
+                  modifiers={[
+                    font({ design: 'rounded', weight: 'semibold', size: ring * 0.34 }),
+                    monospacedDigit(),
+                    foregroundStyle(primary),
+                  ]}
+                >
+                  {uv}
+                </Text>
+                <Capsule
+                  modifiers={[
+                    frame({ width: ring * 0.2, height: ring * 0.2 }),
+                    background(primary),
+                  ]}
+                />
+              </VStack>
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
         </HStack>
       </VStack>

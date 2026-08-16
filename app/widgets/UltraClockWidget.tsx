@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 import {
   Capsule,
-  Gauge,
+  Circle,
   HStack,
   Image,
   ProgressView,
@@ -17,7 +17,6 @@ import {
   font,
   foregroundStyle,
   frame,
-  gaugeStyle,
   monospacedDigit,
   padding,
   progressViewStyle,
@@ -44,11 +43,13 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
     'NOV',
     'DEC',
   ];
-  const { bg, primary, secondary, muted } = {
+  const { bg, primary, secondary, muted, track, border } = {
     bg: '#000000',
     primary: '#F02A1F',
     secondary: '#B62018',
     muted: '#560F0B',
+    track: '#1A0503',
+    border: '#2B0806',
   };
   const date = environment.date;
   const progress = (date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()) / 86400;
@@ -63,46 +64,60 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
   const temp = 72;
   const tempLow = 52;
   const tempHigh = 89;
-  const tempProgress = (temp - tempLow) / Math.max(1, tempHigh - tempLow);
   const uv = 5;
-  const uvProgress = uv / 11;
   const battery = 86;
-  const batteryProgress = battery / 100;
-  const dateProgress = date.getDate() / 31;
   const sunsetLabel = '7:29PM';
-  const isLarge = environment.widgetFamily === 'systemLarge';
-  const isSmall = environment.widgetFamily === 'systemSmall';
-  const padX = isLarge ? 26 : 22;
-  const padY = isLarge ? 18 : 16;
-  const sectionGap = isLarge ? 16 : 14;
-  const ring = isLarge ? 50 : isSmall ? 40 : 44;
-  const ringInner = ring * 0.72;
-  const ringCore = ring * 0.44;
-  const timeSize = isLarge ? 42 : isSmall ? 32 : 36;
-  const labelSize = isLarge ? 12 : 11;
-  const captionSize = isLarge ? 13 : 12;
-  const metricSize = isLarge ? 17 : 16;
-  const markSize = isLarge ? 11 : 10;
+  const family = `${environment.widgetFamily ?? ''}`;
+  const isLarge = family === 'systemLarge' || family.toLowerCase().includes('large');
+  const isSmall = family === 'systemSmall' || family.toLowerCase().includes('small');
+  const padX = isLarge ? 22 : isSmall ? 12 : 16;
+  const padY = isLarge ? 14 : 8;
+  const ring = isLarge ? 34 : isSmall ? 22 : 26;
+  const ringInner = ring * 0.7;
+  const ringCore = ring * 0.42;
+  const stroke = Math.max(3, ring * 0.12);
+  const hole = ring - stroke * 2;
+  const innerHole = ringInner - stroke * 2;
+  const coreHole = Math.max(ringCore - stroke * 2, ringCore * 0.45);
+  const captionHeight = isLarge ? 12 : isSmall ? 8 : 10;
+  const timeSize = isLarge ? 34 : isSmall ? 18 : 22;
+  const labelSize = isLarge ? 11 : isSmall ? 8 : 9;
+  const captionSize = isLarge ? 12 : isSmall ? 8 : 9;
+  const metricSize = isLarge ? 15 : isSmall ? 10 : 12;
+  const markSize = isLarge ? 9 : isSmall ? 7 : 8;
 
   return (
-    <ZStack modifiers={[containerBackground(bg, 'widget'), clipShape('containerRelativeShape')]}>
+    <ZStack
+      alignment="topLeading"
+      modifiers={[
+        containerBackground(bg, 'widget'),
+        clipShape('containerRelativeShape'),
+        frame({ maxWidth: Infinity, maxHeight: Infinity }),
+      ]}
+    >
       <VStack
         alignment="leading"
-        spacing={sectionGap}
+        spacing={0}
         modifiers={[
           padding({ horizontal: padX, vertical: padY }),
           frame({ maxWidth: Infinity, maxHeight: Infinity, alignment: 'topLeading' }),
         ]}
       >
-        <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
+        <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={tempProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <Text
@@ -115,7 +130,7 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
                 {temp}
               </Text>
             </ZStack>
-            <HStack modifiers={[frame({ maxWidth: ring })]}>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
               <Text
                 modifiers={[
                   font({ design: 'rounded', weight: 'bold', size: 9 }),
@@ -137,17 +152,21 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
               </Text>
             </HStack>
           </VStack>
-
           <Spacer />
-
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={dateProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <VStack alignment="center" spacing={0}>
@@ -170,22 +189,32 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
                 </Text>
               </VStack>
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
-
           <Spacer />
-
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={batteryProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <Image systemName="battery.75" size={ring * 0.34} color={primary} />
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
         </HStack>
 
@@ -221,7 +250,7 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
 
         <Spacer />
 
-        <VStack spacing={6} modifiers={[frame({ maxWidth: Infinity })]}>
+        <VStack spacing={4} modifiers={[frame({ maxWidth: Infinity })]}>
           <HStack modifiers={[frame({ maxWidth: Infinity })]}>
             <Text
               modifiers={[
@@ -244,10 +273,10 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
             </Text>
           </HStack>
           <VStack
-            spacing={6}
+            spacing={4}
             modifiers={[
-              padding({ horizontal: 8, vertical: 8 }),
-              background('#080202'),
+              padding({ horizontal: 8, vertical: 6 }),
+              background(track),
               clipShape('roundedRectangle', 8),
             ]}
           >
@@ -308,65 +337,104 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
           </VStack>
         </VStack>
 
-        <HStack spacing={8} modifiers={[frame({ maxWidth: Infinity })]}>
-          <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-            <Gauge
-              value={0.78}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ring, height: ring }),
-              ]}
-            />
-            <Gauge
-              value={0.52}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ringInner, height: ringInner }),
-              ]}
-            />
-            <Gauge
-              value={0.91}
-              modifiers={[
-                gaugeStyle('circularCapacity'),
-                tint(primary),
-                frame({ width: ringCore, height: ringCore }),
-              ]}
-            />
-          </ZStack>
-          <Spacer />
+        <Spacer />
+
+        <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={1}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
                 ]}
               />
-              <Image systemName="sunset.fill" size={ring * 0.28} color={primary} />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: ringInner, height: ringInner }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: innerHole, height: innerHole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: ringCore, height: ringCore }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: coreHole, height: coreHole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
             </ZStack>
-            <Text
-              modifiers={[
-                font({ design: 'rounded', weight: 'bold', size: 10 }),
-                monospacedDigit(),
-                foregroundStyle(primary),
-              ]}
-            >
-              {sunsetLabel}
-            </Text>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Gauge
-                value={uvProgress}
+              <Circle
                 modifiers={[
-                  gaugeStyle('circularCapacity'),
-                  tint(primary),
                   frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
+                ]}
+              />
+              <Image systemName="sunset.fill" size={ring * 0.28} color={primary} />
+            </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Text
+                modifiers={[
+                  font({ design: 'rounded', weight: 'bold', size: 10 }),
+                  monospacedDigit(),
+                  foregroundStyle(primary),
+                ]}
+              >
+                {sunsetLabel}
+              </Text>
+            </HStack>
+          </VStack>
+          <Spacer />
+          <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
+            <ZStack modifiers={[frame({ width: ring, height: ring })]}>
+              <Circle
+                modifiers={[
+                  frame({ width: ring, height: ring }),
+                  background(primary),
+                  clipShape('circle'),
+                ]}
+              />
+              <Circle
+                modifiers={[
+                  frame({ width: hole, height: hole }),
+                  background(bg),
+                  clipShape('circle'),
                 ]}
               />
               <VStack alignment="center" spacing={1}>
@@ -387,6 +455,9 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
                 />
               </VStack>
             </ZStack>
+            <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
+              <Spacer />
+            </HStack>
           </VStack>
         </HStack>
       </VStack>

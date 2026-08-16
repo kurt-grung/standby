@@ -16,6 +16,8 @@ function widgetScopeNightBlock(palette) {
     primary: '${palette.primary}',
     secondary: '${palette.secondary}',
     muted: '${palette.muted}',
+    track: '${palette.track}',
+    border: '${palette.border}',
   }`;
 }
 
@@ -28,7 +30,7 @@ function readWidgetScopeNightPalette() {
       `import { buildStandByNightPalette } from './lib/standByNightPalette.ts';
 import { standbyConfig } from './config.ts';
 const palette = buildStandByNightPalette(standbyConfig.brand.plusColor);
-console.log(JSON.stringify({ bg: palette.bg, primary: palette.primary, secondary: palette.secondary, muted: palette.muted }));`,
+console.log(JSON.stringify({ bg: palette.bg, primary: palette.primary, secondary: palette.secondary, muted: palette.muted, track: palette.track, border: palette.border }));`,
     ],
     { cwd: appRoot, encoding: 'utf8' },
   );
@@ -43,8 +45,7 @@ console.log(JSON.stringify({ bg: palette.bg, primary: palette.primary, secondary
 
 function syncWidgetNightPalette(palette) {
   const replacement = widgetScopeNightBlock(palette);
-  const pattern =
-    /const \{\s*bg: background,\s*primary,\s*secondary,\s*muted,\s*\} = \{[\s\S]*?\};/;
+  const pattern = /const \{([^}]+)\} = \{\s*bg: '#[0-9A-Fa-f]+'[\s\S]*?\};/;
 
   for (const fileName of widgetSources) {
     const filePath = join(appRoot, 'widgets', fileName);
@@ -54,20 +55,13 @@ function syncWidgetNightPalette(palette) {
     }
 
     const content = readFileSync(filePath, 'utf8');
-    if (!pattern.test(content)) {
+    const match = content.match(pattern);
+    if (!match) {
       console.error(`Widget night palette block not found in ${fileName}`);
       process.exit(1);
     }
 
-    const next = content.replace(
-      pattern,
-      `const {
-    bg: background,
-    primary,
-    secondary,
-    muted,
-  } = ${replacement};`,
-    );
+    const next = content.replace(pattern, `const {${match[1]}} = ${replacement};`);
     writeFileSync(filePath, next);
     console.log(`Synced widget night palette → ${fileName}`);
   }
