@@ -1,15 +1,5 @@
 /** @jsxImportSource react */
-import {
-  Capsule,
-  Circle,
-  HStack,
-  Image,
-  ProgressView,
-  Spacer,
-  Text,
-  VStack,
-  ZStack,
-} from '@expo/ui/swift-ui';
+import { HStack, Image, ProgressView, Spacer, Text, VStack, ZStack } from '@expo/ui/swift-ui';
 import {
   background,
   clipShape,
@@ -75,10 +65,6 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
   const ring = isLarge ? 34 : isSmall ? 22 : 26;
   const ringInner = ring * 0.7;
   const ringCore = ring * 0.42;
-  const stroke = Math.max(3, ring * 0.12);
-  const hole = ring - stroke * 2;
-  const innerHole = ringInner - stroke * 2;
-  const coreHole = Math.max(ringCore - stroke * 2, ringCore * 0.45);
   const captionHeight = isLarge ? 12 : isSmall ? 8 : 10;
   const timeSize = isLarge ? 34 : isSmall ? 18 : 22;
   const labelSize = isLarge ? 11 : isSmall ? 8 : 9;
@@ -106,19 +92,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
         <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
               <Text
                 modifiers={[
@@ -155,19 +133,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
               <VStack alignment="center" spacing={0}>
                 <Text
@@ -196,19 +166,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
               <Image systemName="battery.75" size={ring * 0.34} color={primary} />
             </ZStack>
@@ -342,47 +304,23 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
         <HStack modifiers={[frame({ maxWidth: Infinity })]}>
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ringInner}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
-              <Circle
-                modifiers={[
-                  frame({ width: ringInner, height: ringInner }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: innerHole, height: innerHole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: ringCore, height: ringCore }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: coreHole, height: coreHole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ringCore}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
             </ZStack>
             <HStack modifiers={[frame({ width: ring, height: captionHeight })]}>
@@ -392,19 +330,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
               <Image systemName="sunset.fill" size={ring * 0.28} color={primary} />
             </ZStack>
@@ -423,19 +353,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
           <Spacer />
           <VStack alignment="center" spacing={2} modifiers={[frame({ width: ring })]}>
             <ZStack modifiers={[frame({ width: ring, height: ring })]}>
-              <Circle
-                modifiers={[
-                  frame({ width: ring, height: ring }),
-                  background(primary),
-                  clipShape('circle'),
-                ]}
-              />
-              <Circle
-                modifiers={[
-                  frame({ width: hole, height: hole }),
-                  background(bg),
-                  clipShape('circle'),
-                ]}
+              <Image
+                systemName="circle"
+                size={ring}
+                color={primary}
+                modifiers={[foregroundStyle(primary)]}
               />
               <VStack alignment="center" spacing={1}>
                 <Text
@@ -447,11 +369,11 @@ const UltraClockWidget = (_props: UltraClockWidgetProps, environment: WidgetEnvi
                 >
                   {uv}
                 </Text>
-                <Capsule
-                  modifiers={[
-                    frame({ width: ring * 0.2, height: ring * 0.2 }),
-                    background(primary),
-                  ]}
+                <Image
+                  systemName="circle.fill"
+                  size={ring * 0.18}
+                  color={primary}
+                  modifiers={[foregroundStyle(primary)]}
                 />
               </VStack>
             </ZStack>
