@@ -1,3 +1,4 @@
+import expoWidgetsModule from './expoWidgetsModule';
 import { dayProgress } from '../theme/ultra';
 import UltraClockWidget from '../widgets/UltraClockWidget';
 import UltraGaugeWidget, { type UltraGaugeWidgetProps } from '../widgets/UltraGaugeWidget';
@@ -20,8 +21,13 @@ export function refreshStandbyWidgets(
     value: gaugeValue > 0 ? gaugeValue : dayProgress(now),
   };
 
-  UltraClockWidget.updateSnapshot({});
-  UltraGaugeWidget.updateSnapshot(gaugeProps);
-  UltraClockWidget.reload();
-  UltraGaugeWidget.reload();
+  try {
+    UltraClockWidget.updateSnapshot({});
+    UltraGaugeWidget.updateSnapshot(gaugeProps);
+    UltraClockWidget.reload();
+    UltraGaugeWidget.reload();
+    expoWidgetsModule.reloadAllWidgets();
+  } catch (error) {
+    console.error('[StandBy widgets] refresh failed', error);
+  }
 }

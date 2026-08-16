@@ -5,8 +5,8 @@ internal import ExpoWidgets
 @main
 struct ExportWidgets0: WidgetBundle {
   var body: some Widget {
-    UltraClockWidget()
-    UltraGaugeWidget()
+    WidgetLeft()
+    WidgetRight()
     WidgetLiveActivity()
   }
 }

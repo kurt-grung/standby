@@ -2,7 +2,7 @@ import WidgetKit
 import SwiftUI
 internal import ExpoWidgets
 
-struct UltraGaugeWidget: Widget {
+struct WidgetRight: Widget {
   let name: String = "UltraGaugeWidget"
 
   var body: some WidgetConfiguration {
@@ -16,8 +16,8 @@ struct UltraGaugeWidget: Widget {
         }
       }
     }
-    .configurationDisplayName("Ultra Status")
-    .description("Right StandBy column — live status ring (Small)")
+    .configurationDisplayName("Widget Right")
+    .description("Right StandBy column")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     .contentMarginsDisabled()
   }

@@ -35,6 +35,22 @@ export const standbyConfig = {
   widgets: {
     bundleIdentifier: 'com.kurtgrung.standby.widgets',
     groupIdentifier: 'group.com.kurtgrung.standby',
+    catalog: [
+      {
+        name: 'UltraClockWidget',
+        displayName: 'Widget Left',
+        description: 'Left StandBy column',
+        contentMarginsDisabled: true,
+        supportedFamilies: ['systemSmall', 'systemMedium', 'systemLarge'] as const,
+      },
+      {
+        name: 'UltraGaugeWidget',
+        displayName: 'Widget Right',
+        description: 'Right StandBy column',
+        contentMarginsDisabled: true,
+        supportedFamilies: ['systemSmall', 'systemMedium', 'systemLarge'] as const,
+      },
+    ],
   },
   layout: {
     pageTop: {

@@ -2,7 +2,7 @@ import WidgetKit
 import SwiftUI
 internal import ExpoWidgets
 
-struct UltraClockWidget: Widget {
+struct WidgetLeft: Widget {
   let name: String = "UltraClockWidget"
 
   var body: some WidgetConfiguration {
@@ -16,8 +16,8 @@ struct UltraClockWidget: Widget {
         }
       }
     }
-    .configurationDisplayName("Ultra Clock")
-    .description("Left StandBy column — live clock with day ring (Small)")
+    .configurationDisplayName("Widget Left")
+    .description("Left StandBy column")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     .contentMarginsDisabled()
   }

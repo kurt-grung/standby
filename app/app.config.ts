@@ -61,22 +61,13 @@ const config: ExpoConfig = {
       {
         bundleIdentifier: standbyConfig.widgets.bundleIdentifier,
         groupIdentifier: standbyConfig.widgets.groupIdentifier,
-        widgets: [
-          {
-            name: 'UltraClockWidget',
-            contentMarginsDisabled: true,
-            displayName: 'Ultra Clock',
-            description: 'Left StandBy column — live clock with day ring (Small)',
-            supportedFamilies: ['systemSmall', 'systemMedium', 'systemLarge'],
-          },
-          {
-            name: 'UltraGaugeWidget',
-            contentMarginsDisabled: true,
-            displayName: 'Ultra Status',
-            description: 'Right StandBy column — live status ring (Small)',
-            supportedFamilies: ['systemSmall', 'systemMedium', 'systemLarge'],
-          },
-        ],
+        widgets: standbyConfig.widgets.catalog.map((widget) => ({
+          name: widget.name,
+          contentMarginsDisabled: widget.contentMarginsDisabled,
+          displayName: widget.displayName,
+          description: widget.description,
+          supportedFamilies: [...widget.supportedFamilies],
+        })),
       },
     ],
     'expo-asset',

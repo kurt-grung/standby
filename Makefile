@@ -50,6 +50,8 @@ ios: ## Build native app and run on iOS simulator (widgets need this, not Expo G
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-launcher-autoconnect.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-dev-server.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/sync-ios-widget-catalog.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-widgets-bundle.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npm run ios
 
 dev: ## Live dev: Metro on LAN + open iOS simulator dev client
@@ -63,6 +65,8 @@ device: ## Dev build on iPhone — Metro auto-connect (no embedded bundle)
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-launcher-autoconnect.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/patch-dev-client-url.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-dev-server.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/sync-ios-widget-catalog.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-widgets-bundle.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npx expo run:ios --device "$(IOS_DEVICE)"
 	cd "$(ROOT)/$(APP_DIR)" && IOS_DEVICE="$(IOS_DEVICE)" node scripts/connect-dev-client.mjs
 	@echo ""
@@ -72,9 +76,11 @@ device: ## Dev build on iPhone — Metro auto-connect (no embedded bundle)
 standby: ## Release build on iPhone — best for StandBy widgets (no Metro required)
 	$(call require_app)
 	@rm -f "$(ROOT)/$(APP_DIR)/ios/.xcode.env.updates"
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/sync-ios-widget-catalog.mjs
+	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-expo-widgets-bundle.mjs
 	cd "$(ROOT)/$(APP_DIR)" && node scripts/ensure-ios-bundle-id.mjs && EXPO_APPLE_TEAM_ID="$(IOS_TEAM_ID)" npx expo run:ios --device "$(IOS_DEVICE)" --configuration Release
 	@echo ""
-	@echo "Open Standby once, then add Ultra Clock (left) and Ultra Gauge (right) in StandBy."
+	@echo "Open Standby once, then add Widget Left and Widget Right in StandBy."
 
 android: ## Build native app and run on Android
 	$(call require_app)

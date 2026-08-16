@@ -1,3 +1,4 @@
+import '../lib/bootstrapStandbyWidgets';
 import '../global.css';
 
 import { Stack, useRouter } from 'expo-router';
@@ -32,6 +33,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     disableDevToolsButton();
+    refreshStandbyWidgets();
 
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') {
